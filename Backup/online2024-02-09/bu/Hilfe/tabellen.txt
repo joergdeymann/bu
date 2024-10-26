@@ -1,0 +1,62 @@
+Rechnung Vorbelegung: bu_re_pre
+-------------------------------
+recnum: 			Eindeutige nummer
+firmanr:  			zugehörige Firma
+kundenr:            Kunde, für den die Vorbelegung gilt
+pos: 				laufende Position für Reihenfolge
+artikelnr:          Artikelnummer für die Rechnung aus bu_artikel
+
+Artikel: bu_artikel
+--------------------
+recnum:  			Artikelnr: Intern: Recnum
+firma:              zugehöriger Firmennummer der Bearnbeitenden Firma des Artikelstammes
+nummer: 			Artikelnummer Verkauf
+nummer_ek:       	Artikelnummer Einkauf
+EAN:                Offizielle EAN
+waehrung:           € Euro / $ Dollar usw
+netto:              Verkaufspreis
+mwst:               Steuer
+bezeichnung:        Name des Artikels
+mengenbezeichnung:  Stück, Stunde, Tagessatz, km
+text:               Anzahl als Text, zb:
+					[menge] [mengenbezeichnung] á [preis} [waehrung]
+					
+
+
+Artikel: bu_preis   Spezialpreise
+---------------------------------
+recnum:             Eindeutige Nummer
+firma:              zugehörige Firma
+nummer:             Artikelnummer
+position:           zum direkten vorladen zb: 
+					1 = Standart
+					2 = Low Budget
+netto:              Preis
+info:               Wofür dieser Preis
+
+
+Einkauf Waren: bu_einkauf
+-------------------------
+recnum:             Eindeutige Nummer
+firma:				zugehörige Firma
+nummer: 			Einkaufsnummer von dem shop
+name:               Name der Waren
+netto:              Nettopreis
+
+
+Einkauf Adressen: 
+------------------
+später, kann vielleicht mit den anderen adressen kombieniert werden
+user:  			Weblogin User
+pw:             Weblogin Passwort
+vorbelegung:    Webinterface, vorbelegung, Syntax:
+                feldname: Text
+				feldname: Text
+
+
+Alias: bu_artikel_alias
+------------------------
+recnum: Eindeutige nummer
+Firma: zugehöriger Firmennummer der Bearnbeitenden Firma des Artikelstammes
+Artikelnummer_vk: Verkaufsnummer aus bu_artikel
+Name: Alias Name

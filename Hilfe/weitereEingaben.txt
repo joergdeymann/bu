@@ -1,0 +1,8 @@
+Einstellungen :
+- Eingaben:
+  - Rechnung anlegen:
+    a) Leistungsmonat
+	b) Leistung: Datum von bis
+	c) Leistung: Woche 
+	ohne
+	

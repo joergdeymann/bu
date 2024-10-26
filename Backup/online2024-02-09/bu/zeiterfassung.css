@@ -1,0 +1,206 @@
+html,body {
+	width:100%;
+	height: 100%;
+	background-color:#00aaaa; 
+	margin:0;
+}
+
+
+body {
+/*
+	background-image: url("img/wallpaper.png");
+	background-position: center center;
+	background-repeat: no-repeat;
+	background-size: 120%;
+*/
+}
+
+button {
+	font-size: 1.2em;
+	color:black;	
+}
+
+button#gross {
+	margin-top: 2%;
+	padding: 1em;
+	font-weight: 1000;
+	font-size: 1.5em;
+	width:90%;
+	color:black;	
+}
+	
+h1 {
+	/* background-color: #FF9933;	*/
+	margin:0;
+	font-size:1.5em;
+	/* border-radius:5px; */
+	border-bottom: 5px solid #FF0000;
+}
+
+h1 p {
+	white-space: nowrap;
+	font-size: 0.75em;
+	color:black;
+}
+	
+	
+h2 {
+	background-color: lightblue;
+	border-radius:5px;
+	margin-top:0;
+	margin-bottom:0;
+	margin-left: 5px;
+	margin-right: 5px;
+}
+td {
+	color: black;
+	font-size: 1.5em;
+	font-weight:1000;
+	white-space: nowrap;
+}
+p {
+	color:red;
+	margin:0;
+	padding:1px;
+}
+table#zeiten {
+	margin-top: 5px;
+	margin-bottom: 10px;
+	
+	border: 1px solid lightblue /* #ccaadd; */
+}
+table#zeiten tr td {
+	border:1px solid lightblue;
+	text-align:right;
+	padding-right: 5px;
+	font-size: 1.2em;
+}
+table#zeiten tr th {
+	border:1px solid lightblue;
+	text-align:right;
+	padding-right: 5px;
+}
+
+#bottom {
+	position: absolute;
+	width: 100%;
+	text-align:center;
+	bottom: 5px;
+	left:0;
+	right:0
+	
+}
+
+div#menu {
+	margin-bottom: 5px; 
+	/* position: absolute; */
+	width: 100%;
+	text-align:center;
+	/*bottom: 5px;
+	left:0;
+	right:0 */
+}
+
+
+div#menux a {
+	background-color: silver;
+	color: black;
+	border-radius:5px;
+	margin-left: 5px;
+	margin-right: 5px;
+	padding: 5px;
+	text-decoration: none;
+	font-weight:1000;
+	font-family: Arial;
+}
+div#menux a:hover {
+	background-color: grey;
+}
+
+#button {
+  background-color: #c0c0c0;
+  border: 0;
+  border-radius: 25px;
+  color: #000000;
+  cursor: pointer;
+  display: inline-block; 
+  font-weight: 1000 !important;
+  outline: 0; 
+  padding: 5px 10px 7px 10px;
+  margin: 5px;
+  position: relative;
+  text-align: center;
+  text-decoration: none;
+  transition: all .5s;
+  user-select: none;
+  /* -webkit-user-select: none;*/ 
+}
+
+#button:before {
+  background-color: initial;
+  background-image: linear-gradient(#fff 0, rgba(255, 255, 255, 0) 100%);
+  border-radius: 15px;
+  content: "";
+  height: 50%;
+  left: 4%;
+  opacity: .5;
+  position: absolute;
+  top: 0;
+  transition: all .5s;
+  width: 92%;
+}
+#button:hover {
+  background-color: #A0A0A0;
+  box-shadow: rgba(255, 255, 255, .2) 0 3px 15px inset, rgba(0, 0, 0, .1) 0 3px 5px, rgba(0, 0, 0, .1) 0 10px 13px;
+  transform: scale(1.05);
+}
+
+div#animiert {
+	display: inline-block;
+	padding: 5px;
+	border-radius: 10px;
+	font-size: 1em;
+	color:white;
+	background-color: #00aaaa;
+  
+	position: relative;
+
+	animation-name: animiert;
+	animation-duration: 3s;
+	animation-delay: 0s;
+	animation-timing-function: ease-out;
+}
+
+@keyframes animiert {
+	0%  { background-color:#00aaaa; left:0px; top:0px;	 font-size:1em;}
+   25%  { background-color:#00aaaa; left:0px; top:200px; font-size:2em;}
+   50%  { background-color:#00aaaa; left:0px; top:200px; font-size:2em;}
+   75%  { background-color:#00aaaa; left:0px; top:200px; font-size:2em;}
+  100%  { background-color:#00aaaa; left:0px; top:0px;}
+}
+
+
+/*
+div#animiert {
+	display: inline-block;
+	padding: 5px;
+	border-radius: 10px;
+	font-size: 1em;
+	color:white;
+	background-color: #FFaaaa;
+  
+	position: relative;
+	animation-name: hinweis;
+	animation-duration: 3s;
+	animation-delay: 0s;
+	animation-timing-function: ease-out;
+}
+
+@keyframes hinweis {
+    0%  { background-color:#FFaaaa; left:0px; top:0px;   font-size:1em;}
+   25%  { background-color:#00aaaa; left:0px; top:200px; font-size:2em;}
+   50%  { background-color:#00aaaa; left:0px; top:200px; font-size:2em;}
+   75%  { background-color:#00aaaa; left:0px; top:200px; font-size:2em;}
+  100%  { background-color:#FFaaaa; left:0px; top:0px;}
+}
+*/

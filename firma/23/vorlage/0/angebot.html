@@ -1,0 +1,201 @@
+<!doctype html>
+<html lang="de">
+<head>
+    <meta charset="utf-8">
+	<link type="text/css" rel="stylesheet" href="$layout['css']">
+<!--  url("data:image/png;base64,iVB"); 
+/*
+	background-attachment: fix;
+	width:calc (100% - 4cm);
+*/
+-->
+<style>
+body {
+	/* color:green; */
+	background-image: url($layout['logo_trans']);
+	background-repeat: no-repeat;
+	background-position: center;
+	background-size: cover;
+}
+div#trans {
+	position:relative;
+	width:100%;
+	height: 277mm;
+	margin:0;
+	padding:0;
+	/* border:1px solid red; */
+	background-color:#FFFFFF;
+	opacity:0.80;
+}
+div#std {
+	opacity:1;
+}
+
+</style>	
+</head>
+<body><div id="trans">
+<table cellspacing=0 cellpadding=0 border=0 style="width:100%;padding:0;margin:0;">
+<tr>
+<td width="1" rowspan="2" style="height:4cm;"><img src="$layout['logo']" style="height:4cm;"></td>
+<td width="100%" colspan="2" style="height:1;text-align:right;margin:0;padding:0;vertical-align:top;font-size:1.5em;">$layout['ueberschrift']</td>	
+</tr>
+<tr><td style="text-align:right;vertical-align:top;width:100%;">
+Angebotsnr.:<br>
+Kundennr.:<br>
+Datum:<br>
+Lieferdatum:<br>
+</td>
+
+<td width="1" style="text-align:right;vertical-align:top">
+$re['renr']<br>
+$re['kdnr']<br>
+$re['datum']<br>
+$re['leistung']<br>
+</td>
+</tr></table>
+
+<table cellspacing=0 cellpadding=0 border=0 style="width:100%;margin-bottom:70px;"><tr>
+<td><br>
+<nobr style="font-size:8pt;"><u>$abs['firma'],$abs['strasse'],$abs['plz'] $abs['ort']</u></nobr><br>
+$empf['firma']<br>
+$re['name']<br>
+$empf['strasse']<br><br>
+$empf['plz'] $empf['ort']<br>
+</td><td style="text-align:right">
+$abs['firma']<br>
+$abs['rname']<br>
+$abs['strasse']<br>
+$abs['plz'] $abs['ort']<br>
+Tel:$abs['rtel']<br>
+$abs['rmail']<br>
+$abs['web']<br>
+<td>
+
+
+</tr></table>
+$layout['retext']<br><BR>
+<table id="disp" style="width:100%;" cellspacing=0 cellpadding=0><tr>
+<td style="text-align:center;font-weight:600;width:1;">Pos</td>
+<td style="text-align:left;  font-weight:600;width:100%;">Bezeichnung</td>
+<td style="text-align:right; font-weight:600;width:1;">Menge</td>
+<td style="text-align:right; font-weight:600;width:1;">Einheit</td>
+<td style="text-align:right; font-weight:600;width:1;">Einzel €</td>
+<td style="text-align:right; font-weight:600;width:1;">Gesamt €</td>
+</tr>
+	<!-- POSTEN START -->
+	<tr>
+	<td style="text-align:center">$re['pos']</td>
+	<td style="text-align:left; white-space:normal;"  ><b>$re['re_text']</b><br>$re['beschreibung']<br></td>
+	<td style="text-align:right">$re['anz']</td>
+	<td style="text-align:right">$re['einheit']</td>
+	<td style="text-align:right">$re['text_netto']</td>
+	<td style="text-align:right">$re['text_gesamt_netto']</td>
+										
+	</tr>
+	<!-- POSTEN ENDE -->
+
+	<tr><td colspan=5 style="text-align:left;width:100%;white-space:nowrap;">
+		Zwischensumme (netto)<br>
+		<p style="margin:0;padding:0;margin-top:0.5em;"></p>
+		<table border=0 cellspacing=0 cellpadding=0><tr><td style="vertical-align:top;">Umsatzsteuer&nbsp;<br></td><td style="vertical-align:top;">$re['text_mwst']<br></td></tr></table>
+		<!-- div style="display:inline-block;margin-top:0px;margin-bottom:0px;vertical-align:top;">Umsatzsteuer</div -->
+		<p style="margin:0;padding:0;margin-top:0.5em;"></p>
+		<b>Gesamtbetrag</b><br>
+		</td>
+
+		<td style="text-align:right;width:1;">
+		$re['text_summe_netto']<br> 
+		<p style="margin:0;padding:0;margin-top:0.5em"></p>
+		<div style="display:inline-block;margin-top:5px;margin-bottom:0px;">&nbsp;</div>$re['text_summe_mwst']<br>
+		<p style="margin:0;padding:0;margin-top:0.5em"></p>
+		<b>$re['text_summe_brutto']</b><br>
+		</td>
+
+	</tr>
+		
+</table>
+<span style="line-height: 2em;">$layout['schlusswort']
+</span><br>
+
+<table  style="width:100%;" border="0" cellpadding=5"><tr>
+<td style="width:1;border:1px solid silver;padding-left:5px;padding-right:5px;">
+	<table cellspacing=0><tr>
+	<td style="background-color:transparent;width:5cm;min-width:5cm;vertical-align:top;height:1.5cm;">
+<b>Bezahlen per Paypal</b><br>
+Ganz bequem Code scannen<br>
+oder <a href="$re['papal_link_standart']">Link</a> verwenden
+	</td>
+	<td style="background-color:transparent;width:1.5cm;min-width:1.5cm;vertical-align:middle;text-align:right;"><img  alt="Paypal QR" src="$re['paypal_qr_standart']" style="width:100%;"></td>
+	</tr></table>
+</td>
+<td style="width:100%;">&nbsp;</td>
+<td style="width:1;border:1px solid silver;padding-left:5px;padding-right:5px;">
+	<table cellspacing=0><tr>
+	<td style="background-color:transparent;width:5cm;min-width:5cm;vertical-align:top;height:1.5cm;">
+<!-- b>Überweisen per Code</b><br>
+Ganz bequem Code mit der<br>
+Banking-App scannen<br -->
+	</td>
+	<td style="background-color:transparent;width:1.5cm;min-width:1.5cm;vertical-align:middle;text-align:right;"><img  alt="Bank QR" src="$re['bank_qr_standart']" style="width:100%;"></td>
+	</tr></table>
+</td>
+
+</tr></table>
+
+
+
+<!--
+<td style="text-align:left;vertical-align:center;height:4em;border:1px solid #DDDDDD;width:1px;white-space:nowrap;">
+<div style="display:inline-block;margin:0;padding:0;vertical-align:middle;height:100%;width:7cm;">
+<b>Bezahlen per Paypal</b><br>
+Ganz bequem Code scannen<br>
+oder <a href="$qr['papal_link']">Link</a> verwenden
+</div>
+<div style="display:inline-block;margin:0;padding:0;vertical-align:top;text-align:right;height:100%;width:2cm;">
+<img src="$qr['paypal_code']" style="height:2cm;100%;margin:0;padding;0;">
+</div>
+</td><td>&nbsp;</td>
+<td style="text-align:left;vertical-align:center;height:4em;border:1px solid #DDDDDD;width:1px;white-space:nowrap;">
+<div style="display:inline-block;margin:0;padding:0;vertcal-align:middle;height:100%;width:7cm;">
+<b>Überweisen per Code</b><br>
+Ganz bequem Code mit der<br>
+Banking-App scannen<br>
+</div>
+<div style="display:inline-block;margin:0;padding:0;vertical-align:top;text-align:right;height:100%;width:2cm;">
+<img src="$qr['bank_code']" style="height:2cm;margin:0;padding;0;">
+</div>
+
+</td>
+</tr></table>
+-->
+$re['paypal_link_standart']<br>
+
+
+
+<div id=foot>
+<!-- table id="foot" cellspacing=20 width="100%"> <tr -->
+<table width="100%" border=0> <tr>
+<td width="33%">
+$abs['firma']<br>
+$abs['strasse']<br>
+$abs['plz'] $abs['ort']<br>
+Tel.:$abs['rtel']<br>
+$abs['rmail']<br>
+$abs['web']<br>
+</td>
+
+<td width="33%">&nbsp;
+</td>
+
+<td width="33%">
+$abs['firma']<br>
+$abs['bankname']<br>
+<nobr>IBAN:$abs['iban']</nobr><br>
+BIC:$abs['bic']<br>
+Ust-ID: $abs['ustid']<br>
+</td>
+
+</tr></table></div>
+
+</div></body>
+</html>

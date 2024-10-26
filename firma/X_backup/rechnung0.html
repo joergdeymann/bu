@@ -1,0 +1,147 @@
+<!doctype html>
+<html lang="de">
+<head>
+    <meta charset="utf-8">
+	<link type="text/css" rel="stylesheet" href="$layout['css']">
+<!--  url("data:image/png;base64,iVB"); 
+/*
+	background-attachment: fix;
+	width:calc (100% - 4cm);
+*/
+-->
+<style>
+body {
+	/* color:green; */
+	background-image: url($layout['logo']);
+	background-repeat: no-repeat;
+	background-position: center;
+	background-size: cover;
+}
+div#trans {
+	position:relative;
+	width:100%;
+	height: 277mm;
+	margin:0;
+	padding:0;
+	/* border:1px solid red;*/
+	background-color:#FFFFFF;
+	opacity:0.85;
+}
+div#std {
+	opacity:1;
+}
+
+</style>	
+</head>
+<body><div id="trans">
+<table cellspacing=0 cellpadding=0 border=0 style="width:100%;padding:0;margin:0;">
+<tr>
+<td width="1" rowspan="2" style="height:4cm;"><img src="$layout['logo']" style="height:4cm;"></td>
+<td width="100%" colspan="2" style="height:1;text-align:right;margin:0;padding:0;vertical-align:top;font-size:1.5em;">Rechnung</td>	
+</tr>
+<tr><td style="text-align:right;vertical-align:top;width:100%;">
+Rechnungsnr.:<br>
+Kundennr.:<br>
+Datum:<br>
+Lieferdatum:<br>
+</td>
+
+<td width="1" style="text-align:right;vertical-align:top">
+$re['renr']<br>
+$re['kdnr']<br>
+$re['datum']<br>
+$re['leistung']<br>
+</td>
+</tr></table>
+
+<table cellspacing=0 cellpadding=0 border=0 style="width:100%;margin-bottom:100px;"><tr>
+<td><br>
+<nobr style="font-size:8pt;"><u>$abs['firma'],$abs['strasse'],$abs['plz'] $abs['ort']</u></nobr><br>
+$empf['firma']<br>
+$re['name']<br>
+$empf['strasse']<br>
+$empf['plz'] $empf['ort']<br>
+</td><td style="text-align:right">
+$abs['firma']<br>
+$abs['rname']<br>
+$abs['strasse']<br>
+$abs['plz'] $abs['ort']<br>
+Tel:$abs['rtel']<br>
+$abs['rmail']<br>
+<td>
+
+
+</tr></table>
+Unsere Lieferungen/Leistungen vom $re['leistung'] stellen wir Ihnen wie folgt in Rechnung.<br><br>
+<table id="disp" style="width:100%;" cellspacing=0 cellpadding=0><tr>
+<td style="text-align:center;font-weight:600;width:1;">Hallo</td>
+<td style="text-align:left;  font-weight:600;width:100%;">Bezeichnung</td>
+<td style="text-align:right; font-weight:600;width:1;">Menge</td>
+<td style="text-align:right; font-weight:600;width:1;">Einheit</td>
+<td style="text-align:right; font-weight:600;width:1;">Einzel €</td>
+<td style="text-align:right; font-weight:600;width:1;">Gesamt €</td>
+</tr>
+	<!-- POSTEN START -->
+	<tr>
+	<td style="text-align:center">$re['pos']</td>
+	<td style="text-align:left"  ><b>$re['re_text']</b></td>
+	<td style="text-align:right">$re['anz']</td>
+	<td style="text-align:right">$re['einheit']</td>
+	<td style="text-align:right">$re['text_netto']</td>
+	<td style="text-align:right">$re['text_gesamt_netto']</td>
+										
+	</tr>
+	<!-- POSTEN ENDE -->
+
+	<tr><td colspan=5 style="text-align:left;width:100%;white-space:nowrap;">
+		Zwischensumme (netto)<br>
+		<p style="margin:0;padding:0;margin-top:0.5em;"></p>
+		<div style="display:inline-block;margin-top:5px;margin-bottom:0px;">Umsatzsteuer</div>$re['text_mwst']<br>
+		<p style="margin:0;padding:0;margin-top:0.5em;"></p>
+		<b>Gesamtbetrag</b><br>
+		</td>
+
+		<td style="text-align:right;width:1;">
+		$re['text_summe_netto']<br> 
+		<p style="margin:0;padding:0;margin-top:0.5em"></p>
+		<div style="display:inline-block;margin-top:5px;margin-bottom:0px;">&nbsp;</div>$re['text_summe_mwst']<br>
+		<p style="margin:0;padding:0;margin-top:0.5em"></p>
+		<b>$re['text_summe_brutto']</b><br>
+		</td>
+
+	</tr>
+		
+</table>
+<span style="line-height: 2em;">
+Gemäß §19 UStG wird keine Umsatzsteuer berechnet.<br>
+Zahlbar sofort,rein netto.<br>
+Viele Dank für die gute Zusammenarbeit.<br>
+</span>
+
+<div id=foot>
+<!-- table id="foot" cellspacing=20 width="100%"> <tr -->
+<table width="100%" border=0> <tr>
+<td width="33%">
+$abs['firma']<br>
+$abs['strasse']<br>
+$abs['plz'] $abs['ort']<br>
+Tel.:$abs['rtel']<br>
+$abs['rmail']<br>
+$abs['web']<br>
+</td>
+
+<td width="33%">&nbsp;
+</td>
+
+<td width="33%">
+$abs['firma']<br>
+$abs['bankname']<br>
+<nobr>IBAN:$abs['iban']</nobr><br>
+BIC:$abs['bic']<br>
+Ust-ID: $abs['ustid']<br>
+</td>
+
+</tr></table></div>
+
+</div></body>
+</html>

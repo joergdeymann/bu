@@ -1,0 +1,110 @@
+button#kalendertag:hover {
+	vertical-align:middle;
+	font-size: 1.5em;
+	border: 2px solid red !important;
+	/* height: calc (100% - 4px) !important; */ 
+}
+
+	/*	$style='vertical-align:middle; border:1px solid black;border-radius:25px;font-weight:bold;margin:0;padding:0; min-width:120px;height:'.$kalender->cellheight.';cursor:pointer;';*/
+
+
+button#kalendertag2 {
+	vertical-align:middle; 
+	border:1px solid black;
+	border-radius:25px;
+	font-weight:bold;
+	margin:0;
+	padding:0; 
+	min-width:calc(100% - 4px);
+	cursor:pointer;
+	margin-bottom:5px;
+}
+button#kalendertag2:hover {
+	vertical-align:middle;
+	font-size: 1.05em;
+	border: 2px solid red !important;
+	/* height: calc (100% - 4px) !important; */ 
+}
+
+#button_green {
+	vertical-align:middle; 
+	border:1px solid black;
+	border-radius:25px;
+	font-weight:bold;
+	height: 44px;
+	margin:0;
+	padding:1px; 
+	width:100px;
+	cursor:pointer;
+	margin-bottom:5px;
+	background-color:lime;
+	margin-right:20px;
+}
+#button_green:hover {
+	vertical-align:middle;
+	padding:0px; 
+	height: 44px;
+	font-size: 1.05em;
+	border: 2px solid red !important;
+	background-color: #99FF99;
+	/* height: calc (100% - 4px) !important; */ 
+}
+#button_red {
+	vertical-align:middle; 
+	border:1px solid black;
+	border-radius:25px;
+	font-weight:bold;
+	height: 44px;
+	margin:0;
+	padding:1px; 
+	width:100px;
+	cursor:pointer;
+	margin-bottom:5px;
+	background-color:red;
+	margin-right:20px;
+}
+#button_red:hover {
+	vertical-align:middle;
+	padding:0px; 
+	height: 44px;
+	font-size: 1.05em;
+	border: 2px solid red !important;
+	background-color: #FF9999;
+}
+
+
+
+h1 {
+	text-align:center;
+	margin-bottom:10px;
+	margin-top:0;
+	margin-left:0;
+	margin-right:0;
+	background-color: silver;
+	border-radius: 25px;
+}
+/* table#kalender outline:0px;*/
+button {
+	color:black;
+}
+
+input {
+	height: 2em;
+	margin-top:5px;
+	margin-bottom:5px;
+}
+
+input[type="submit"] {
+	height: 3em;
+	outline:0;
+	margin:0;
+	padding:0;
+	border-radius:20px;
+}
+
+input2 {
+	height:4em !important;
+	margin-top:20px;
+	margin-bottom:20px !important;
+	background-color: red;
+}

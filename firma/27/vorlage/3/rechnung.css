@@ -1,0 +1,202 @@
+html {
+	margin:0;
+	padding:0;
+}
+
+/* Lokal und online geht dies 
+Der link muss also auf bei DOMPDF wie lokal behandelt werden
+die rechung.html befindet sich in: 
+von:  bu/firma/nr/vorlage/nr
+nach: bu/font/fontname.ttf
+*/
+
+@font-face {
+   font-family:'Arial';
+   font-style: normal;
+   font-weight: normal;
+   src:  url('../../../../font/arial.ttf') format('truetype');
+}
+@font-face {
+   font-family:'Arial';
+   src:  url('../../../../font/ARIALBD.ttf') format('truetype');
+   font-style: normal;
+   font-weight: bold;
+}
+@font-face {
+   font-family:'Arial';
+   src:  url('../../../../font/ARIALI.ttf') format('truetype');
+   font-style: italic;
+   font-weight: normal;
+}
+@font-face {
+   font-family:'Arial';
+   src:  url('../../../../font/ARIALBI.ttf') format('truetype');
+   font-style: italic;
+   font-weight: bold;
+}
+
+
+@page { 
+	size: A4;
+	margin: 0cm; 
+}
+
+
+body {
+	position: relative;
+	width: calc (100% - 4cm); /* $210mm */
+	height: 277mm;
+	max-width: 210mm;
+  
+  
+	margin-left: 2cm;
+	margin-right:2cm; /* 50px; */
+	margin-top: 10mm;
+	margin-bottom: 10mm;
+	
+	font-family:Arial,Calibri,Tahoma; 
+	font-size:9pt;
+	line-height: 9pt;
+
+	/* border: white 1px solid; /* sonst wird alles zusammengeschoben */  
+	
+	/* color: red;  */
+	
+	
+}
+
+* {
+    -webkit-print-color-adjust: exact !important;   /* Chrome, Safari */
+    color-adjust: exact !important;                 /*Firefox*/
+}
+
+/*
+body {
+	margin-top: 1cm;
+	margin-bottom: 1cm;
+	margin-left:2cm;
+	margin-right:2cm;
+}
+*/
+div#logo {
+	position: relative;
+	background-color: #00aaaa;
+	text-align: right;
+	z-index:-1;
+}
+div#logo img {
+	height: 4cm;
+}
+div#retext {
+ 	font-size: 10mm; 
+	width:100%;
+	border-bottom: 4px red solid;
+	margin-top: -19mm;
+	margin-bottom: 19mm;
+}
+div#fenster {
+	position: absolute;
+	top: 45mm;
+	height: 45mm;
+	left: 0mm;
+	width: 90mm;
+	/* border: 1px solid green;*/
+}
+div#abs {
+	/* color: #007fc5; */
+	color: #00AAAA; 
+/*
+	font-weight: 300;
+	font-family: XArial;
+*/	
+	font-size: 8pt;
+	border-bottom: 2px solid silver;
+	width: inherit;
+	white-space: nowrap;
+}
+div#info {
+	position: relative;
+	text-align: right;
+	/* font-size: 10pt; */
+	/* border: 1px solid green; */
+}
+div#info table {
+	display: inline-table;
+}
+div#info th {
+	text-align:left;
+	vertical-align: top;
+}
+div#info td {
+	text-align:right;
+	vertical-align: top;
+}
+
+table#liste  {
+	width:100%;
+}
+table#liste th {
+	white-space:nowrap;
+	padding:2px;
+	padding-top:4px;
+	padding-bottom:4px;
+}
+
+table#liste td {
+	vertical-align:top;
+	white-space:nowrap;
+	padding-left:2px;
+	padding-right:2px;
+	border-bottom: 1px solid silver;
+}
+table#liste th#blau {
+	background-color: #00aaaa;
+	color: white;
+	font-weight: 700;
+}
+table#liste th#grau {
+	background-color: silver;
+	color: black;
+	font-weight: 700;
+}
+#body {
+	position:absolute;
+	top: 102mm;
+	/* margin-top: 20mm; */
+	/* background-color:#EEEEEE; */
+}
+#foot {
+	font-size: 8pt;
+	position: absolute;
+	bottom: 0;
+	width:100%;
+}
+#foot table {
+	border-spacing: 0px;
+	margin:0;
+	padding:0;
+}
+#foot table tr td {
+	font-size: 8pt;
+	line-height: 1em;
+	/* font-family: XArial; */
+	margin: 0;
+	padding:0;
+	/* color: red; */
+	text-align:center;
+}
+#foot img {
+	position:relative;
+	height: 1cm;
+}
+#foot hr {
+	position: relative;
+	z-index:-1;
+	margin:0;
+	margin-top:-5mm;
+	padding:0;
+	height: 2px;
+	background-color:#00aaaa;
+	border-width: 0px
+}
+	

@@ -1,0 +1,212 @@
+
+@font-face {
+   font-family:'Calibri';
+   font-style: normal;
+   font-weight: normal; 
+   src:  url('font/Calibri_Regular.ttf') format('truetype'); 
+}
+
+
+@font-face {
+   font-family:'Calibri';
+   font-style: normal;
+   font-weight: 1000;
+   src:  url('font/Calibri_Bold.ttf') format('truetype'); 
+}
+
+
+html {
+	margin:0;
+	padding:0;
+
+	/* width:21cm;
+	height:29cm; */
+	
+}
+
+body {
+	position: relative;
+	width: 90%; /* $210mm */
+	height: 277mm;
+	max-width: 210mm;
+  
+  
+	margin-left: 5%;
+	margin-right:5%; /* 50px; */
+	margin-top: 10mm;
+	margin-bottom: 10mm;
+	
+	font-family:Calibri,Arial,Tahoma;
+	font-size:12pt;
+
+	border: white 1px solid; /* sonst wird alles zusammengeschoben */  
+}
+	
+div#rechts {
+	position: absolute;
+	right: 0px; /* #10px; */
+	top: 0px;
+
+	padding: 0px; /* 10px;*/
+	margin-top: 0px;
+	margin-right: 0px; /* #50px; */
+	margin-bottom: 0px;
+	
+	/* border: green 1px solid; */
+}
+
+div#rechts img {
+	height:100px;
+}
+
+div#rechts p {
+	margin-top: 20px;
+	color:#0080e0;
+}
+	
+div#absender {
+	margin-top:150px;
+	width:350px;
+	height:50px;
+	font-size:20px;
+	color:black;
+	font-weight:1000;
+}
+div#absender div {
+	font-size:12px;
+	border-bottom:#0080d0 solid 1px;
+	color:#0080e0;
+	text-align:center;
+}
+	
+div#daten {
+	position: absolute;
+	right: 0px; /* 10px */
+	width: 300px;
+	
+	font-size:12px;
+
+	border:#0080d0 solid 2px;
+	
+	padding: 5px;
+	margin-top: 40px;
+	margin-right: 0px; /* 50px; */
+	margin-bottom: 0px;
+}
+div#betreff {
+	margin-bottom: 20px;
+	font-size:24px;
+	font-weight: 1000;
+}
+#foot {
+	font-size: 12px;
+	position: absolute;
+	bottom: 0;
+	width:100%;
+}
+#foot table {
+	border-spacing: 0px;
+	margin:0;
+	padding:0;
+}
+#foot table tr td {
+	font-size: 12px;
+	line-height: normal;
+	font-family: Arial;
+	/* color: red; */
+}
+div#spacer{
+	margin-top: 150px;
+	margin-bottom: 0px;
+}
+
+table#pos {
+	border-left:#0070c0 solid 1px;
+	border-right:#0070c0 solid 1px;	
+}
+
+table#pos tr td {
+	border-left:#0070c0 solid 1px;
+	border-right:#0070c0 solid 1px;	
+}
+
+
+
+table#pos tr th {
+	border:#0070c0 solid 1px;
+}
+
+
+table#pos tr * {
+	padding-left:5px;
+	padding-right:5px;
+}
+
+th {
+	background-color:#8db4e2 ;
+}
+
+td {
+	padding:1px;
+	/* #text-align: initial; */
+	vertical-align:top;
+}
+
+/* Rahmen aufheben */
+table#sum,  table#sum tr * {
+	border:initial !important;
+	padding:0 !important;
+	margin:0 !important;
+}
+
+button {
+	border-width: 0px;
+	border-style: solid;
+	border-color: white;
+	
+	background-color: white;
+	color:inherit;
+	font: inherit;
+	font-family: inherit;
+	text-align: inherit;
+	align-items:inherit;
+	alignment:inherit;
+	
+	
+	margin:0;
+	padding:0;	
+	width:100%;
+}
+
+button:hover {
+	border-width:0px;
+	border-style:  solid;
+	border-color: red;
+	background-color: #CCCCCC;
+}
+	
+* {
+    -webkit-print-color-adjust: exact !important;   /* Chrome, Safari */
+    color-adjust: exact !important;                 /*Firefox*/
+}
+@page { 
+	size: A4;
+	margin: 0cm; 
+}
+
+@media print {
+	body {
+		/* display: block; */
+	}
+	
+	button:hover {
+		display: none !important;
+	}
+}
+/*
+#Blaufarben
+#89cff0. Babyblau
+
+#0070c0 linien der Tabelle Positionen
+#8db4e2 Helles Blau bei überschriften
+*/

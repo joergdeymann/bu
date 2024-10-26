@@ -1,0 +1,101 @@
+<!doctype html>
+<html lang="de">
+<head>
+    <meta charset="utf-8">
+	<link type="text/css" rel="stylesheet" href="$layout['css']">
+</head>
+<body>
+
+<div id="rechts">
+
+<button>
+<img src="$layout['logo']">
+</button>
+<br>
+<button>
+	<p>  
+		$abs['firma']<br>
+		$abs['strasse']<br><br>
+		$abs['plz'] $abs['ort']
+	</p> 
+</button>
+
+</div>
+
+<div id="absender">
+<div><button>
+<nobr>$abs['firma'],$abs['strasse'],$abs['plz'] $abs['ort']</nobr>
+</button></div>
+<button>
+	$empf['firma']<br>
+	$re['name']<br>
+	$empf['strasse']<br>
+	$empf['plz'] $empf['ort']<br>
+</button></div>
+</div>
+<div id="daten">
+<button>
+<table width="100%">
+<tr><td align="left">RECHNUNG-Nr:</td><td align="right">$re['renr']</td></tr>
+<tr><td align="left">Rechnungsdatum:</td><td align="right">$re['datum']</td></tr>
+<tr><td align="left">Leistungsmonat:</td><td align="right">$re['leistung']</td></tr>
+<tr><td align="left">Ihre Kundennummer:</td><td align="right">$re['kdnr']</td></tr>
+<tr><td align="left">Fälligkeitsdatum:</td><td align="right">$re['faellig']</td></tr>
+</table>
+</button>
+</div>
+<div id="spacer"></div>
+
+<button>
+<div id="betreff">Rechnungsnummer: $re['renr']</div> 
+$layout['anrede']
+</button>
+
+<table id="pos" cellspacing=0 width="100%">
+	<tr><th>Pos</th><th>Menge,Einheit</th><th>Thema</th><th>Einzelpreis</th><th>Gesamtpreis</th></tr>
+	$re['posten']
+	<tr><td colspan=5 style="border-top:#0070c0 dashed 2px">
+		<table id="sum" width="100%" cellspacing=0 cellpadding=0>
+			<tr><td align="left">Zwischensumme</td><td align="right">$re['summe']</td></tr>
+			<tr><td align="left">Umsatztzsteuer 19%</td><td align="right">$re['ust']</td></tr>
+		</table>	
+	</tr>
+	<tr><th colspan="5">
+		<table style="border:initial;padding:0;" width="100%" cellspacing=0 cellpadding=0><tr style="border:initial;padding:0;"><td style="border:initial;padding:0;" align="left">Rechnungsbetrag</td><td style="border:initial;padding:0;" align="right">$re['gesamtsumme']</td></tr></table>
+	</th></tr>
+
+</table>
+
+
+<br>
+<br>
+<br>
+<div id=foot>
+<!-- table id="foot" cellspacing=20 width="100%"> <tr -->
+<table width="100%" border=0> <tr>
+<td width="33%">
+$abs['firma']<br>
+$abs['strasse']<br>
+$abs['plz'] $abs['ort']<br>
+<br>Inhaber: $abs['inhaber']<br>
+</td>
+
+<td width="33%">
+Bankverbindung:<br>
+$abs['bankname']<br>
+<nobr>IBAN:$abs['iban']</nobr><br>
+BIC:$abs['bic']<br>
+</td>
+
+<td>
+Handelsregistzer:<br>
+$abs['hrname']<br>
+HRA:$abs['hra']<br>
+Ust-ID-Nr: $abs['ustid']<br>
+Betriebs-Nr: $abs['betriebsnr']<br>
+</td>
+</tr></table>
+</div>
+
+</body>
+</html>

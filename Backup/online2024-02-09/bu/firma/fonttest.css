@@ -1,0 +1,24 @@
+	@font-face {
+	   font-family:'Matcha';
+	   font-style: normal;
+	   font-weight: normal; /* 400 */ 
+	   src:  url('/FazalTamiz/font/Cafe_Matcha.ttf') format('truetype'); 
+   
+	}
+	@font-face {
+	   font-family:'Calibri';
+	   font-style: normal;
+	   font-weight: normal; /* 400 */ 
+	   src:  url('../font/Calibri_Regular.ttf') format('truetype'); 
+   
+	}
+
+	div#m {	
+		font-family:Matcha,Arial,Tahoma; 
+		font-size:48px;
+	}
+
+	div#c {	
+		font-family:Calibri,Arial,Tahoma; 
+		font-size:48px;
+	}

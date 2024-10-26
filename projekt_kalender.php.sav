@@ -1,0 +1,256 @@
+<?php
+include "class/class_projekt_kalender.php";
+
+print_r($_POST);
+
+$ton1	="rgba(0,153,255,0.5)";   // #0099FF
+$ton2  	="rgba(102,255,255,0.5)"; // #66FFFF ("#6666FF","#9999FF","#00FFFF")
+$licht1 ="#FFFF00";               // #FFFF00  
+$licht2 ="#FFFFCC";				  // #FFFFCC
+$reise 	="#FF33FF";
+$schul 	="#66FF66";
+$sperr 	="#FF3366";
+$kalender=new Projekt_kalender();
+$kalender->backgroundcolor_reisetag=$reise;
+// print_r($_POST);
+// $event[3]['color'] ="#66FF66";
+
+// $kalender->color['links'];
+
+$event=array();
+$event[0]['start'] ="2024-01-12";
+$event[0]['ende']  ="2024-01-12";
+$event[0]['color'] =$ton1;
+$event[0]['info']  ="Index"; 
+
+$event[4]['start'] ="2024-01-13";
+$event[4]['ende']  ="2024-01-13";
+$event[4]['color'] =$ton2;
+$event[4]['info']  ="Index"; 
+$event[4]['left']  ="An $"; 
+$event[4]['right'] ="Ab $"; 
+       
+$event[1]['start'] ="2024-01-26";
+$event[1]['ende']  ="2024-01-29";
+$event[1]['color'] =$licht1;
+$event[1]['info']  ="Nix"; 
+
+$event[5]['start'] ="2024-01-26";
+$event[5]['left']  ="An"; 
+
+$event[6]['start'] ="2024-01-29";
+$event[6]['color'] =$reise;
+$event[6]['right'] ="Ab $"; 
+       
+$event[2]['start'] ="2024-02-03";
+$event[2]['ende']  ="2024-02-13";
+$event[2]['color'] ="#00FFFF";
+$event[2]['info']  ="Nr 3"; 
+
+$event[3]['start'] ="2024-01-23";
+$event[3]['ende']  ="2024-01-25";
+$event[3]['color'] =$licht2;
+$event[3]['info']  ="Index"; 
+
+$event[7]['start'] ="2024-01-30";
+$event[7]['ende']  ="2024-01-31";
+$event[7]['color'] =$sperr;
+$event[7]['info']  ="Index"; 
+
+$event[8]['start'] ="2024-01-20";
+$event[8]['ende']  ="2024-01-21";
+$event[8]['color'] =$schul;
+$event[8]['info']  ="Index"; 
+
+$event[9]['start'] ="2024-01-19";
+$event[9]['color'] =$reise;
+
+       
+/*
+$kalender->addEvent($event[0]);
+$kalender->addEvent($event[1]);
+$kalender->addEvent($event[2]);
+$kalender->addEvent($event[3]);
+$kalender->addEvent($event[4]);
+$kalender->addEvent($event[5]);
+$kalender->addEvent($event[6]);
+$kalender->addEvent($event[7]);
+$kalender->addEvent($event[8]);
+$kalender->addEvent($event[9]);
+*/
+
+
+// Eingabe von Name der Veranstaltung und Ort der Veranstaltung
+if (empty($_POST['phase'])) {
+	$_POST['phase']=0;
+}
+if (!empty($_POST['btn_licht'])) {
+	$_POST['event_typ']=1;
+}
+if (!empty($_POST['btn_ton'])) {
+	$_POST['event_typ']=2;
+}
+if (!empty($_POST['btn_sperr'])) {
+	$_POST['event_typ']=3;
+}
+if (!empty($_POST['btn_schul'])) {
+	$_POST['event_typ']=4;
+}
+			
+			
+// Eingabe des Zeitraums
+if (isset($_POST['btn_zeitraum'])) {
+	$_POST['phase']=1;
+}
+if (isset($_POST['btn_anreise'])) {
+	$_POST['phase']=2;
+}
+if (isset($_POST['btn_abreise'])) {
+	$_POST['phase']=0;
+	$focus="";
+}
+
+/*
+if (!empty($_POST['kalender_select_start']) and !empty($_POST['kalender_select_ende']) and $_POST['phase']==1) {
+	$_POST['projekt_start']=$_POST['kalender_select_start'];
+	$_POST['projekt_ende']=$_POST['kalender_select_ende'];
+	$_POST['phase']=2;
+} 
+*/ 
+	
+// Autoswitch falls gewümscht
+if (!empty($_POST['kalender_tag']) and $_POST['phase'] == 0 and !empty($_POST['kalender_select_start'])) {
+	$_POST['projekt_start']=$_POST['kalender_select_start'];
+	$_POST['projekt_ende']=$_POST['kalender_tag'];
+	$_POST['phase']=1;
+} else 
+if (!empty($_POST['kalender_tag']) and ($_POST['phase']==1)) {
+	$_POST['anreise']=$_POST['kalender_tag'];
+	$_POST['phase']=2;
+} else 
+if (!empty($_POST['kalender_tag']) and ($_POST['phase']==2)) {
+	$_POST['abreise']=$_POST['kalender_tag'];
+	$_POST['phase']=0;
+	$_POST['kalender_tag']="";
+	$_POST['kalender_select_start']="";
+	$_POST['kalender_select_ende']="";
+	
+}
+	
+
+switch ($_POST['phase']) {
+	case 0:
+		$_POST['kalender_usage']=0;
+		$kalender->usage=$_POST['kalender_usage'];
+		$headline="Wann ?";
+		$button="btn_zeitraum";
+		break;
+	case 1:
+		$_POST['kalender_usage']=1;
+		$kalender->usage=$_POST['kalender_usage'];
+		$headline="Anreise";
+		$button="btn_anreise";
+		// if (!empty($_POST['kalender_tag'])) {
+		// 	$_POST['anreise']=$_POST['kalender_tag'];
+		// }
+		break;
+	case 2:
+		$_POST['kalender_usage']=1;
+		$kalender->usage=$_POST['kalender_usage'];
+		$headline="Abreise";
+		$button="btn_abreise";
+		// if (!empty($_POST['kalender_tag'])) {
+		//	$_POST['abreise']=$_POST['kalender_tag'];
+		// }
+		break;
+		
+} 
+
+// if (!empty($_POST['kalender_select_start']) and !empty($_POST['kalender_select_ende'])) {
+if (!empty($_POST['projekt_start']) and !empty($_POST['projekt_ende'])) {
+	$ev=array();
+	$ev['start']=(new DateTime($_POST['projekt_start']))->format("Y-m-d");	   
+	$ev['ende'] =(new DateTime($_POST['projekt_ende']))->format("Y-m-d");	   
+	$ev['color']="orange";
+	if (!empty($_POST['event_typ'])) {
+		$color=array("",$licht1,$ton1,$sperr,$schul)[$_POST['event_typ']];
+		// $ev['color']=$color;
+	}
+}
+if (!empty($_POST['anreise'])) {
+	$ev=array();
+	$ev['start']=(new DateTime($_POST['anreise']))->format("Y-m-d");	   
+	$ev['left']  ="An"; 
+	$ev['color']=$reise;
+	$event[]=$ev;
+}
+
+if (!empty($_POST['abreise'])) {
+	$ev=array();
+	$ev['start']=(new DateTime($_POST['abreise']))->format("Y-m-d");	   
+	$ev['right']  ="Ab"; 
+	$ev['color']=$reise;
+	$event[]=$ev;
+}
+	   
+	   
+// echo "<pre>";
+// print_r($event);	   
+// echo "</pre>";
+foreach($event as $v)  {
+	$kalender->addEvent($v);
+}
+
+
+if (empty($_POST['event_name']) ) 	$_POST['event_name']="";
+if (empty($_POST['event_ort']) ) 	$_POST['event_ort']="";
+if (empty($_POST['anreise']) ) 	    $_POST['anreise']="";
+if (empty($_POST['abreise']) ) 	    $_POST['abreise']="";
+if (empty($_POST['projekt_start']) ) 	    $_POST['projekt_start']="";
+if (empty($_POST['projekt_ende']) ) 	    $_POST['projekt_ende']="";
+
+	
+
+$html = "";
+$html.= '
+	<!doctype html>
+	<html lang="de">
+
+	<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=720px, initial-scale=1, user-scalable=yes">
+	<!-- meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=yes"-->
+	</head>
+	<body>
+	';
+	
+$html.= '<form method="POST" action="projekt_kalender.php" style="width:720px;border:1px solid red;">';
+$html.= '<input type="hidden" name="kalender_usage" value="'.$_POST['kalender_usage'].'">';
+$html.= '<input type="hidden" name="phase" value="'.$_POST['phase'].'">';
+$html.= '<input type="hidden" name="anreise" value="'.$_POST['anreise'].'">';
+$html.= '<input type="hidden" name="abreise" value="'.$_POST['abreise'].'">';
+$html.= '<input type="hidden" name="projekt_start" value="'.$_POST['projekt_start'].'">';
+$html.= '<input type="hidden" name="projekt_ende"  value="'.$_POST['projekt_ende'].'">';
+// $html.= '<input type="hidden" name="event_typ"  value="'.$_POST['event_typ'].'">';
+
+$html.='<input autofocus type="text" value="'.$_POST['event_name'].'" placeholder="Name der Veranstaltung" style="width:98%;border: black solid 2px;"><br style="margin-bottom:1em;">';
+$html.='<input type="text" value="'.$_POST['event_ort'].'" placeholder="Ort der Veranstaltung" style="width:98%;border: black solid 2px;"><br style="margin-bottom:1em">';
+$html.='<center>';
+$html.= '<div id="kalender" style="display:inline-block;">';
+
+$html.= '<center style="font-size:1.5em;"><b>'.$headline.'</b></center>';
+
+$html.= $kalender->show();
+$html.='<center style="margin-top:5px;"><input type="submit" value="WEITER" name="'.$button.'" style="font-weight:bold;"></center>';
+$html.='</div><br style="margin-bottom:5px;">';
+$html.= '<button id="kalendertag2" type="submit" name="btn_licht"   value="'.$licht1.'"  style="vertical-align:middle; border:1px solid black;border-radius:25px;font-weight:bold;margin:0;padding:0; min-width:120px;height:'.$kalender->cellheight.';background-color:'.$licht1.';cursor:pointer;">Licht</button>';
+$html.= '<button id="kalendertag2" type="submit" name="btn_ton"     value="'.$ton1.'"    style="vertical-align:middle; border:1px solid black;border-radius:25px;font-weight:bold;margin:0;padding:0; min-width:120px;height:'.$kalender->cellheight.';background-color:'.$ton1.  ';cursor:pointer;">Ton</button>';
+// $html.= '<br>';
+$html.= '<button id="kalendertag2" type="submit" name="btn_sperr"   value="'.$sperr.'"   style="vertical-align:middle; border:1px solid black;border-radius:25px;font-weight:bold;margin:0;padding:0; min-width:120px;height:'.$kalender->cellheight.';background-color:'.$sperr.  ';cursor:pointer;">Krank<br>Familie</button>';
+$html.= '<button id="kalendertag2" type="submit" name="btn_schul"   value="'.$schul.'"   style="vertical-align:middle; border:1px solid black;border-radius:25px;font-weight:bold;margin:0;padding:0; min-width:120px;height:'.$kalender->cellheight.';background-color:'.$schul.  ';cursor:pointer;">Schulung<br>sonstiges</button>';
+$html.='</center>';
+$html.= "</form>";
+$html.= '</body></html>';
+echo $html;
+
+?>	

@@ -1,0 +1,111 @@
+Hallo Luka!
+Wenn du jetzt die Mail per Button rausschickst klappte es!
+Du solltest vorher überprüfen, welche Texte Du raus sendest und ob die Zahlungsfristen Deinen wünschen entsprechen.
+
+Ausserdem habe ich gesehen das, ein paar Angaben nicht richtig sind:
+1. Im Bereich "Dienstleistung anlegen":
+	- hast du Einheit Mehrzahl und Einheit Einzahl hier sind Tage/Tag oder Stunden/Stunde oder km/km gemeint
+	- bei dem Nettopreis: gehört der Einzel Preis hin, nicht der Gesamtpreis, 
+	  Der Gesamtpreis errechnet sich aus den Einzelpreis und der Anzahl, die du in der Rechnung anpassen musst. 
+	  Also erst Dienstleistung hinzufügen, dann die Menge ändern.
+	  Du solltest auch deswegen Offdays, und Anfahrt als je einen Posten / Dienstleistung machen.
+
+Wichtig: 
+Wenn du alles zusammen in einenm Eingabefeld haben möchtest ohne einezelne Posten, die du wiederverwenden möchtest,
+dann passe ich das für Dich an.
+Dann kannst du Menge eingeben, die Überschrift und den Rechnungstext, sowie den Gesamtbetrag 
+gibt mir dazu eine Rückmeldung.
+Ich möchte die Rechnungsschreibung so einfach wie möglich für Dich gestalten.
+
+PS: Um alles nachzuvollziehen habe ich mich als Admin eingeloggt. So sind mir die Fehler aufgefallen.
+    Hab keine Angst um die Daten. Diese behandele ich natürlich vertraulich. 
+ 
+
+Zu den einmaligen Einstellungen die schon Vorbereitet sind:
+=============================================================
+
+Du findest die Einstellungen dazu unter Links: "Einstellungen"  und oben "Rechnungslayout";
+
+Die Suchoptionen
+================
+Du kannst die mehrere Vorlagen erstellen, die erste und schon erstellte Vorlage ist bereits vorhanden und hat die Nummer 0.
+
+Die Vorlagen sind unterteilt in verschiedenen Mahnstufen, so kannst du jede Mahnstufe individuell konfigurieren:
+-1 = Angebot
+ 0 = Rechnung
+ 1 = 1. Mahnung
+ 2 = 2. Mahnung
+ 3 = 3. Mahnung
+ 
+Den Punkt "Kunde" mit den Button "Liste" kannst du erst mal auslassen, er ist dafür gedacht wenn du eine bestimmte Vorlage 
+für einen Kunden brauchst, der vom Standart abweicht.
+
+Mit "Suchen" 
+	werden die Daten der Vorlage in die Eingabefelder geladen.
+der Button "Liste" daneben 
+	zeigt dir eine Liste mit den Vorlagen an, dazu gleich mehr.
+der Button "Vorlage als Standart verwenden"
+	Verwendert die unter Vorlagenr eingestellte Zahl als Standart-Vorlage für die Rechnungen
+	
+Die Rechnungsangaben:
+=====================
+Rechnungsbezeichnung: 
+	ist dafür gedacht um zu wissen um was es sich handelt
+Rechnungstitel: 
+	erscheint als Wort in der Rechnung ,Beispiele sind: "Angebot" "Rechnung" oder "Mahnung"
+Anschreiben: 
+	Der Text der vor der Tabelle mit den Posten kommt.
+Schlusswort: 
+	Der Text der nach der Tabelle der Posten kommt.
+Mahngebühren: 
+	legt fest wieviel Mahngebühren du veranschlagen willt, bei einer Rechnung ist das natürlich 0;
+Zahlungsziel: 
+	Bestimmt, wie lange der Kunde Zeit hat zu bezahlen, bis die nächste Mahnung raus kommen soll, bei einer Mahnug soll der 
+	Kunde ja sofort bezahlen und man schreibt es auch in den Text, aber du möchtest eine weiter Mahnung ja nicht gleich am 
+	nächsten Tag raussenden, dafür ist dann die Frist, wann die nächste Mahnunug raus soll. 
+ 
+Die Mailangaben - Mail anschreiben
+================================== 
+Betreff:
+	Betreff oder Subject: Das was in der Mail als Betreff steht
+Anschreiben:
+	Das was als Text mitgegeben wird
+Signatur:
+	Diese ist im HTML Format anzugeben, damit auch schönere Signaturen mit Bild gesendet werden können.
+	
+Hinweis: die mit $ beginnenden Texte sind Variablen zb. $re['renr'], sie werden bei Erstellung übersetzt.
+
+Die 3 Buttons
+=============
+1. "ändern" : 
+	Dieser Button muss zum speichern der Daten verwendet werden, wenn du die Texte angepasst hast.
+2. "als Neu Kopieren": 
+	Dieser Button kannst du verwenden um eine weitere Mahnung hinzuzufügen 
+	oder diese Texte für eine andere Vorlage zu verwenden.
+	dazu musst du "Vorher!" die Vorlage und Mahnstufe anpassen, nachdem sie geladen wurde.
+	Diesen Button brauchst du aber normal erwesie nicht.
+3. Der Button "Vorschau" 
+	soll Die Rechnung darstelen, wie sie dann aussieht. 
+	Er ist noch außer Funktion
+	
+	
+Liste mit Vorlagen
+==================
+	Sie ist unterteilt in "Verwendete Layouts" und "mögliche Layout Vorlagen"
+
+Verwendete Layouts
+==================
+	Das sind die Layouts die du für die Firma verwenden willst.
+	Du kannst davon beliebig viele anlegen auch mit den selben Vorlagen.
+	- Klickt man auf die Vorlage, siehst man rechts wie Sie aussieht.
+	- Klickt man auf Bearbeiten, landet man in dem Eingabebereich
+
+mögliche Layout Vorlagen
+========================
+	Hier sind die möglichen Vorlagen die bisher erstellt wurden, 
+	es werden im Laufe der Zeit weitere dazu kommen.
+	
+	- Klickt man auf die Vorlage, siehst man rechts wie Sie aussieht.
+	- Klickt man auf Hinzufügen, wird diese Vorlage zu den verwendeten Layouts hinzugefügt und kann Verwendet werden
+	
+	Die Standart Vorlage kann im Eingabebereich Bereich festgelegt werden 

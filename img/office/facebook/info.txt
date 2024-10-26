@@ -1,0 +1,26 @@
+Titrelbild: 
+Format: 1,91:1 bzw 16:9
+ab 400x150 Pixel
+Ideal: 851x315 Pixel, <100 KB
+
+Profilbild: 320px x 320px
+
+1. Roter faden
+2. Verstehen
+3. Praxisprojekte
+
+1. Webseiten
+2. HTML,CSS, Bootstrap
+3. Reackt Angular, Python, Jangoo
+
+
+Quiz App
+Todo App
+Lieferando
+
+Plattformen
+---------------
+Instagramm
+1. Project-Management
+2. Kundenverwaaltungs-System
+

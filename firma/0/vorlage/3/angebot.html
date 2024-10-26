@@ -1,0 +1,109 @@
+<!doctype html>
+<html lang="de">
+
+<head>
+<meta charset="utf-8">
+<link type="text/css" rel="stylesheet" href="$layout['css']">
+<!-- link type="text/css" rel="stylesheet" href="rechnung.css"-->
+</head>
+<div id="logo">
+<img src="$layout['logo']" >
+<!-- img src="../../../../img/logo/die-deymanns.png" -->
+</div>
+<div id="retext">
+$layout['ueberschrift']
+</div>
+<div id="info">
+<table>
+<tr><th>Angebot Nr.:</th><td>$re['renr']</td></tr>
+<tr><th>Angebotsdatum:</th><td>$re['datum']</td></tr>
+<tr><th>Leistungssdatum:</th><td>$re['leistung']</td></tr>
+<tr><th>Kundennummer:</th><td>$re['kdnr']</td></tr>
+<tr><th>Ansprechpartner:</th><td style="text-align:left">$abs['aname']</td></tr>
+</table>
+</div>
+
+<div id="fenster">
+<div id="abs">
+$abs['firma'], $abs['strasse'], $abs['plz'] $abs['ort']
+</div>
+$empf['adresse']<br>
+</div>
+
+<div id="body">
+$layout['retext']<br><BR>
+<table id="liste" cellspacing=0 cellpadding=0>
+<tr>
+	<th id="blau" style="text-align:center;width:1;">Menge</th>
+	<th id="blau" style="text-align:left;  width:100%;">Beschreibung</th>
+	<th id="grau" style="text-align:right; width:1;">Einzelpreis</th>
+	<th id="grau" style="text-align:right; width:1;">Gesamtpreis</th>
+</tr>
+<!-- POSTEN START -->
+<tr>
+	<td style="text-align:center;width:1;">$re['anz'] $re['einheit']</td>
+	<td style="text-align:left;  width:100%;white-space:normal;"><b>$re['re_text']</b><br>$re['beschreibung']</td>
+	<td style="text-align:right; width:1;">$re['text_netto']</td>
+	<td style="text-align:right; width:1;">$re['text_gesamt_netto']</td>
+</tr>
+<!-- POSTEN ENDE -->
+<tr>
+	<td colspan=2 style="border-top:2px solid black;border-bottom:0px;">&nbsp;</td>
+	<td colspan=1 style="border-top:2px solid black;border-bottom:0px;">Summe Netto</td>
+	<td style="border-top:2px solid black;border-bottom:0px;text-align:right;">$re['text_summe_netto']</td>
+</tr>
+<tr>
+	<td colspan=2 style="border-bottom:0px;">&nbsp;</td>
+	<td colspan=1 style="border-bottom:0px;">$re['text_mwst']</td>
+	<td style="border-bottom:0px;text-align:right;">$re['text_summe_mwst']</td>
+</tr>
+<tr style="padding-top:2px;padding-bottom:2px;">
+	<td colspan=2 style="padding-top:3px;padding-bottom:3px;border-bottom:0px;text-align:right;">&nbsp;</td>
+	<th id="blau" style="border-top:2px solid black;">Gesamtsumme:</th>
+	<th id="blau" style="text-align:right;border-top:2px solid black;">$re['text_summe_brutto']</th>
+</tr>
+	
+</table>
+$layout['schlusswort']<br>
+<!--
+<i style="font-size:8pt"><br>Zahlung innerhalb von $layout['zahlungsziel_dauer'] Tagen bis zum $re['faellig'] ohne Abzüge oder innerhalb 3 Tagen zum $re['skonto_datum'] mit $re['skonto_prozent'] % Skonto: $re['skonto_betrag'] €.</i><br>
+<br>Bei Rückfragen stehen wir selbstverständlich jederzeit gerne zur Verfügung.<br>
+<br>Mit freundlichen Grüßen<br>
+<br>$abs['rname']<br>
+-->
+
+</div>
+<div id=foot>
+<table width="100%" border=0> <tr>
+<td width="25%">
+<img src="img/rechnung/home.jpg"><br><hr>
+$abs['firma']<br>
+$abs['strasse']<br>
+$abs['plz'] $abs['ort']<br>
+</td>
+
+<td width="25%">
+<img src="img/rechnung/contact.jpg"><br><hr>
+Tel.:$abs['rtel']<br>
+$abs['rmail']<br>
+$abs['web']<br>
+</td>
+
+<td width="25%">
+<img src="img/rechnung/bank.jpg"><br><hr>
+$abs['bankname']<br>
+<nobr>IBAN:$abs['iban']</nobr><br>
+BIC:$abs['bic']<br>
+</td>
+
+<td width="25%">
+<img src="img/rechnung/company.jpg"><br><hr>
+Ust-ID: $abs['ustid']<br>
+Geschäftsführer<br>
+$abs['iname']<br>
+</td>
+
+</tr></table></div>
+
+</body>
+</html>

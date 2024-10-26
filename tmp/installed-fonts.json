@@ -1,0 +1,20 @@
+{
+    "arial": {
+        "normal": "C:\\PROG\\XAMPP\\htdocs\\FazalTamiz\\bu\/tmp\/arial_normal_ada71992590a528ebb070a3a277dfc9f",
+        "bold": "C:\\PROG\\XAMPP\\htdocs\\FazalTamiz\\bu\/tmp\/arial_bold_4259b7fa700c7afbd0e19443a8e78b49",
+        "italic": "C:\\PROG\\XAMPP\\htdocs\\FazalTamiz\\bu\/tmp\/arial_italic_157142760f0094b427c831dd236ef753",
+        "bold_italic": "arial_bold_italic_d6fb3f30e3f6342b561298e3b5609e88"
+    },
+    "xarialx": {
+        "normal": "C:\\PROG\\XAMPP\\htdocs\\vendor\\dompdf\\dompdf\/lib\/fonts\/arial",
+        "italic": "C:\\PROG\\XAMPP\\htdocs\\vendor\\dompdf\\dompdf\/lib\/fonts\/arial_italic",
+        "bold": "C:\\PROG\\XAMPP\\htdocs\\vendor\\dompdf\\dompdf\/lib\/fonts\/arial_bold",
+        "bold_italic": "C:\\PROG\\XAMPP\\htdocs\\vendor\\dompdf\\dompdf\/lib\/fonts\/arial_bold"
+    },
+    "bier": {
+        "normal": "bier_normal_30661cdb3fdbc4e18cbcaa328aa8e4de"
+    },
+    "bitstream vera serif bold": {
+        "normal": "bitstream_vera_serif_bold_normal_2bc49403fc192c646c03057aeace2ab0"
+    }
+}

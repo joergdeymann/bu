@@ -1,0 +1,148 @@
+Genereller Test
+================
+
+1. Angebot versenden: Falls noch kein Standattext einen eigenen nehmen und den bearbeiten lassen
+genauso bei Rechnung:
+wie sieht es aus, wenn noch nichts eingestellt ist ?
+
+
+2. Mailtexte
+
+
+einstellung_layout_liste.php // 
+1. Rechnung Links oben im Feld anzeigen, Größe auf 40% oder 30% der gesamtbreite reduzieren, Fixiert ist gut
+2. Vorlagen: Screenshots machen
+3. Links der Vorlagen gehen nicht / wahrscheinlich noch alte Verzeichnisstruktur
+4. Wenn alles geht: Hinzufügen Testen
+
+
+einstellung_layout.php
+Mahnstufe eingabefeld kleiner, Hinweis: "-1 = Angebot" oder button ?
+
+Fehkermeldung bei Suchen, beheben bitte
+
+
+$unsubscribe_mail=$this->row_firma['rmail'];
+$unsubscribe_http=cwd()."/unsubscribe.php?re_recnum=".$this->row_re['recnum']);
+
+echo $unsubscribe_mail=$trhis->abs['rmail'];
+echo "<br>";
+echo $unsubscribe_http=cwd()."/unsubscribe.php?re_recnum=".$this->re['recnum']);
+echo "<br>";
+
+$x->AddCustomHeader("List-Unsubscribe: <mailto:".$unsubscribe_mail."?subject=Unsubscribe>, ".$unsubscribe_http);
+$x->AddCustomHeader("List-Unsubscribe-Post: List-Unsubscribe=One-Click");
+
+
+
+Offene Posten 
+=============
+15.03.2024
+	OP9: 	LIST-UNSUBSCRIBE-HEADER eintrag wird die SPAM wahrscheinlichkeit noch mehr Veringern
+
+
+16.03.2024	
+	OP2: Wasserzeichen genauso wie Logo behandeln, Eingabe bei Firma unter dem Logo oder im Setup
+
+	OP9: Logo per Auswahl hochladen
+
+
+	OP9: Rechnungsposten und Kopf automatisch speichern bei allen Buttons die gedrückt werden können
+
+20.03.2024 
+	
+	
+erledigte offene Posten 
+=======================
+15.03.2024
+	OP1: 	BU_mahn; bei erstellung wird die Rechnungsnummer nicht mitgespeichert, Doppelte Einträge MÜSSEN ausgeschlossen werden
+			mit WHERE NOT ... 
+			(DONE)
+	OP1: 	in Rechnung wird teilweise originale Rechnungstext angezeit. Es muss aber der geänderte Rechnungstext genommen werden. 
+			Es reicht in allen Layouts die $re['re_beschreibung'] in $re['beschreibung'] umzuwandeln
+			(DONE)
+	OP2: 	Zusatztext für Name in Adresse noch einfügen (DONE)
+			(DONE)
+ 	OP1: 	Angebote genauso listen wir bei Rechnung, damit die Beträge stimmen 
+			Files: angebot_liste.php 
+			(DONE)
+
+
+Change-Log
+==========
+11.03.2023
+	FIX: in der Liste der Rechnungen wurde der Falsche Betrag ausgerechnet Netto Brutto
+	     Files: Rechnung_liste.php
+	ADD: in dem Details, daß unter Aktion im Auswahlbereich zu finden ist, kann man "unbezahlt" auswählen
+
+14.03.2023 
+	ADD:Skonto in Layouts,Datenbanken und PHP Files eingefügt
+		Skonto bei Firma möglich: Standart Skonto, falls es erwünscht ist 
+		Skonto bei Kunde möglich: überschreibt das Skonto der Firma
+		Skontofrist auch eingebbar bei Kunde und Firma
+		   
+15.03.2024
+	FIX: Rechnungsnummer hochzälen bei REYYYY0000 war nicht in Ordnung
+	FIX: Beim Versenden von Rechnungen wurde nicht die korrekte Rückmeldung anzeigt. 
+	FIX: statt sendmail den PHP Mailer benutzt, 
+		 bei sendmail mit anderen absender Mails wurde in Testmail eine Wertung von 2.5 / 10 angezeigt
+		 bei PHP-Mailer habe ich jetzt mit DKIM eintrag der eigenen Absendermail eine Wertung 10/10, sonst 9/10
+		 jetzt wird auch ein Text/Plain mitgesendet, was die Wertung verbessert
+	ADD: ein BCC zur eigenen Mail mögich beim Rechnungsversand
+	FIX: diverse Layout anpassungen
+	ADD: Variable $empf['adresse'] füllt automatisch die Adresse ein mit allen benötigten Werten
+	ADD: in Adressen kann jetzt eine Rechnungsadresse eingefügtr werden, diese ist Priorisiert und überschreibt die aus dem Kundendaten
+	ADD: Farbe von "Fällig" lesbar gemacht von Orange nach Gelb
+	FIX: lange ladezeiten bei Aufbau der rechnung, speziell bei Bilddateien auf 1/3 reduziert
+
+16.03.2024	
+	ADD: Zusätzliche abfrage der Rechnunzunsnummer-Länge beim erstellen der Rechnungsnummer	
+		 Files: class_rechnung_extra.php
+	FIX: Datenbankfeld bu_mahn_renr von int auf varchar 20 gesetzt, es wurden bei Text Rechnungsnummern immer 0 in der Mahnung angezeigt
+	ADD: Rechnung Versenden kann jetzt CC an weitere Adressen aus der Adressliste und BCC an die eigene Adresse gesendet werden
+		 Files: adresse.php: Art desx Eintrags "CC" hinzugefügt
+		        rechnung_versenden.php Anzeige der CC mails mit aufgeführt und Absenden mit CC ermöglicht
+	ADD: Hinweis: "Bitte einene Moment gedult", zum versenden der Mail hinzugefügt
+
+17.03.2024	
+	FIX: Anpassung der Rechnungslayouts mit dem richtigen Rechnungstext
+	FIX: Adress Zusatz wurde nicht mit aufgeführt
+	ADD: Strasse jetzt auch mit Zusatzfeld
+		 Files: class_rechnung.php
+				rechnung.php
+				adresse.php
+				class_adresse.php
+		 Datenbank: bu_adresse.strasse_zusatz
+	FIX: Adresse auswählen in der Liste geht jetzt auch nach mehrfacher Sortierung:
+		 benutzte Funktionen: 
+			popPOST($var):  holt die alten $_POST Variablen aus der SESSION zurück und addiert die neuern $_POST dazu 
+			pushPOST($var): speichert $_POST und Variablen in die Session Variable und verändert sie nicht bis sie von popPOST wiederrgeholt werden
+	
+18.03.2024
+	FIX: Es wurden (nach äderung der Fällig Variable) nicht mehr die Fälligen Posten angezeigt
+	FIX: Firma-IBAN Feld zu kurz, in Datenbank geändert
+	FIX: Layout 3 Angaben unten angepasst email ohne Umbruch, 5px Ränder Links und Rechts
+		 Angebotsangaben bei Leyout 0,1,3 angepasst
+	FIX: Auswahl der Adresse in der Liste bei Direktzugriff nioht möglich, eventuell kein action="" hinterlegt
+	
+20.03.2024
+	ADD: Mahnung versenden anpassen wir Rechnung: Kontrolle alles passt
+	ADD: Angebot versenden anpassen wir Rechnung: Kontrolle alles passt
+	CHG: Priojekt Liste: Reihenfolge auf neueste zuerst
+	CHG: Tagesangaben Projekt: Reihenfolge auf neueste zuerst
+	
+23.03.2024
+	FIX: Kunde wird jetzt nicht mehr falsch vorgeschlagen, wenn leer
+		 Files: projekt_tag_bearbeiten.php
+
+24.03.2024
+	FIX: Leistungszeitraum in der Rechnungserstellung wurde nach Suchen nicht beibehalten, 
+		 es fehlte der UPLOAD der schin erstellen Korrektur
+		 files: rechnung.php, kunde_suchen.php
+		 mit gleichen Zug wurden die Buttonbezeichnungen angepasst
+	ADD: Anzeige der verknüpften Adressen bei der Kunden anlegen/ändern
+	ADD: Bei den Einstellungen Layout wir jetzt die Standartvorlage vorgeschlagen= weniger eingaben
+	
+	 
+	
+	

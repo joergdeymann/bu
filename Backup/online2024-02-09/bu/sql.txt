@@ -1,0 +1,6 @@
+SELECT bu_mitarbeiter.name, bu_mitarbeiter.recnum, bu_zeit.*  
+FROM `bu_zeit` 
+LEFT JOIN bu_mitarbeiter ON bu_mitarbeiter.recnum = bu_zeit.usernr 
+WHERE bu_mitarbeiter.firmanr = 14 
+ORDER BY bu_mitarbeiter.name,bu_zeit.time
+GROUP BY bu_mitarbeiter.name

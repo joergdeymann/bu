@@ -1,0 +1,200 @@
+<?php
+include "dbconnect.php";
+include "class/class_mitarbeiter.php";
+include "class/class_firma.php";
+// include "class/class_project_tag.php";
+include "session_zeiterfassung.php";
+
+$m=new mitarbeiter($db);
+$m->loadByRecnum($_SESSION['usernr']);
+$f=new firma($db);
+$f->load($m->row['firmanr']);
+
+$pt=new project_tag($db);
+
+if (empty($_POST['km'])) {
+	$_POST['km']=0;
+}
+
+headers();
+echo '<body>';
+echo '<div id="menu"><a href="zeiterfassung.php">Zeiten</a><a href="project.php">Projekt</a><a href="chat.php">Nachricht</a></div>';
+echo '<h1>Projektinfo</h1>';
+$dt=new Datetime();
+echo '<h2>KM heute ('.$dt->format("d.m.Y").')</h2>';  // wunsch mit einer großen Box
+echo '<p>';
+echo '<input type="number" name="km" value="'.$_POST['km'].'"><br>';
+echo '<button name="km" type="submit" value="senden">';
+echo '</p>';
+echo '<h2>Arbeitszeit</h2>';
+$checked=array("","","","","";"");
+$i=0;
+// erst aus datei laden, falls nicht vohanden, diesen vorschlag machen
+// heir abfragen: 
+// 0 Arbeitszeit  bis  10h    = normale Arbeitszet
+// 1 Arbeitszeit  0           = offday bezahlt
+// 2 Arbeitszeit  0           = offday unbezahlt
+// 3 Arbeitszeit  12:15 - 16h = überstunde AZ ohne pause
+// 4 Arbeitszeit  > 16h       = doppelter Tagessatz 
+// diese Zeiten werden in der Kundendatei festgelegt,
+// vorbelegung nur wenn Kunde bekannt ist.
+// Kunde kann auch in der APP geändert werden
+
+// erst mal standart
+
+
+$checked[0]="checked";
+foreach($pt->arbeitstyp as $v) {
+	echo '<input type="radio" name="arbeitstyp" '.$checked[$i].'>'.$v.'<br>';
+	$i++;
+}
+
+echo "</body></html>";
+
+
+function headers() {
+echo '<html lang="de"><head>
+	<meta charset="utf-8">
+	<meta name="description" 
+		  content="tägliche Projekterfassung für die Vorbereitung der Rechnung">
+	<meta name="keywords" content="Stempeluhr, stempeln, Zeiterfassung, Krankheitserfassung, Urlaubserfassung">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Projekt Tagesinfo</title>
+	<link rel="stylesheet" href="zeiterfassung.css">
+	</head>
+';
+}
+
+
+/*
+bu_project_tag
+------------------
+Firmanr: Firma, bei der du arbeitest
+Kunde: Kunde, der betroffen ist: 0 = keinei info, ansonsten Kundennamen anzeigen
+
+Tag:  Datum der betroffen ist
+arbeitstyp: 0 = normalter Tagessatz, 
+			1 = Offday, 
+			2 = unbezahlter Offday, 
+			3 = Überstunden, 
+			4 = doppelter Tagessatz
+info: Was hast du heute ausgefressen ? = Besonderes
+Project Zugehörigeit : bu_project.recnum
+*/
+
+
+class project_tag {
+	$db="";
+	$row=array();
+	$arbeitstyp = array(
+		"normaler Tag",
+		"Offday",
+		"kostenloser Offday",
+		"Überstunden",
+		"doppelter Tagessatz"	
+	);
+	
+	
+	public function __construct(&$db) [
+		$this->db=$db;
+	}
+	
+	public function loadByRecnum($recnum) {
+		
+	}
+
+	public function add($row) {
+		
+	}
+
+	public function update($row) {
+		
+	}
+	
+	public function getTyp($nr) {
+		return $this->arbeitstyp($nr);
+	}
+}
+
+/*
+
+|Zeiten|Projekt|Nachricht|
+---------------------------
+
+Rechnung
+---------
+heutige KM: ________
+
+Arbeitszeit: 
+o normaler Tag
+o OFFDAY
+o kostenloser OFFDAY
+o berechne |____| überstunden
+o doppelter Tagessatz
+
+heutige Info:
+______________________
+______________________
+______________________
+
+[Fertig]
+
+
+  
+------------------
+
+bu_project
+
+Projekt
+-------
+Datum von: ___________
+Datum Bis: ___________
+Projektnr: ____________
+Projektname: ___________
+Kontakt Daten:
+	Name1  
+	Mail(Typ): jd.de@web.de
+	Telefon: +491234567
+	[aendern]
+	-> adress: recnum Firmanr Kundennr Anrede Name, Strasse, PLZ, Ort    
+	-> contact: recnum Key (=adress.recnum), Typ (0=mail, 1=Telefon), Typtext (Telefon Mail Dienst, Mail Rechnung, Mail Privat), content
+	
+
+	Name2  
+	Mail(Typ): jd.de@web.de
+	Telefon: +491234567
+	Strasse:
+	PLZ Ort:
+	
+	[aendern]
+
+	[hinzufügen]
+	
+	
+	
+Info: (width=100% rows=5)
+_______________________
+_________________________
+__________________________
+
+Wichtiges:
+___________________________
+___________________________
+____________________________
+
+[Fertig]
+
+
+|Zeiten|Projekt|Nachricht|
+---------------------------
+letzte 5 Nachrichten
+Text:
+___________________________
+___________________________
+____________________________
+
+[Senden]
+
+[mehr...]
+?>
+*/

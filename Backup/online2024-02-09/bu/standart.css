@@ -1,0 +1,194 @@
+body {
+	background-color:darkblue;
+	color: white;
+}
+
+
+td {
+	color: black;
+	vertical-align:top;
+	text-align:left;
+	font-weight: 300;
+	border-bottom: 1px silver solid;
+	/* background-color: silver;*/
+	
+}
+th {
+	font-weight: 900;
+	font-size: 20px;
+	border: 0px red solid;
+	background-color: gray;/* lightblue */
+	color: black;
+	font-style:italic;
+}
+
+table {
+	min-width:60%;
+	background-color:silver;	
+}
+
+table tr th b {
+	font-size:28px;
+}
+
+tr#dark td {
+		background-color: #afafaf;
+}
+table#liste tr td {
+	white-space: nowrap;
+}
+
+button {
+	display: inline-block;
+	padding: 1px 5px;
+	margin-left: 20px;
+	min-width: 100px;
+	border: 1px solid black;
+	border-radius: 5px;
+	text-align: center;
+	text-decoration: none;
+	color: #000000;
+	background: #F0F0F0; 
+	cursor: pointer;
+}
+
+#rand {
+	margin-left:10px;
+	margin-right:10px;
+}
+
+div#submenu {
+	width:100%;
+	height: 7em;
+	display:table;
+	align-items: center;
+	margin-bottom: 10px;
+}
+
+div#submenu_neu {
+	width:99.0%;
+    height: 7em;
+    /* border: 0px solid black;*/ 
+    display: flex;
+    align-items: center;
+	margin-bottom: 10px;
+	padding-left:0.5%;
+	padding-right:0.5%;#
+	text-align: left;	
+}
+
+div#submenu_neu div {
+    flex: 1;
+    border: 1px solid black;
+    height:100%;
+	
+    margin-left: 0.5%;
+    margin-right: 0.5%;
+	
+	background-color:lightgray;
+	color: black;
+	text-align: left;
+	
+}
+div#submenu_neu h1 {
+	margin-top:  0px;
+	margin-bottom: 2px;
+}
+
+div#submenu table tr td {
+	background-color: lightgray;
+	color:black;
+	border: 0px; /* green solid;*/
+}
+
+div#submenu > div  {
+	display: table;
+	width: 23.5%;
+	height: 100%;
+	background-color:lightgray;
+	color: black;
+	border: white 1px solid;
+	text-align: left;
+	float: left;
+	margin-left: 0.5%;
+	margin-right: 0.5%;
+	
+}
+div#submenu h1 {
+	margin-top:  0px;
+	margin-bottom: 2px;
+}
+
+#clearfloat {
+	float:initial;
+}
+
+div#left {
+	margin-left:5px;
+	margin-right:0px;
+	width:48.0%;
+	height: calc(100% - 60px);
+	border: 1px darkgrey solid;
+	display: block;
+	float:left;
+}
+div#right {
+	margin-left:0px;
+	margin-right:5px;
+	width:48.0%;
+	height: calc(100% - 60px);
+	border: 1px darkgrey solid;
+	display: block;
+	float:right;
+}
+/*
+figure {
+  display: table;
+}
+figcaption {
+  display: table-caption;
+  caption-side: top;
+}
+*/
+
+figure {
+  border-top: none;
+  padding-top: 0;
+}
+figcaption {
+  padding: 0.5em;
+  border: thin silver solid;
+  border-bottom: none;
+}	
+	
+div#vorlage {
+	display:inline-block;
+	float:left;
+	margin:2px;
+}
+div#vorlage div {
+	border:black solid 1px;
+	height:56mm;
+	width:42mm;
+}
+button#vorlage {
+	margin:2px;
+	padding:0;	
+}
+
+div#vorlage2btn {
+	display:inline-block;
+	margin:0px;
+	padding:0;	
+}
+	
+h2#info {
+	background-color:#999999;
+	color:black;
+	padding:10px;
+	display:inline-block;
+	border:1px solid white;
+	min-width:50%;
+}
+	
+	

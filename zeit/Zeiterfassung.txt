@@ -1,0 +1,35 @@
+Angepasste Farben:
+===================
+Hintergrund:
+Titel-Text:
+Titel-Hintergrund:
+Überschrift-Text:
+Überschrift-Hintergrund: 
+Text:
+Jahresübersicht-Text:
+
+
+Fehlende Werte aus der Datenbank
+=================================
+Mitarbeiter:
+- Urlaub
+- entree
+erledigt
+
+
+
+Firma:
+- erfassungsstartpunkt-Zeiten
+Offen
+erledigt
+
+
+Benutzerzugänge
+===============
+Zeiten
+
+1. Firma
+2. Usernr
+3. Name: "zeiten"bn 
+4. Recht: 0 Verboten, 1=Alles erlaubt 2=nur Lesen
+

@@ -1,0 +1,15 @@
+TODO: 
+1. Krank wenn Urlaub (13.08.2023) 
+	Wenn die Krankheit auf ein Urlaubstag fällt, dann den Urlaub wieder gut schreiben.
+	Dieses bei der Eingabe mit AU berücksichtigen
+2. Kranheits und Urlaubstage
+	im Main berichtigen
+3. untere Buttons im Main 
+	anpassen, versuche diese auch Sticky zu machen überall
+	
+
+
+   
+
+
+

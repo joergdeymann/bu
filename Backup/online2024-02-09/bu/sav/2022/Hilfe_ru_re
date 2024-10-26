@@ -1,0 +1,33 @@
+1. Nur Bezahlte:
+SELECT * from bu_re where bezahlt is not null
+dabei auf faellige Bezahlte
+dabei auch überfällige bezahlte
+so soll es auch
+
+
+2. Nur Faellige:
+SELECT * from bu_re where now() between datum and faellig;
+dabei auch entwuerfe
+dabei auch bezahlte
+SELECT * from bu_re where now() between datum and faellig;
+
+
+3. Nur Überfällige
+SELECT * from bu_re where now() > faellig;
+dabei auch bezahlte
+dabei auch entwürfe
+  alle nicht überfälligen
+  SELECT * from bu_re where not (now() > faellig);
+
+
+4. Nur Entwürfe
+SELECT * from bu_re where versandart = 0;
+
+===============================================================
+
+11======================================================
+SELECT * from bu_re where (not (now() > faellig)  and bezahlt is null) and (bezahlt is null);
+
+
+
+

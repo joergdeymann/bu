@@ -1,0 +1,130 @@
+<?php
+/*
+# Irgendwie einbinden
+
+[artikel.php]
+ok_change  = "Artikel $data wurde geändert"
+ok_add 	   = "Artikel $data wurde neu angelegt"
+err_change = "Artikel $data konnte nicht geändert werden"; 
+err_add    = "Artikel $data konnte nicht hinzugefügt werden";
+
+
+[kunde]
+ok_change  = "Kunde $data wurde geändert"
+ok_add 	   = "Kunde $data wurde neu angelegt"
+err_change = "Kunde $data konnte nicht geändert werden"; 
+err_add    = "Kunde $data konnte nicht hinzugefügt werden";
+*/
+include "dbconnect.php";
+include "class/class_texte.php";
+$texte=new Texte($db);
+$texte->firmanr=0; // $firmanr=0; // Anpassen für welche Firma (firmanr)
+
+/*  
+	=========================================================================
+	menu
+	=========================================================================
+*/
+$texte->insert("menu", array(
+	'Buchhaltung' 		=> 'Buchhaltung',
+	'Firma'             => 'Firma'      ,
+	'Mitarbeiter'       => 'Mitarbeiter',
+	'Kunden'            => 'Kunden'     ,
+	'Artikel'           => 'Artikel'    ,
+	'Rechnungen'        => 'Rechnungen' ,
+	'Projekte'          => 'Projekte'   ,
+	'Berichte'          => 'Berichte'   ,
+	'Statistiken'	    => 'Statistiken',
+	'Adressen'          => 'Adressen'   ,
+	'Einstellungen'     => 'Einstellungen',
+	'firma_edit'    	=> 'Firma anlegen/änderen',    
+	'firma_liste'   	=> 'Firmenliste',              
+	'benutzer_edit' 	=> 'Benutzer anlegen/änderen', 
+	'benutzer_liste' 	=> 'Benutzerliste',            
+	'ma_edit'           => 'Mitarbeiter anlegen/änderen',
+	'ma_liste'          => 'Mitarbeiterliste',           
+	'kunde_edit'        => 'Kunden anlegen/änderen',     
+	'kunde_liste'       => 'Kundenliste',                
+	'artikel_edit'      => 'Artikel anlegen/änderen',    
+	'artikel_liste'     => 'Artikelliste',
+	'angebot_edit'		=> 'Angebote anlegen/änderen',
+	'angebot_liste'		=> 'Liste aller Angebote',
+	're_edit'			=> 'Rechnung anlegen/änderen',
+	're_liste'			=> 'Liste aller Rechnungen',
+	'user_edit'			=> 'Benutzerverwaltung',
+	're_layout'			=> 'Rechnungslayout',
+	're_input'			=> 'Rechnungseingaben',
+	'projekt_edit'		=> 'Projekt anlegen/änderen',
+	'projekt_liste'		=> 'Projektliste',
+	'projekt_tag'		=> 'Tagesangaben',
+	'adresse_edit'		=> 'Adresse anlegen/änderen',
+	'adresse_liste'		=> 'Adressliste',
+	'User:'				=> 'User:',
+	'Firma:'			=> 'Firma:',
+	'Firmanr:'			=> 'Firmanr:',
+	'Bearbeiten'        => 'Bearbeiten'
+
+));
+
+
+/*  
+	=========================================================================
+	adresse.php
+	=========================================================================
+*/
+$texte->insert("adresse.php",array (
+	'btn_suchen' 			=> 'Suchen',
+	'ok_add'     			=> 'Artikel $data wurde neu angelegt!',
+	'ok_change'  			=> 'Artikel $data wurde geändert!',
+	'err_change'  			=> 'Artikel $data konnte nicht bearbeitet werden!',
+	'artikelnr'  			=> 'Artikelnummer',
+	'artikel'   			=> 'Artikel',
+	'artikelnr_ek'  		=> 'Artikelnummer Einkauf',
+	'name'          		=> 'Bezeichnung',
+	're_text' 				=> 'Rechnungstext',
+	're_beschreibung'  		=> 'Beschreibung',
+	'netto'	 				=> 'Verkauf Nettopreis',
+	'mwst' 					=> 'Verkauf MwSt',
+	'miet_netto' 			=> 'Miet Nettopreis',
+	'miet_mwst' 			=> 'Miet MwSt',
+	'einheit_einzahl' 		=> 'Einheit Einzahl',
+	'einheit_mehrzahl' 		=> 'Einheit Mehrzahl',
+	'einheit_anzahl' 		=> 'Anzahl pro Einheit',
+	'lagerbestand' 			=> 'Lagerbestand',
+	'ean' 					=> 'EAN',
+	'sn' 					=> 'Seriennummer',
+	'hersteller' 			=> 'Hersteller',
+	'modell' 				=> 'Modell',
+	'typ' 					=> 'Typ',
+	'charge' 				=> 'Charge',
+	'zuordnung' 			=> 'Crew',
+	'gruppe' 				=> 'Gruppe',
+	'zustand' 				=> 'Zustand',
+	'nutzbar' 				=> 'Nutzbar',
+	'aktiv' 				=> 'Aktiv',
+	'shopnr' 				=> 'Shop-Nr',
+	'header' 				=> "Artikel erfassen/ändern",
+	'btn_submit' 			=> "übernehmen",
+	'info' 					=> 'Info',
+	'reserviert'			=> 'Reserviert',
+	'einheit_anzahl_zusatz' => 'z.B. 6 im Karton'	
+));
+
+/*  
+	=========================================================================
+	menu_artikel.php
+	=========================================================================
+*/
+$texte->insert('menu_artikel.php'		,array('header' => 'Artikel' 		));
+$texte->insert('menu_adressen.php'   	,array('header' => 'Adressen'		));
+$texte->insert('menu_angebot.php'       ,array('header' => 'Angebote'));
+$texte->insert('menu_einstellung.php'   ,array('header' => 'Einstellungen'));
+$texte->insert('menu_kunde.php'    		,array('header' => 'Kunden'));
+$texte->insert('menu_mitarbeiter.php'   ,array('header' => 'Mitarbeiter'));
+$texte->insert('menu_projekte.php'    	,array('header' => 'Projekte'));
+$texte->insert('menu_firma.php'    		,array('header' => 'Firmendaten'));
+$texte->insert('menu_rechnung.php'    	,array(
+	'header' => 'Rechnungen',
+	'todo'   => 'Der Kunde $kunde hat die Rechnung $renr nicht bezahlt!'
+));
+?>

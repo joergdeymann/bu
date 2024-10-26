@@ -1,0 +1,183 @@
+<?php
+/*
+
+datei:
+usernr
+timestamp  Stempelzeit
+typ:       A = Arbeit, P=Pause, U = Urlaub, K=Krank, F=Frei Unbezahlt // S = Start E=Ende 
+		   Beispiele: AS PS PE PS PE AE, US UE KS KE
+*/
+
+class bu_zeiten {
+	$db = "";
+	$row = array();
+	$usernr=0;
+	$output = array();
+	
+	
+	function __construct(&$db) {
+		$this->db=$db;
+	}
+	
+	public setUser($usernr) {
+		$this->usernr=$usernr;
+	}
+	
+	// wenn kein AE gefunen dann neu
+	// sonst
+	//  
+	
+	public function load($name) {
+		// Arbeitsanfang finden
+		$request="select max(time) as max from bu_zeiten where usrnr='".$this->usernr."' and typ='AS'";
+		$result = $this->db->query($request);
+		$row = $result->fetch_assoc();
+		$start = $row['max'];
+		echo "Start=".$start."<br>";exit;
+
+		$request="select * from bu_zeiten where usrnr='".$this->usernr."' and time>'".$start."' order by time";
+		$result = $this->db->query($request);
+		$pause_gesamt=0;
+		while ($row = $result->fetch_assoc()) {
+			if ($row['typ']="AS") {
+				$this->output['zeitraum'] = now() - $row['time'];
+			}
+			if ($row['typ']="PS") {
+				$pause_start = $row['time'];
+			}
+			if ($row['typ']="PE") {
+				$pause_teil = $row['time'] - $pause_start; // in sekunden
+				$pause_gesamt+=$pause_teil;
+				$pause_start=0;
+			}
+			
+		}
+		
+		$this->output['pause_seit']=$pause_start;
+		if ($pause_start>0) {
+			$this->output['pause_gesamt']=$pause_gesamt+$now-$pause_start;	
+		} else {
+			$this->output['pause_gesamt']=$pause_gesamt;	
+		}
+		
+	}
+}
+
+		   
+
+
+
+class bu_mitarbeiter {
+	$db = "";
+	$row = array();
+	
+	function __construct(&$db) {
+		$this->db=$db;
+		if (isset($_COOKIE['username'])) {
+			$_SESSION['username']=$_COOKIE['username'];
+			setcookie("username",$_COOKIE['username'],time()+(3600*24)); // 24h
+		}
+		
+	}
+	
+	public function load($name) {
+		$request="select * from bu_mitarbeiter where name='".$this->db->real_escape_string($name)."'";
+		$result = $this->db->query($request);
+		$this->row = $result->fetch_assoc();
+	}
+
+	public function exist($name) {
+		$request="select count(*) as sum from bu_mitarbeiter where name='".$this->db->real_escape_string($user)."'";
+		$result = $this->db->query($request);
+		$row = $result->fetch_assoc();
+
+		if ($row['sum'] > 0) {
+			return true;
+		}
+		return false;
+	
+	}
+
+	public function add($record) {
+		$name=$record['name'];
+		$pw=cipher($name,$name);
+		$firmanr=$this->row['firmanr'];
+		
+		$request="insert select count(*) as sum from bu_mitarbeiter where name='".$this->db->real_escape_string($user)."'";
+		$result = $this->db->query($request);
+
+		$request  = sprintf("INSERT INTO bu_mitarbeiter(firmanr,name,pw) VALUES('%s','%s','%s');",
+					$this->db->row['firmanr'];
+					$this->db->real_escape_string($_POST['user']),
+					password_hash($_POST['user'], PASSWORD_DEFAULT)
+					);
+		$result = $db->query($request);
+	}
+
+	/* 
+		Erster Login
+		-> Passwort muss geändert werden
+	*/	
+	public function login_firsttime() {
+		if (password_verify($this->row['name'], $this->row['pw'])) {
+			return true;
+		}
+		return false;
+	}
+	
+	/* 
+		Normaler Login
+	*/	
+	public function login(&$pw) {
+		if (password_verify($pw, $this->row['pw'])) {
+			$_SESSION['username']=$_POST['name'];
+
+			// setcookie("username",$_POST['name'],time()+(3600*24)); // 24h
+			// if isset($_COOKIE['username']) {
+			//	$_SESSION['username']=$_COOKIE['username'];
+			//  setcookie("username",$_COOKIE['username'],time()+(3600*24)); // 24h
+			// }
+			return true;
+		}
+		return false;
+	}
+	
+	
+	
+	
+}
+
+?>
+<html lang="de">
+  <head>
+    <meta charset="utf-8">
+    <meta name="description" 
+          content="Stempeluhr und Zeiterfassung mit Urlaubs und Krankheitsabwesenheiten für jeden, mit Auswertungen">
+    <meta name="keywords" content="Stempeluhr, stempeln, Zeiterfassung, Krankheitserfassung, Urlaubserfassung">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Zeiterfassung</title>
+  </head>
+ <body>
+<div style="display:inline-block;"><center>
+<h1>Hallo $_SESSION['username']</h1>
+<p>Eingeloggt seit: 8:30 (4 Stunden, 50 min)</p>
+<p>Pause seit: 12:30 (20 min)</p>
+<hr>
+<p>Heutige Pausenseit: 30 min</p>
+<hr>
+<h2>Jahresübersicht</h2>
+<p>14 Überstunden</p>
+<p> 9 Krankheitstage</p>
+<p>14 von 30 Urlaubstage</p>
+<h2>Aktionen</h2>
+<button>Pause anfangen<button>
+<button>Arbeit anfangen</button>
+<button>Pause beenden<button>
+<button>Arbeit beenden</button>
+<hr>
+<button>Krank</button>
+<button>Urlaub</button>
+</center></div>
+</body>
+</html>
+

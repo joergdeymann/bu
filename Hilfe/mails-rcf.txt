@@ -1,0 +1,127 @@
+Emails 
+müsssen
+
+RFC 5321
+RFC 5322
+
+Konform sein
+
+Ein eintrag= z.B. (nach Content-Type)
+Date: Tue, 26 Jan 2021 13:13:51 +0100 (CET)
+Beispiel von WEB.DE
+
+Return-Path: <joergdeymann@web.de>
+X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on mx2ecf.netcup.net
+X-Spam-Level: 
+X-Spam-Status: No, score=-0.2 required=7.0 tests=DKIM_SIGNED,DKIM_VALID,
+	DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,HTML_MESSAGE,
+	RCVD_IN_MSPIKE_H3,RCVD_IN_MSPIKE_WL,SPF_HELO_NONE,SPF_PASS,
+	TVD_SPACE_RATIO,T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no
+	version=3.4.2
+X-Original-To: joerg.deymann@die-deymanns.de
+Delivered-To: joerg.deymann@die-deymanns.de
+Received: from mout.web.de (mout.web.de [212.227.15.4])
+	by mx2ecf.netcup.net (Postfix) with ESMTPS id A720E1A003A
+	for <joerg.deymann@die-deymanns.de>; Sat,  3 Jun 2023 00:13:52 +0200 (CEST)
+Authentication-Results: mx2ecf;
+	dkim=pass header.d=web.de;
+        spf=pass (sender IP is 212.227.15.4) smtp.mailfrom=joergdeymann@web.de smtp.helo=mout.web.de
+Received-SPF: pass (mx2ecf: domain of web.de designates 212.227.15.4 as permitted sender) client-ip=212.227.15.4; envelope-from=joergdeymann@web.de; helo=mout.web.de;
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=web.de;
+ s=s29768273; t=1685744032; x=1686348832; i=joergdeymann@web.de;
+ bh=WTN2YMBrDH1NNQJKrIbDIhNZnodHh91hUKK9xNqJNbI=;
+ h=X-UI-Sender-Class:From:To:Subject:Date;
+ b=f/gioulcOQmHwfQ/vfkeh7B5C7KVcSo+mP1pqu8gc3nlg2Xb2MxvbYc/3QnD0MclzxhsBzF
+ MC2XHRxjGkG8orm8J/Z0/zQ8qVntH6hfNI341wgce2BL+R+8iOkPkk2f7KVIHsJEJKooiGLx8
+ Djc+e66hR8MTcc1Igt/dxgkunLkDygoU/IpwcM8ZRMN2sdohfV0LJB8PWOPpuPZdbRpZmYfmh
+ T8hsT78o2uQmIUnCe+tQrTivOAc6yqUDVfrp26VLQbRRLgBpwE5yPa8JhgjQYFJOXOmLERhA8
+ psGTdKiMfQRfz8ekN05xkBeVAMQ8bod+Kie9SEolWXrW+Qxu9XVg==
+X-UI-Sender-Class: 814a7b36-bfc1-4dae-8640-3722d8ec6cd6
+Received: from [193.34.118.52] ([193.34.118.52]) by web-mail.web.de
+ (3c-app-webde-bs52.server.lan [172.19.170.108]) (via HTTP); Sat, 3 Jun 2023
+ 00:13:52 +0200
+MIME-Version: 1.0
+Message-ID: <trinity-00f2effd-3fc6-4af3-b6b4-76fb9fd40481-1685744032209@3c-app-webde-bs52>
+From: =?UTF-8?Q?J=C3=B6rg_Deymann?= <joergdeymann@web.de>
+To: joerg.deymann@die-deymanns.de
+Subject: Date: Check
+Content-Type: multipart/mixed;
+ boundary=refeik-a5e65544-d115-4dc7-8dc9-58fc81542e59
+Date: Sat, 3 Jun 2023 00:13:52 +0200
+Importance: normal
+Sensitivity: Normal
+X-Priority: 3
+X-Provags-ID: V03:K1:Odi6BqngwTh8qmoz517Jko2I7fAmPwesaNRWYkLtuWD2hXykQZnXBoaXmVGl5hWnjUdTZ
+ Q8sJB/SUi07b0HhUdRIKlDq3faBrpY8G6jQqMPK8SH+mtrX8XEgl/PBWpvYidgKsZjgFNaqeKWJW
+ tNNi2kMSUqx5W7cY1VwPZp12SmwmTsyppFIXrc/a4fvI0fq+S4gLwkzHBeDfqfbw8Ko+hH6W9jt5
+ tqsrMSk9AZdfoW2515RCueEnEWhdjHX3/0e4PxcZfeo+OfSiXU2uFFbocWuZolFKAjEoXC7JkUwe
+ TU=
+UI-OutboundReport: notjunk:1;M01:P0:LHs5X4e0IaQ=;yfnesZQwsGZlFi4jjg0e4fs5o1T
+ +8+5+1C+hSoyn2mfScGVRsdC4zfTBhOjyAoLGf5DhDuy5csCb3m7IGxKFE5fgxcKzVb6UnmdQ
+ DeH78kn1qeOyh+B/OIv9R4puaq9PolX2woogNfqgMmEuwkyqvQcFsKLtOEBxTL6Khlyaic9CE
+ QlWSi4WTliEWkrVnVC98uwiKSKQEhPJtmycPh8ckPtqj4sbAlo282vD4wJ4kwz6V2+P8jjqsj
+ vBUScE1UqrFQLs6LoTB2HHHfkgWr1SYVIkHa9Fm7IsgZfo5Ahp0pPb+fIi2Sl+6WrdG4uwAdk
+ kEPZULSR5RZvGTNraZB/wnz/wBgA3TuQvYvi4WQb1lklqG6hFJYk7GWWDzidiWCzdx7I6McsU
+ h8dXwwpvROQi+Mgzcx0PMse3lYPyHx4j3q3fDJtAuB9javmkA8yXxWfPQFlYHofed3IlJBskl
+ nYyWGsU5RMK9AlxjoHXKFNOY17Dj1HKrSrobH3cztMN4s5xrkcvI1eU728kfuq2H2shdMvNR3
+ 8fNXQX8Dh+P/5/KcRAmVsWdxi58kxFVwn6vUHHTfejXyrgR+mOWHbBHM/v4JAN8J8uIQ3AtCP
+ DCmfq16+31CVrjeWdD5+1IPtQGmnie18EvGwRa21uUzJEW1oLwcl7bLATj1wnnY5aOmfvVoId
+ YNMOOnJxuRGx/WAIid+HPWIzGXxcZ8ubdJsqpDQNG3FXD7gI/v5H7m+7vyby+gHmZ8RMiC4ex
+ 9p29/weqcg8rReG8uHOzUkUph4r0Na6kT1rBWrcOUgQfQUHuGXV/AQAy2gnmOikumMDJVvQtP
+ kmISUjEEjiQsODUPqBmO+5Qw==
+X-Rspamd-Queue-Id: A720E1A003A
+X-Spamd-Result: default: False [-3.22 / 15.00];
+	BAYES_HAM(-2.95)[92.50%];
+	DMARC_POLICY_ALLOW(-0.50)[web.de,none];
+	MID_RHS_NOT_FQDN(0.50)[];
+	R_DKIM_ALLOW(-0.20)[web.de:s=s29768273];
+	MIME_HTML_ONLY(0.20)[];
+	R_SPF_ALLOW(-0.20)[+ip4:212.227.15.0/25:c];
+	MIME_BASE64_TEXT(0.10)[];
+	MIME_GOOD(-0.10)[multipart/mixed];
+	RWL_MAILSPIKE_GOOD(-0.10)[212.227.15.4:from];
+	R_MIXED_CHARSET(0.03)[subject];
+	TO_MATCH_ENVRCPT_ALL(0.00)[];
+	RECEIVED_SPAMHAUS_PBL(0.00)[193.34.118.52:received];
+	RCPT_COUNT_ONE(0.00)[1];
+	ARC_NA(0.00)[];
+	FROM_HAS_DN(0.00)[];
+	ASN(0.00)[asn:8560, ipnet:212.227.0.0/16, country:DE];
+	FREEMAIL_ENVFROM(0.00)[web.de];
+	TO_DN_NONE(0.00)[];
+	HAS_ATTACHMENT(0.00)[];
+	FREEMAIL_FROM(0.00)[web.de];
+	MIME_TRACE(0.00)[0:+,1:~,2:~];
+	DKIM_TRACE(0.00)[web.de:+];
+	FROM_EQ_ENVFROM(0.00)[];
+	HAS_X_PRIO_THREE(0.00)[3];
+	RCVD_TLS_LAST(0.00)[];
+	RCVD_COUNT_TWO(0.00)[2]
+X-Rspamd-Server: rspamd-worker-8404
+X-MORS-Enabled: yes
+X-MORS-DOMAIN: die-deymanns.de
+X-MORS-HOSTING: hosting151841
+X-MORS-USER: hosting151841
+
+--refeik-a5e65544-d115-4dc7-8dc9-58fc81542e59
+Content-Type: text/html; charset=UTF-8
+
+<html><head></head><body><div style="font-family: Verdana;font-size: 12.0px;"><div>Bodytext<br/>
+&nbsp;</div>
+
+<div class="signature">--&nbsp;<br/>
+J&ouml;rg&nbsp;Deymann<br/>
+Staatlich&nbsp;gepr&uuml;fter&nbsp;Wirtschaftsassistent&nbsp;-&nbsp;Informatik<br/>
+Systemtechniker&nbsp;Client/Server</div></div></body></html>
+--refeik-a5e65544-d115-4dc7-8dc9-58fc81542e59
+Content-Type: text/x-vcard; charset=UTF-8
+Content-Disposition: attachment;
+ filename="=?UTF-8?Q?J=C3=B6rg_Deymann=2Evcf?="
+Content-Transfer-Encoding: base64
+
+QkVHSU46VkNBUkQNClZFUlNJT046My4wDQpGTjpKw7ZyZyBEZXltYW5uDQpOOkRleW1hbm47SsO2
+cmc7OzsNCkJEQVk6MTk3My0wOS0wOA0KRU1BSUw7VFlQRT1IT01FLFBSRUY6am9lcmdkZXltYW5u
+QHdlYi5kZQ0KQURSO1RZUEU9SE9NRSxQUkVGOjs7SG9oZXIgS2FtcCAxMjtIYXJlbjs7NDk3MzM7
+RGV1dHNjaGxhbmQNCkVORDpWQ0FSRA0K
+--refeik-a5e65544-d115-4dc7-8dc9-58fc81542e59--
+

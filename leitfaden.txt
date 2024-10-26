@@ -1,0 +1,91 @@
+Schnell erstellter Leitfaden
+(Entschuldige, wenn hier viele Schreibefehler auftauchen) 
+==========================================================
+
+
+Verwaltung der Firma Online unter anderen die Mitarbeiter Zeiterfassung
+1. www.die-deymanns.de/bu
+
+Registriern des Nutzers
+2. Registrieren 
+3. Login, Passwort und Passwort wiederholen eingeben
+4. Registrieren drücken
+
+Firmendaten eingeben
+5. mindestens Firmenname eingebn (zur Identifikaton)
+6. Neu Anlegen drücken
+7. Mitarbeiter
+8. Mitarbeiter anlegen / ändern
+9. Alle bekannten Daten eingeben
+   -  Eintrittsdatum, Anfang Zeitaufzeichnug und Anfang Überstundenaufzeichnung
+       ann für den Test so bleiben wie Vorgeschlagen
+   -  Mitarbeiternummer: hier kann die interne Mitarbeiternummer angegeben werden
+   -  Der Mitarbeitername muss eingegeben werden damit sich der Mitarbeiter einloggen kann
+10. Übernehmen drücken
+
+==========================================================================
+Menüpunkte
+==========================================================================
+Kundenerfassung sollte gehen
+Artikelerfassung sollte gehen
+Rechnung geht noch nicht weil bestimmte Plugins noch nicht hochgeladen wurden  
+Brerichte geht nicht
+Statistiken geht nicht
+Einstellungen betreffen derzeit nur Rechnungen, kann man sich aber schon mal ansehen
+Projekte:
+	hier geht nur Tagesangaben
+	Der Mitarbeiter kann einen Projekt zugeordnet sein und seine Information bei 
+	seiner Zeiterfassung mit angeben, hier kann man diese Daten sehen oder änderen
+Mitarbeiter - Mitarbeiterliste
+	Hier kann man sich die erstelllten Mitarbeiter ansehen, 
+	und über den Butten Zeiten, die Arbeitszeiten ansehen 
+	Eingrenzungen sind übrigens überall möglich
+
+================================================================
+Das Zeiterfassungstool für Handy oder einen PC, den nur du nutzt
+================================================================
+
+also am besten von Deinem Handy diesen Link aufrufen:
+https://localhost/FazalTamiz/zeiterfassung.php
+
+Der Mitarbeiter muss vom Firmeninhaber/Admin angelegt worden sein, 
+auch muss man sich selbst als Firmeninhaber als Mitarbeiter angelegt haben, 
+damit man seine Zeit erfassen kann.
+
+Als 1. loggt man sich ein mit einen der erstellen Mitabeiternamen ein,
+das Passwort welches beim erstenmal ebenfalls der Mitarbeitername ist, 
+muss jetzt eingegeben werden.
+
+Danach wird man aufgefordert sein Passwort zu ändern. 
+
+Jetzt kann der Mitarbeiter seine Zeit erfassen.
+
+Die "App" merkt sich die Logindaten 24 Stunden, seit der letzten Benutzung. 
+Man muss sich also nicht andauernd neu einloggen.
+
+Nachricht schreiben (under construction)
+----------------------------------------
+geht noch nicht, ist aber zeitnah geplant.
+Diese geht dann direkt zum Admin, sobald er eines der Tools nutzt.
+Dieser kann dann auch antworten, oder selber neue Nachrichten senden.
+
+Projekt
+-------
+Hier kann man einen Text, die KM für eine Reise usw. eintragen.
+Dieser Bereich ist gerade neu. Probiere es aus und schau im 
+Hauptprogramm nach wie es dann dort aussieht. Wenn es Dir gefällt, 
+kann man hier noch mehr einbauen.
+Susi benutzt es für Sonderfahrten oder mir Informationen zukommen zu lassen 
+wenn sich was ändert oder Überstunden berechnet werden müssen. 
+
+Info
+----
+Mehr informationen zur Zeiterfassung
+
+
+Viel Spass beim Ausprobieren!
+
+	
+
+
+

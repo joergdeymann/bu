@@ -1,0 +1,133 @@
+StartFontMetrics 4.1
+Notice Converted by PHP-font-lib
+Comment https://github.com/PhenX/php-font-lib
+EncodingScheme FontSpecific
+Copyright Cafe Matcha © Orenari. 2020. All Rights Reserved
+FontName Cafe Matcha
+FontSubfamily Regular
+UniqueID Cafe Matcha:Version 1.00
+FullName Cafe Matcha
+Version Version 1.00;February 10, 2021;FontCreator 12.0.0.2545 64-bit
+PostScriptName CafeMatcha
+Trademark Orenari
+Manufacturer Lia Ari Wijayanti from Orenari
+Designer Lia Ari Wijayanti
+Description You can not resell, share or giveaway the font files
+FontVendorURL heyorenari@gmail.com
+FontDesignerURL www.instagram.com/heyorenari
+LicenseDescription This is font free for PERSONAL USE
+Weight Medium
+ItalicAngle 0
+IsFixedPitch false
+UnderlineThickness 73
+UnderlinePosition -106
+FontHeightOffset 0
+Ascender 941
+Descender -232
+FontBBox -21 -167 564 766
+StartCharMetrics 102
+U 32 ; WX 248 ; N space ; G 1
+U 33 ; WX 154 ; N exclam ; G 2
+U 34 ; WX 246 ; N quotedbl ; G 3
+U 35 ; WX 580 ; N numbersign ; G 4
+U 36 ; WX 405 ; N dollar ; G 5
+U 37 ; WX 496 ; N percent ; G 6
+U 38 ; WX 496 ; N ampersand ; G 7
+U 39 ; WX 151 ; N quotesingle ; G 8
+U 40 ; WX 247 ; N parenleft ; G 9
+U 41 ; WX 247 ; N parenright ; G 10
+U 42 ; WX 227 ; N asterisk ; G 11
+U 43 ; WX 378 ; N plus ; G 12
+U 44 ; WX 160 ; N comma ; G 13
+U 45 ; WX 439 ; N hyphen ; G 14
+U 46 ; WX 152 ; N period ; G 15
+U 47 ; WX 379 ; N slash ; G 16
+U 48 ; WX 443 ; N zero ; G 17
+U 49 ; WX 162 ; N one ; G 18
+U 50 ; WX 412 ; N two ; G 19
+U 51 ; WX 387 ; N three ; G 20
+U 52 ; WX 382 ; N four ; G 21
+U 53 ; WX 379 ; N five ; G 22
+U 54 ; WX 405 ; N six ; G 23
+U 55 ; WX 398 ; N seven ; G 24
+U 56 ; WX 387 ; N eight ; G 25
+U 57 ; WX 404 ; N nine ; G 26
+U 58 ; WX 152 ; N colon ; G 27
+U 59 ; WX 160 ; N semicolon ; G 28
+U 60 ; WX 345 ; N less ; G 29
+U 61 ; WX 439 ; N equal ; G 30
+U 62 ; WX 344 ; N greater ; G 31
+U 63 ; WX 346 ; N question ; G 32
+U 64 ; WX 535 ; N at ; G 33
+U 65 ; WX 378 ; N A ; G 34
+U 66 ; WX 364 ; N B ; G 35
+U 67 ; WX 382 ; N C ; G 36
+U 68 ; WX 390 ; N D ; G 37
+U 69 ; WX 302 ; N E ; G 38
+U 70 ; WX 315 ; N F ; G 39
+U 71 ; WX 388 ; N G ; G 40
+U 72 ; WX 405 ; N H ; G 41
+U 73 ; WX 170 ; N I ; G 42
+U 74 ; WX 335 ; N J ; G 43
+U 75 ; WX 376 ; N K ; G 44
+U 76 ; WX 302 ; N L ; G 45
+U 77 ; WX 438 ; N M ; G 46
+U 78 ; WX 423 ; N N ; G 47
+U 79 ; WX 427 ; N O ; G 48
+U 80 ; WX 382 ; N P ; G 49
+U 81 ; WX 428 ; N Q ; G 50
+U 82 ; WX 378 ; N R ; G 51
+U 83 ; WX 367 ; N S ; G 52
+U 84 ; WX 394 ; N T ; G 53
+U 85 ; WX 410 ; N U ; G 54
+U 86 ; WX 417 ; N V ; G 55
+U 87 ; WX 593 ; N W ; G 56
+U 88 ; WX 464 ; N X ; G 57
+U 89 ; WX 386 ; N Y ; G 58
+U 90 ; WX 371 ; N Z ; G 59
+U 91 ; WX 239 ; N bracketleft ; G 60
+U 92 ; WX 313 ; N backslash ; G 61
+U 93 ; WX 239 ; N bracketright ; G 62
+U 94 ; WX 293 ; N asciicircum ; G 63
+U 95 ; WX 384 ; N underscore ; G 64
+U 96 ; WX 198 ; N grave ; G 65
+U 97 ; WX 403 ; N a ; G 66
+U 98 ; WX 461 ; N b ; G 67
+U 99 ; WX 335 ; N c ; G 68
+U 100 ; WX 437 ; N d ; G 69
+U 101 ; WX 339 ; N e ; G 70
+U 102 ; WX 334 ; N f ; G 71
+U 103 ; WX 414 ; N g ; G 72
+U 104 ; WX 417 ; N h ; G 73
+U 105 ; WX 168 ; N i ; G 74
+U 106 ; WX 323 ; N j ; G 75
+U 107 ; WX 384 ; N k ; G 76
+U 108 ; WX 175 ; N l ; G 77
+U 109 ; WX 574 ; N m ; G 78
+U 110 ; WX 405 ; N n ; G 79
+U 111 ; WX 465 ; N o ; G 80
+U 112 ; WX 453 ; N p ; G 81
+U 113 ; WX 411 ; N q ; G 82
+U 114 ; WX 360 ; N r ; G 83
+U 115 ; WX 370 ; N s ; G 84
+U 116 ; WX 347 ; N t ; G 85
+U 117 ; WX 406 ; N u ; G 86
+U 118 ; WX 450 ; N v ; G 87
+U 119 ; WX 560 ; N w ; G 88
+U 120 ; WX 404 ; N x ; G 89
+U 121 ; WX 379 ; N y ; G 90
+U 122 ; WX 332 ; N z ; G 91
+U 123 ; WX 292 ; N braceleft ; G 92
+U 124 ; WX 143 ; N bar ; G 93
+U 125 ; WX 292 ; N braceright ; G 94
+U 126 ; WX 350 ; N asciitilde ; G 95
+U 160 ; WX 248 ; N space ; G 1
+U 173 ; WX 439 ; N hyphen ; G 14
+U 8216 ; WX 144 ; N quoteleft ; G 96
+U 8217 ; WX 143 ; N quoteright ; G 97
+U 8218 ; WX 143 ; N quotesinglbase ; G 98
+U 8220 ; WX 229 ; N quotedblleft ; G 99
+U 8221 ; WX 229 ; N quotedblright ; G 100
+U 8222 ; WX 235 ; N quotedblbase ; G 101
+EndCharMetrics
+EndFontMetrics
