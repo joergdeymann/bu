@@ -18,20 +18,22 @@ export class ExtDate {
 
     getDateMMMJJJJ() {
         // month["DE"]["Januar"]
-        let month=["DE"][
-            "Januar",
-            "Februar",
-            "März",
-            "April",
-            "Mai",
-            "Juni",
-            "Juli",
-            "August",
-            "September",
-            "Oktober",
-            "November",
-            "Dezember"
-        ];
+        let month={
+            "DE":[
+                "Januar",
+                "Februar",
+                "März",
+                "April",
+                "Mai",
+                "Juni",
+                "Juli",
+                "August",
+                "September",
+                "Oktober",
+                "November",
+                "Dezember"
+            ]
+        };
         return `${month[this.#lang][this.date.getMonth()]} ${this.date.getFullYear(4)}`;                                                            
     }
 

@@ -37,31 +37,39 @@ export class ProjectCalendar extends Calendar {
     async getRequest() {
         let php=new PHP('./php/calendar_read.php');
         let parameters = {
-            searchDate: this.date.getDateString()
+            searchDate: this.date.toISOString()
         }
         this.#entries=await php.get(parameters);   
 
     }
  
+    separateDateString(date) {
+        return date.toISOString().slice(0,10);
+    }
+
+    separateDate(date) {
+        return new Date(date.toISOString().slice(0,10));
+    }
+
     renderCalendarDays() {
-        let date=new Date(this.date.slice(0,10));
-        let weekday=date.getDayOfWeek();
+        let date=this.separateDate(this.date);
+        let weekday=this.getDayOfWeek();
         let format="";
         let month=date.getMonth();
         let html="";
 
-        let i=0;
+        let i=1;
         while(i<weekday) {
             html+=`<div><div class="empty"></div></div>`;
             i++;
         } 
 
         while(month == date.getMonth()){
-            for (entry in this.#entries) {
-                let ds=new Date(entry.start.slice(0,10));  // Select only the Year
-                let de=new Date(entry.end.slice(0,10));
-                let arrival   =new Date(entry.araival.slice(0,10));
-                let departure =new Date(entry.departure.slice(0,10));
+            for (let entry of this.#entries) {
+                let ds=entry.start.slice(0,10);  
+                let de=entry.end.slice(0,10);;
+                let arrival   =entry.arrival.slice(0,10);
+                let departure =entry.departure.slice(0,10);
 
                 let style=""; // color
                 let add="";   // Arrival or Depature
@@ -82,7 +90,7 @@ export class ProjectCalendar extends Calendar {
                 if (date == departure ) {
                     add+=`<span class="small br">Ab</span>`;
                 }
-                if ((date == depature || date == arrival) && format=="") {
+                if ((date == departure || date == arrival) && format=="") {
                     format = "big";
                 }
                 //  noch die Ecken
@@ -111,7 +119,7 @@ export class ProjectCalendar extends Calendar {
             <div class="calendar">
                 <nav>
                     <img src="../img/pfeil-links.png" onclick="calendar(-1)">
-                    <span id="month" onclick="calender(0)">${this.date.getDateMMMJJJJ()}</span>
+                    <span id="month" onclick="calender(0)">${this.getDateMMMJJJJ()}</span>
                     <img src="../img/pfeil-rechts.png" onclick="calendar(1)">
                 </nav>
                 <header>
