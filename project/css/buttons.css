@@ -1,0 +1,15 @@
+button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    cursor: pointer;
+    height: 3rem;
+    border-radius: 1.5rem;
+    box-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+
+    outline: none;
+    border: 1px solid var(--button-border);
+    font-weight: bold;
+    font-size: 0.75rem;
+}
