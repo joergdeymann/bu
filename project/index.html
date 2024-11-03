@@ -2,7 +2,7 @@
 <html lang="de">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <title>Document</title>
     <!-- script src="./js/calendar.js"></script-->
     <!-- <script type="module" src="./js/Modules.js" defer></script> -->
@@ -12,13 +12,16 @@
     <script src="./js/buttons.js"></script>-->
     <link rel="stylesheet" href="./style.css">
     <link rel="stylesheet" href="./css/calendar.css">
+    <link rel="stylesheet" href="./css/calendarHeadline.css">
+    <link rel="stylesheet" href="./css/calendarSetup.css">
+    <link rel="stylesheet" href="./css/gear.css">
     <link rel="stylesheet" href="./css/input.css">
     <link rel="stylesheet" href="./css/buttons.css">
 
 </head>
 <body>
     <H1 class="headline">Projekt anlegen</H1>
-    <form id="add-project">
+    <form id="add-project" action="return false;">
         <input type="hidden" name="date">
 
         <input type="text" name="name"  placeholder="Name der Veranstaltung">
@@ -28,7 +31,7 @@
             <div class="calendar">
                 <nav>
                     <img src="../img/pfeil-links.png" onclick="calendar(-1)">
-                    <span id="month" onclick="calender(0)">Oktober 2024</span>
+                    <span id="month" onclick="calender(0)">&nbsp;</span>
                     <img src="../img/pfeil-rechts.png" onclick="calendar(1)">
                 </nav>
                 <header>

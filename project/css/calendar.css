@@ -19,16 +19,6 @@
 
 }
 
-h1 {
-    text-align: center;
-    font-size: 2rem;
-    background-color: #CCCCCC;
-    border-radius: 1rem;
-    margin:0px 0px;
-    width: calc(100% - 16px);
-    margin-bottom:16px;
-}
-
 .calendar {
     border: 2px solid var(--cell-border);
     /* box-shadow: 2px 2px 4px rgba(0,0,0,0.2);*/
@@ -108,21 +98,50 @@ h1 {
     align-items:center;
 }
 
-.calendar section>div>div:hover:not(.empty) {
-    border: 2px solid var(--cell-border-hover);
+/*
+Hover each event
+*/
+.Xcalendar section>div>div:hover:not(.empty) {
+    padding:0;
+    border-color: var(--cell-border-hover);
     font-size: 2rem;
 }
 
-.calendar section>div>div:hover:not(.start):not(.end):not(.empty):not(.big)  {
+/*
+Hover each event
+*/
+.Xcalendar section>div>div:hover:not(.start):not(.end):not(.empty):not(.big)  {
     border-radius: 8px;;
+}
+
+
+.calendar section>div>span {
+    position: absolute;
+    z-index: 1;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+/* 
+    Hover Day 
+*/
+.calendar section>div>span:hover {
+    border: 3px solid var(--cell-border-hover);
+    border-radius: 8px;
+    font-size: 2rem;
+    transform: scale(1.1);
 }
 
 /*
     Selections: Left
 */
 .calendar section>div>div.start {
-    border-top-left-radius:50%;
-    border-bottom-left-radius: 50%;
+    border-top-left-radius:50vh;
+    border-bottom-left-radius: 50vh;
     background-color: yellow;
 }
 
@@ -130,8 +149,8 @@ h1 {
     Selections: Right
 */
 .calendar section>div>div.end {
-    border-top-right-radius:50%;
-    border-bottom-right-radius: 50%;
+    border-top-right-radius:50vh;
+    border-bottom-right-radius: 50vh;
     background-color: yellow;
 }
 
@@ -140,6 +159,10 @@ h1 {
 */
 .calendar section>div>div.center {
     background-color: yellow;
+}
+
+.calendar section>div>i {
+    background-color: blue;
 }
 
 .calendar .small {
@@ -159,17 +182,17 @@ h1 {
 
 .calendar .bl {
     left:0;
-    bottom:0;
+    bottom:-1px;
 }
 
 .calendar .br {
     right:0;
-    bottom:0;
+    bottom:-1px;
 }
 
 .calendar .big {
     background-color: #FF33FF;
-    border-radius:50%;
+    border-radius:50vh;
 }
 .calendar .floor-left {
     border-bottom-left-radius: 8px;
@@ -178,3 +201,14 @@ h1 {
 .calendar .floor-right {
     border-bottom-right-radius: 8px;
 }
+
+.calendar-container .headline {
+    position: relative;
+    display:flex;
+    justify-content: center;
+    align-items:center;
+    width: 100%;
+}
+
+
+

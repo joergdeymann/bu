@@ -1,0 +1,20 @@
+.gear {
+    position: absolute;
+    right:0;
+    cursor: pointer;
+    width: 32px;
+    height: 32px;
+    content: url('../img/gear16.svg');
+}
+.gear:hover {
+    animation: rotate 11000ms linear infinite;
+}
+
+@keyframes rotate {
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(360deg);
+    }
+}

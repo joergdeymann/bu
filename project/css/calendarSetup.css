@@ -1,0 +1,51 @@
+.calendar-setup {
+    position: absolute;
+    top:0;
+    right: 4px;
+
+    display:flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    /* align-items: flex-start; */
+
+    border: 1px solid grey;
+    border-radius: 8px;
+    box-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+
+    background-color: rgba(255,255,255,0.95);
+    padding: 0px;
+    z-index:2;
+    font-size: 1rem;
+    overflow: hidden;
+
+
+}
+
+.calendar-setup .screen {
+    position: fixed;
+    top:0;
+    bottom:0;
+    left:0;
+    right:0;
+    overflow: hidden;
+    z-index: -1;
+}
+
+.calendar-setup header {
+    overflow:hidden;
+    padding: 4px 8px;
+    margin:0px;
+    background-color:#DDDDDD;
+    display: flex;
+}
+
+.calendar-setup nav {
+    display:flex;
+    flex-direction: column;
+    margin: 8px;
+    gap:16px;
+}
+
+.calendar-setup label {
+    cursor:pointer;
+}

@@ -1,0 +1,41 @@
+<svg width="32" height="32" viewBox="-16 -16 32 32" xmlns="http://www.w3.org/2000/svg">
+    <!-- Innerer Kreis des Zahnrads -->
+    <circle cx="0" cy="0" r="6" fill="gray" />
+
+    <!-- Zähne des Zahnrads -->
+    <g fill="black">
+        <!-- Ein Zahn mit 32 Rotationen -->
+        <rect x="6" y="-1" width="2" height="4" transform="rotate(0)" />
+        <rect x="6" y="-1" width="2" height="4" transform="rotate(11.25)" />
+        <rect x="6" y="-1" width="2" height="4" transform="rotate(22.5)" />
+        <rect x="6" y="-1" width="2" height="4" transform="rotate(33.75)" />
+        <rect x="6" y="-1" width="2" height="4" transform="rotate(45)" />
+        <rect x="6" y="-1" width="2" height="4" transform="rotate(56.25)" />
+        <rect x="6" y="-1" width="2" height="4" transform="rotate(67.5)" />
+        <rect x="6" y="-1" width="2" height="4" transform="rotate(78.75)" />
+        <rect x="6" y="-1" width="2" height="4" transform="rotate(90)" />
+        <rect x="6" y="-1" width="2" height="4" transform="rotate(101.25)" />
+        <rect x="6" y="-1" width="2" height="4" transform="rotate(112.5)" />
+        <rect x="6" y="-1" width="2" height="4" transform="rotate(123.75)" />
+        <rect x="6" y="-1" width="2" height="4" transform="rotate(135)" />
+        <rect x="6" y="-1" width="2" height="4" transform="rotate(146.25)" />
+        <rect x="6" y="-1" width="2" height="4" transform="rotate(157.5)" />
+        <rect x="6" y="-1" width="2" height="4" transform="rotate(168.75)" />
+        <rect x="6" y="-1" width="2" height="4" transform="rotate(180)" />
+        <rect x="6" y="-1" width="2" height="4" transform="rotate(191.25)" />
+        <rect x="6" y="-1" width="2" height="4" transform="rotate(202.5)" />
+        <rect x="6" y="-1" width="2" height="4" transform="rotate(213.75)" />
+        <rect x="6" y="-1" width="2" height="4" transform="rotate(225)" />
+        <rect x="6" y="-1" width="2" height="4" transform="rotate(236.25)" />
+        <rect x="6" y="-1" width="2" height="4" transform="rotate(247.5)" />
+        <rect x="6" y="-1" width="2" height="4" transform="rotate(258.75)" />
+        <rect x="6" y="-1" width="2" height="4" transform="rotate(270)" />
+        <rect x="6" y="-1" width="2" height="4" transform="rotate(281.25)" />
+        <rect x="6" y="-1" width="2" height="4" transform="rotate(292.5)" />
+        <rect x="6" y="-1" width="2" height="4" transform="rotate(303.75)" />
+        <rect x="6" y="-1" width="2" height="4" transform="rotate(315)" />
+        <rect x="6" y="-1" width="2" height="4" transform="rotate(326.25)" />
+        <rect x="6" y="-1" width="2" height="4" transform="rotate(337.5)" />
+        <rect x="6" y="-1" width="2" height="4" transform="rotate(348.75)" />
+    </g>
+</svg>

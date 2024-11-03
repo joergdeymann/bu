@@ -1,0 +1,41 @@
+<svg width="32" height="32" viewBox="-16 -16 32 32" xmlns="http://www.w3.org/2000/svg">
+    <!-- Innerer grauer Kreis des Zahnrads -->
+    <circle cx="0" cy="0" r="6" fill="gray" />
+
+    <!-- Zähne des Zahnrads -->
+    <g fill="none" stroke="black" stroke-width="0.5">
+        <!-- Ein Zahn mit 32 Rotationen und gekürzten Spitzen -->
+        <path d="M6,1 L10,1 L8,0 L10,-1 L6,-1 Z" transform="rotate(0)" />
+        <path d="M6,1 L10,1 L8,0 L10,-1 L6,-1 Z" transform="rotate(11.25)" />
+        <path d="M6,1 L10,1 L8,0 L10,-1 L6,-1 Z" transform="rotate(22.5)" />
+        <path d="M6,1 L10,1 L8,0 L10,-1 L6,-1 Z" transform="rotate(33.75)" />
+        <path d="M6,1 L10,1 L8,0 L10,-1 L6,-1 Z" transform="rotate(45)" />
+        <path d="M6,1 L10,1 L8,0 L10,-1 L6,-1 Z" transform="rotate(56.25)" />
+        <path d="M6,1 L10,1 L8,0 L10,-1 L6,-1 Z" transform="rotate(67.5)" />
+        <path d="M6,1 L10,1 L8,0 L10,-1 L6,-1 Z" transform="rotate(78.75)" />
+        <path d="M6,1 L10,1 L8,0 L10,-1 L6,-1 Z" transform="rotate(90)" />
+        <path d="M6,1 L10,1 L8,0 L10,-1 L6,-1 Z" transform="rotate(101.25)" />
+        <path d="M6,1 L10,1 L8,0 L10,-1 L6,-1 Z" transform="rotate(112.5)" />
+        <path d="M6,1 L10,1 L8,0 L10,-1 L6,-1 Z" transform="rotate(123.75)" />
+        <path d="M6,1 L10,1 L8,0 L10,-1 L6,-1 Z" transform="rotate(135)" />
+        <path d="M6,1 L10,1 L8,0 L10,-1 L6,-1 Z" transform="rotate(146.25)" />
+        <path d="M6,1 L10,1 L8,0 L10,-1 L6,-1 Z" transform="rotate(157.5)" />
+        <path d="M6,1 L10,1 L8,0 L10,-1 L6,-1 Z" transform="rotate(168.75)" />
+        <path d="M6,1 L10,1 L8,0 L10,-1 L6,-1 Z" transform="rotate(180)" />
+        <path d="M6,1 L10,1 L8,0 L10,-1 L6,-1 Z" transform="rotate(191.25)" />
+        <path d="M6,1 L10,1 L8,0 L10,-1 L6,-1 Z" transform="rotate(202.5)" />
+        <path d="M6,1 L10,1 L8,0 L10,-1 L6,-1 Z" transform="rotate(213.75)" />
+        <path d="M6,1 L10,1 L8,0 L10,-1 L6,-1 Z" transform="rotate(225)" />
+        <path d="M6,1 L10,1 L8,0 L10,-1 L6,-1 Z" transform="rotate(236.25)" />
+        <path d="M6,1 L10,1 L8,0 L10,-1 L6,-1 Z" transform="rotate(247.5)" />
+        <path d="M6,1 L10,1 L8,0 L10,-1 L6,-1 Z" transform="rotate(258.75)" />
+        <path d="M6,1 L10,1 L8,0 L10,-1 L6,-1 Z" transform="rotate(270)" />
+        <path d="M6,1 L10,1 L8,0 L10,-1 L6,-1 Z" transform="rotate(281.25)" />
+        <path d="M6,1 L10,1 L8,0 L10,-1 L6,-1 Z" transform="rotate(292.5)" />
+        <path d="M6,1 L10,1 L8,0 L10,-1 L6,-1 Z" transform="rotate(303.75)" />
+        <path d="M6,1 L10,1 L8,0 L10,-1 L6,-1 Z" transform="rotate(315)" />
+        <path d="M6,1 L10,1 L8,0 L10,-1 L6,-1 Z" transform="rotate(326.25)" />
+        <path d="M6,1 L10,1 L8,0 L10,-1 L6,-1 Z" transform="rotate(337.5)" />
+        <path d="M6,1 L10,1 L8,0 L10,-1 L6,-1 Z" transform="rotate(348.75)" />
+    </g>
+</svg>

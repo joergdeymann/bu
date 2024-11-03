@@ -1,23 +1,20 @@
 import { ProjectCalendar } from './ProjectCalendar.js';
 
-/*
-class Project  {
-    #calendar;
 
-    constructor() {
-        this.#calendar=new ProjectCalendar();
-    }
-
-
-
+function calendarNext(event,day) {
+    calendar.setCalendarInformation(date,day)
 }
-*/
-// import { ProjectCalendar } from './ProjectCalendar.js';
+
 
 function init() {
     // project=new Project();
     let calendar=new ProjectCalendar();
-    document.getElementById("calendar").innerHTML=calendar.renderCalendar();
+    window.calendar=calendar;
 
+    document.getElementById("calendar").innerHTML=calendar.render.renderCalendar();
+    calendar.render.addCaledarSetupListener();
 }
+
+
 init();
+

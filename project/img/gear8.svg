@@ -1,0 +1,17 @@
+<svg width="32" height="32" viewBox="-16 -16 32 32" xmlns="http://www.w3.org/2000/svg">
+    <!-- Innerer grauer Kreis des Zahnrads -->
+    <circle cx="0" cy="0" r="6" fill="gray" />
+
+    <!-- Zähne des Zahnrads -->
+    <g fill="none" stroke="black" stroke-width="0.5">
+        <!-- Ein Zahn mit nur 8 Zacken -->
+        <path d="M6,1 L10,1 L8,0 L10,-1 L6,-1 Z" transform="rotate(0)" />
+        <path d="M6,1 L10,1 L8,0 L10,-1 L6,-1 Z" transform="rotate(45)" />
+        <path d="M6,1 L10,1 L8,0 L10,-1 L6,-1 Z" transform="rotate(90)" />
+        <path d="M6,1 L10,1 L8,0 L10,-1 L6,-1 Z" transform="rotate(135)" />
+        <path d="M6,1 L10,1 L8,0 L10,-1 L6,-1 Z" transform="rotate(180)" />
+        <path d="M6,1 L10,1 L8,0 L10,-1 L6,-1 Z" transform="rotate(225)" />
+        <path d="M6,1 L10,1 L8,0 L10,-1 L6,-1 Z" transform="rotate(270)" />
+        <path d="M6,1 L10,1 L8,0 L10,-1 L6,-1 Z" transform="rotate(315)" />
+    </g>
+</svg>
