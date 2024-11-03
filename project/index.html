@@ -26,6 +26,7 @@
 
         <input type="text" name="name"  placeholder="Name der Veranstaltung">
         <input type="text" name="place" placeholder="Ort der Veranstaltung">
+
         <div id="calendar" class="calendar-container">
             <h2 id="theme">Wann ?</h2>
             <div class="calendar">
@@ -89,6 +90,28 @@
                     <div><div class="empty"></div></div>
                     <div><div class="empty floor-right"></div></div>
                 </section>
+            </div>
+
+            <div class="buttons movement">
+                <button onclick="calendar.reset()">RESET</button>
+                <button onclick="calendar.next()">WEITER</button>
+                <button onclick="calendar.redo()">OOPS</button>
+            </div>
+
+            <div class="buttons type">
+                <button onclick="calendar.menuList(0)" style="color:red">${this.menu[0].name}</button>
+                <button onclick="calendar.menuList(1)" style="color:blue">${this.menu[1].name}</button>
+                <button onclick="calendar.menuList(2)" style="color:brown">${this.menu[2].name}</button>
+            </div>
+            <div class="buttons full id0">
+                <button onclick="calendar.setJob(0)" style="color:red">${this.menu[0].name}</button>
+                <button onclick="calendar.setJob(1)" style="color:red">${this.menu[0].name}</button>
+                <button onclick="calendar.setJob(2)" style="color:red">${this.menu[0].name}</button>
+            </div>
+            <div class="buttons full id1">
+                <button onclick="calendar.setJob(0)" style="color:blue">${this.menu[0].name}</button>
+                <button onclick="calendar.setJob(1)" style="color:blue">${this.menu[0].name}</button>
+                <button onclick="calendar.setJob(2)" style="color:blue">${this.menu[0].name}</button>
             </div>
 
 

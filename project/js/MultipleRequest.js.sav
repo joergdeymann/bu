@@ -1,0 +1,60 @@
+// request.js
+import { PHP } from "../js/PHP.js";
+
+export class XRequest extends PHP {
+    constructor(query = null) {
+        super(); // falls PHP eine eigene Super-Klasse hat
+        this.query = query;
+        this.response = null;
+        this.isLoading = false;
+    }
+
+    async getRequest(query = this.query) {
+        this.isLoading = true;
+        const php = new PHP('./php/request.php');
+        const parameters = { query: query };
+        
+        this.response = await php.get(parameters);
+        this.isLoading = false;
+        
+        return this.response; // Rückgabe der gelesenen Daten
+    }
+
+    async getData() {
+        // Wartet, falls der Ladevorgang noch läuft
+        if (this.isLoading) {
+            await this.getRequest();
+        }
+        return this.response;
+    }
+}
+
+// main.js
+import { XRequest } from "./request.js";
+
+async function loadMultipleRequests(queries) {
+    // Erstelle eine Array von `Request`-Instanzen
+    const requests = queries.map(query => new Request(query));
+
+    // Starte alle `getRequest()`-Aufrufe gleichzeitig (ohne `await`), um die Daten zu laden
+    const loadPromises = requests.map(request => request.getRequest());
+
+    // Warte auf alle `getRequest`-Aufrufe mit `Promise.all()`
+    await Promise.all(loadPromises);
+
+    // Hole alle geladenen Daten mit `getData()`
+    const results = await Promise.all(requests.map(request => request.getData()));
+
+    return results;
+}
+
+// Beispielaufruf:
+const queries = [
+    "SELECT * FROM Datei",
+    "SELECT * FROM Users",
+    "SELECT * FROM Orders"
+];
+
+loadMultipleRequests(queries).then(data => {
+    console.log(data); // Ausgabe des Arrays mit allen Ergebnissen
+});

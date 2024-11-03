@@ -1,6 +1,7 @@
 import { Calendar } from './Calendar.js';
 import { ProjectCalendarRender } from './ProjectCalendarRender.js';
 import { PHP } from './PHP.js';
+import { ProjectJobs } from './ProjectJobs.js';
 
 export class ProjectCalendar extends Calendar {
     position=0;
@@ -86,8 +87,9 @@ export class ProjectCalendar extends Calendar {
       */
     constructor(dateString="") {
         super(dateString);
-        
+        this.jobs=new ProjectJobs();    
         this.render=new ProjectCalendarRender(this);
+
     };
 
     setMonth(month) {
@@ -197,6 +199,7 @@ export class ProjectCalendar extends Calendar {
     }
 
     renderCalendar() {
+        this.getJobHeadlines();
         return this.render.renderCalendar();
     }
 
@@ -204,6 +207,9 @@ export class ProjectCalendar extends Calendar {
         return this.render.addCaledarSetupListener();
     }
 
+    async getJobHeadlines() {
+        let x= this.jobs.getJobHeadlines();
+    }
 
 
 }

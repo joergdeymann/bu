@@ -6,7 +6,7 @@ export class PHP {
     }
 
     async get(keyvalues) {
-        fetch(this.#filename, {
+        return fetch(this.#filename, {
             method: 'POST',
             headers: { 
                 'Content-Type': 'application/json' 
@@ -20,6 +20,7 @@ export class PHP {
         .catch(error => {
             // ###Fehlerbehandlung für JS SCRIPT !!
             console.error('Fehler:', error);
+            throw error;
         });
     }
     
