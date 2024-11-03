@@ -1,4 +1,4 @@
-import {Request} from "../js/request.js" // Sollte aber groß sein
+import {Request} from "../js/Request.js" // Sollte aber groß sein
 
 export class ProjectJobs  {
     request;

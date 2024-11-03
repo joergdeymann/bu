@@ -1,14 +1,8 @@
 import { ProjectCalendar } from './ProjectCalendar.js';
-import { PHP } from './PHP.js';
-
-
-function calendarNext(event,day) {
-    calendar.setCalendarInformation(date,day)
-}
+import { Request } from './Request.js';
 
 
 function init() {
-    // project=new Project();
     let calendar=new ProjectCalendar();
     window.calendar=calendar;
 
@@ -17,36 +11,9 @@ function init() {
 }
 
 
-
-
-async function get(keyvalues=null) {
-    let filename="./php/request.php";
-    return fetch(filename, {
-        method: 'POST',
-        headers: { 
-            'Content-Type': 'application/json' 
-        },
-        body: JSON.stringify(keyvalues)
-    })
-    .then(response => response.json())
-    .then(data => {
-        console.log("OUT");
-        // console.log(data);
-        return data; // Rückgabe vom PHP-Skript anzeigen
-    })
-    .catch(error => {
-        // ###Fehlerbehandlung für JS SCRIPT !!
-        console.log("Fehler");
-        console.error('Fehler:', error);
-        throw error;
-    });
-}
-
-
 async function XPHP() {
-    let p=new PHP("./php/request.php");
-    let data=await p.get();
-    // let data=await get();
+    let p=new Request("SELECT * FROM `bu_project_jobs`  ORDER BY father; ");
+    let data=await p.getData();
     console.log(data);
 }
 

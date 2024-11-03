@@ -1,5 +1,5 @@
 export class PHP {
-    #filename;
+    #filename; // Root is the Directory of the HTML file
 
     constructor(filename) {
         this.#filename=filename
