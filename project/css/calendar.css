@@ -173,7 +173,8 @@ Hover each event
     width: 10px;
     height: 10px;
     background-color: #FF33FF;
-    border: black solid 1px;
+    border: rgba(0,0,0,0.5) solid 1px;
+    border-radius: 50vh;
     font-size: 8px;
 
     padding:1px;
@@ -210,5 +211,9 @@ Hover each event
     width: 100%;
 }
 
-
+.calendar-setup label {
+    display:flex;
+    flex-direction: row;
+    justify-content: flex-start;
+}
 

@@ -1,10 +1,14 @@
+import {ProjectJobs} from "../js/ProjectJobs.js";
+
 export class ProjectCalendarRender {
     calendar;
-    constructor(calendar) {
-        console.log("Hallo");
-        console.log(calendar.setup);
-        this.calendar=calendar;
+    jobs;
 
+    constructor(calendar) {
+        // console.log("Hallo");
+        // console.log(calendar.setup);
+        this.calendar=calendar;
+        this.jobs=new ProjectJobs();
     }
 
 
@@ -24,8 +28,8 @@ export class ProjectCalendarRender {
                         <label><input name="travel" type="checkbox" ${travelChecked}>An- und Abfahrt</label>
                     </nav>
                 </div>
-
             </div>
+
             <div class="calendar">
                 <nav>
                     <img src="../img/pfeil-links.png" onclick="calendar.setMonth(-1)">
@@ -42,9 +46,14 @@ export class ProjectCalendarRender {
                     <div>So</div>
                 </header>
                 <section>${this.calendar.renderCalendarDays()}</section>
+
             </div>
-        `
+            
+
+        `;
+        // document.getElementById("calendar").innerHTML=html;
         return html;
+        // return html;
     }
 
     addCaledarSetupListener() {
@@ -102,7 +111,7 @@ export class ProjectCalendarRender {
      * @returns - html width Empty Cells
      */
     renderEmptyCellsStart() {
-        const weekday=this.calendar.getDayOfWeek();
+        const  weekday=this.calendar.getDayOfWeek();
         return Array.from({ length: weekday }, () => `<div><div class="empty"></div></div>`).join('');
     }
     
@@ -115,8 +124,11 @@ export class ProjectCalendarRender {
      * @returns - html width Empty Cells
      */
     renderEmptyCellsEnd(date) {
-        const remainingDays = (7 - date.getDay()) % 7; // Berechnet die verbleibenden Tage bis zum nächsten Montag
-        return Array.from({ length: remainingDays }, () => `<div><div class="empty"></div></div>`).join('');
+        //const remainingDays = (8 - date.getDay()) % 7; // Berechnet die verbleibenden Tage bis zum nächsten Montag
+        let remainingDays = (8 - date.getDay()) % 7; // Berechnet die verbleibenden Tage bis zum nächsten Montag
+        if (remainingDays == 0) return "";
+        return Array.from({ length: --remainingDays }, () => `<div><div class="empty"></div></div>`).join('') + `<div class="floor-right"><div class="empty"></div></div>`;
+        
     }       
 
     getStyles(dt,ds,de) {
@@ -171,7 +183,7 @@ export class ProjectCalendarRender {
                     format+=" end";
                 } 
                 if (dt >= ds && dt <= de) {
-                    styles.push(`background-color:${entry.color}`);
+                    styles.push(`background:${entry.color}`);
                     display=true;
                 }
                 if (dt == arrival ) {
@@ -198,11 +210,22 @@ export class ProjectCalendarRender {
                 }
             }
 
+            
+
+            let floor="";
+            let d=new Date(date.getFullYear(),date.getMonth(),0).getDate(); // last day in Month
+            
+            if (date.getDate() == this.getDateLastMonday(date).getDate()) {
+                floor=`class="floor-left"`;
+            }
+            if (date.getDate() == this.getDateLastMonday(date).getDate()+6) {
+                floor=`class="floor-right"`;
+            }
   
             html+=/*html*/ `
-            <div>
+            <div ${floor}>
                 ${htmlLevel.join("")}
-                <span onclick="calendar.setCalendarInformation(event,'${dt}')">${date.getDate()}</span>
+                <span onclick="calendar.setCalendarInformation('${dt}')">${date.getDate()}</span>
             </div>
             `;
     
@@ -217,5 +240,16 @@ export class ProjectCalendarRender {
         return html;
     }
 
+    getDateLastMonday(givenDate) {
+        // Monat wird in JS mit 0-indexiert (0 = Januar, 11 = Dezember)
+        let lastDay = new Date(givenDate.getFullYear(), givenDate.getMonth()+1, 0); // letzter Tag des Monats
+        let dayOfWeek = lastDay.getDay(); // Wochentag des letzten Tages (0 = Sonntag, 1 = Montag, ..., 6 = Samstag)
+    
+        let offset = (dayOfWeek >= 1) ? dayOfWeek - 1 : 6;
+    
+        lastDay.setDate(lastDay.getDate() - offset);
+        return lastDay;
+    }
+    
 
 }

@@ -3,8 +3,34 @@ input,textarea {
     border-radius: 8px;
     padding: 8px;
     border: 1px solid grey;
+    height: 1em;
+    display: flex;
 }
 
 ::placeholder {
     color: rgb(200,200,200);
+}
+
+.input-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    gap: 8px
+}
+
+.input-container input, 
+textarea {
+        flex:1;
+}
+
+.group {
+    display: flex;
+    flex-direction: row;
+    align-items:center;
+    gap: 4px;
+}
+
+::placeholder,textarea {
+    font-family: inherit;
 }

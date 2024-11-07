@@ -6,13 +6,20 @@ button {
     cursor: pointer;
     height: 3rem;
     border-radius: 1.5rem;
-    box-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+    box-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+    text-shadow: 0px 0px 6px rgba(255,255,255,1);
 
     outline: none;
-    border: 1px solid var(--button-border);
-    font-weight: 400;
+    /* border: 1px solid var(--button-border); */
+    border: none;
+    font-weight: 700;
     font-size: 0.75rem;
+    color: #000000;
     margin: 4px;
+
+    box-shadow: 
+        inset 0px 0px 8px 2px rgba(230,230,210,0.5),
+        2px 2px 4px 0px rgba(0,0,0,0.2); 
 }
 
 .buttons {
@@ -20,16 +27,103 @@ button {
     flex-direction: row;
     justify-content: space-evenly;
     flex-wrap: wrap;
+    width: 310px;
 }
+
 .buttons.movement button {
     min-width: 90px;
+    /* background: linear-gradient(to top right, rgba(1, 175, 27,0.5), rgba(1, 175, 27,1)); */
+    background: linear-gradient(to top right, rgba(230, 230, 250,1), rgba(180, 180, 250,1));
+    height: 2rem;
+
+    box-shadow: 
+        inset 0px 0px 4px 2px rgba(180,180,180,0.2),
+        2px 2px 4px 0px rgba(0,0,0,0.2);
 }
+
 .buttons.type button {
-    min-width: 150px;
+    width: 140px;
+    border:none;
 }
+
+
 .buttons.full button {
-    min-width: calc(100% - 8px);
+    width: 100%;
+    margin-left:4px;
+    margin-right:4px;
 }
+
 .buttons button:hover {
     box-shadow: 2px 2px 4px rgba(255,0,0,0.5);
+}
+
+.XmyButton {
+    width: 200px;
+    height: 50px;
+    font-size: 20px;
+    color: #000000;
+    background: linear-gradient(to top right, rgba(1, 175, 27,0.1), rgba(1, 175, 27,1));
+    color: rgba(1, 175, 27,1);
+
+    border: none;
+    border-radius: 10px;
+    font-family: arial;
+    transition: all 0.25s ease;
+}
+.XmyButton:hover {
+    color: #000000;
+    background: linear-gradient(to top right, #01af1b, #1dd862);
+    border-color: none;
+} 
+
+/* background: linear-gradient(to top right, rgba(1, 175, 27, 0.3), rgba(1, 175, 27, 1)); */
+
+button.small {
+    width: 32px;
+    height: 32px;
+    min-width: 32px;
+    min-height: 32px;
+    border-radius: 50%;
+    font-size: 20px;
+    border: 1px solid rgba(0,0,0,0.5); 
+    display:flex;
+    justify-content: center;
+    align-items: center;
+    padding:0;
+ 
+
+    background: var(--input-button); 
+    box-shadow: var(--input-shadow); 
+}
+
+button.flex {
+    height: 32px;
+    border-radius: 50vh;
+    font-size: 1rem;
+    background: none;
+    border: 1px solid rgba(0,0,0,0.2); 
+    display:flex;
+    justify-content: center;
+    align-items: center;
+    padding:0;
+
+    background: var(--input-button); 
+    box-shadow: var(--input-shadow); 
+}
+button.flex.green {
+    background-color:lime;
+}
+
+button.flex.green:hover {
+    border: 2px solid red;
+    background-color: #99FF99;
+}
+
+button.bg-red-gradient {
+    background: linear-gradient(to top right, rgba(250, 130, 150,1), rgba(230, 30, 50,1)) !important;
+
+}
+
+button.bg-green-gradient {
+    background: linear-gradient(to top right, rgba(130, 250, 150,1), rgba(30, 230, 50,1)) !important;
 }

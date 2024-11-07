@@ -31,42 +31,48 @@ export class ProjectCalendar extends Calendar {
             end:'2024-11-05',
             arrival:'2024-11-03',
             departure:'2024-11-06',
-            color: '#00FF00'            
+            color: '#00FF00',
+            jobId: 6   
         },
         {
             start:'2024-11-10',
             end:'2024-11-12',
             arrival:'2024-11-09',
             departure:'2024-11-12',
-            color: '#00CC00'            
+            color: '#00CC00',
+            jobId: 1   
         },
         {
             start:'2024-11-12',
             end:'2024-11-14',
             arrival:'2024-11-12',
             departure:'2024-11-14',
-            color: '#009900'            
+            color: '#009900',            
+            jobId: 2
         },
         {
             start:'2024-11-15',
             end:'2024-11-16',
             arrival:'2024-11-15',
             departure:'2024-11-16',
-            color: '#66FF66'            
+            color: '#66FF66',            
+            jobId: 3   
         },
         {
             start:'2024-11-22',
             end:'2024-11-23',
             arrival:'2024-11-22',
             departure:'2024-11-23',
-            color: '#BBFFBB'            
+            color: '#BBFFBB',            
+            jobId: 4   
         },
         {
             start:'2024-11-25',
             end:'2024-11-26',
             arrival:'2024-11-25',
             departure:'2024-11-26',
-            color: '#00FFAA'            
+            color: '#00FFAA',            
+            jobId: 5   
         }
     ];
 
@@ -75,10 +81,15 @@ export class ProjectCalendar extends Calendar {
         end:'',
         arrival:'',
         departure:'',
-        color: 'orange'            
+        color: 'orange',
+        jobId:null,  
+        jobName:""   
     }
 
     render;
+    jobs;
+    undoList=[];
+
 
 
      /**
@@ -94,12 +105,12 @@ export class ProjectCalendar extends Calendar {
 
     setMonth(month) {
         this.date.setMonth(this.date.getMonth()+month);
-        document.getElementById(this.#Id).innerHTML=this.renderCalendar();
-        this.addCaledarSetupListener();
+        this.renderCalendarAll();
     }
 
 
-    setCalendarInformation(event,day) {
+
+    changeCalendarInformation(day) {
         if  (!this.setup.calendar.period && !this.setup.calendar.travel) {
             return;
         }
@@ -112,9 +123,14 @@ export class ProjectCalendar extends Calendar {
         if (this.position == 2)  this.newEntry.arrival=day;
         if (this.position == 3)  {
             this.newEntry.departure=day;
-            if (this.newEntry.arrival > this.newEntry.departure ) [this.newEntry.arrival,this.newEntry.departure ] = [this.newEntry.departure,this.newEntry.arrival];
+
+            if (this.newEntry.arrival != '' ) {
+                if (this.newEntry.arrival > this.newEntry.departure ) [this.newEntry.arrival,this.newEntry.departure ] = [this.newEntry.departure,this.newEntry.arrival];
+            }
         }
-        this.position = ++this.position%4;        
+   }
+   
+    calendarPosition() {     
         if  (!this.setup.calendar.period) {
             if (this.position == 0 || this.position==1) this.position=2;
         } else 
@@ -122,9 +138,15 @@ export class ProjectCalendar extends Calendar {
             if (this.position == 2 || this.position==3) this.position=0;
         }
         if (this.newEntry.start > this.newEntry.end ) [this.newEntry.start,this.newEntry.end ] = [this.newEntry.end,this.newEntry.start];
-        document.getElementById(this.#Id).innerHTML=this.renderCalendar();
-        this.addCaledarSetupListener();
     }
+
+    setCalendarInformation(day) {
+        this.changeCalendarInformation(day);
+        this.position = ++this.position%4;
+        this.calendarPosition();
+        this.renderCalendarAll();
+    }
+
 
     async getRequest() {
         let php=new PHP('./php/calendar_read.php');
@@ -193,24 +215,76 @@ export class ProjectCalendar extends Calendar {
     }
 
     
-    
+    renderCalendarAll() {
+        this.renderCalendar();
+        this.render.addCaledarSetupListener();
+    }
+
     renderCalendarDays() {
         return this.render.renderCalendarDays();
     }
 
-    renderCalendar() {
-        this.getJobHeadlines();
-        return this.render.renderCalendar();
+    renderCalendar(undo=true) {
+        if (undo) this.undoList.push({...this.newEntry,position:this.position});
+        document.getElementById("calendar").innerHTML = this.render.renderCalendar();
     }
 
-    addCaledarSetupListener() {
-        return this.render.addCaledarSetupListener();
+    // addCalendarSetupListener() {
+    //     return 
+    // }
+
+    async renderJobHeadline() {
+        document.getElementById("jobs").innerHTML=`<h2></h2>` + await this.jobs.renderJobHeadlines();
     }
 
-    async getJobHeadlines() {
-        let x= this.jobs.getJobHeadlines();
+    // async getJobHeadlines() {
+    //     this.jobs.getJobHeadlines();
+    // }
+
+    async getJobs(id) {
+        document.getElementById("jobs").innerHTML=`<h2>${this.newEntry.jobName}</h2>`+await this.jobs.renderJobs(id);
+    }
+    
+    async chooseJob(id) {
+        let job=this.jobs.getJob(id);
+        this.newEntry.color=job.color;
+        this.newEntry.jobId=id;
+        this.newEntry.jobName=job.name;
+        document.getElementById("jobs").innerHTML=`<h2>${this.newEntry.jobName}</h2>` + await this.jobs.renderJobHeadlines();
+        this.renderCalendarAll();
     }
 
+    reset() {
+        this.newEntry = {
+            ...this.newEntry,  // Die restlichen Attribute behalten
+            start: '',
+            end: '',
+            arrival: '',
+            departure: ''
+        };        
+        this.position=0;
+        this.renderCalendarAll();    
+    }
+
+    next() {
+        this.position = ++this.position%4;
+        this.calendarPosition();
+        this.renderCalendarAll();
+    }
+
+    undo() {
+        if (this.undoList.length<=1) return;
+        this.undoList.pop();
+        this.newEntry={...this.undoList[this.undoList.length-1]}; 
+        
+        // this.position = (this.position + 3) % 4;
+        this.position = this.newEntry.position;
+
+        this.calendarPosition();
+        this.renderCalendar(false);
+        this.render.addCaledarSetupListener();
+        document.getElementById("jobs").querySelector("h2").innerText=this.newEntry.jobName;
+    }
 
 }
 

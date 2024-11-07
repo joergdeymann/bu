@@ -1,13 +1,26 @@
+import { ProjectInputs } from './ProjectInputs.js';
 import { ProjectCalendar } from './ProjectCalendar.js';
 import { Request } from './Request.js';
+import { CustomerList } from './CustomerList.js';
 
 
-function init() {
+async function init() {
     let calendar=new ProjectCalendar();
     window.calendar=calendar;
+    let project=new ProjectInputs();
+    window.project=project;
+    let customer=new CustomerList();
+    window.customerList=customer;
 
-    document.getElementById("calendar").innerHTML=calendar.render.renderCalendar();
+    // customer.load(); better loadonDemand becase possible changes inbetween, if to slow, we need to preload without show
+
+    // document.getElementById("calendar").innerHTML=calendar.render.renderCalendar();    
+    calendar.renderCalendar();
     calendar.render.addCaledarSetupListener();
+    calendar.renderJobHeadline();
+    
+
+
 }
 
 
@@ -17,6 +30,6 @@ async function XPHP() {
     console.log(data);
 }
 
-XPHP();
+// XPHP();
 init();
 
