@@ -11,7 +11,7 @@ export class ProjectJobs  {
 
     async load() {
         if (this.json==null) {
-            this.json=await this.request.getData();
+            this.json=await this.request.get();
         }
     }
 

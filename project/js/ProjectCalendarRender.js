@@ -221,6 +221,10 @@ export class ProjectCalendarRender {
             if (date.getDate() == this.getDateLastMonday(date).getDate()+6) {
                 floor=`class="floor-right"`;
             }
+            
+            // let dateString=date.getFullYear+"-"+date.getMonth()+"-"+date.getDate() ;
+            // $dt = $date
+            dt=this.utcDate(date);
   
             html+=/*html*/ `
             <div ${floor}>
@@ -251,5 +255,15 @@ export class ProjectCalendarRender {
         return lastDay;
     }
     
+    utcDate(date) {
+        const year = date.getFullYear();
+        const month = String(date.getMonth() + 1).padStart(2, '0'); // Monate sind 0-basiert
+        const day = String(date.getDate()).padStart(2, '0');
+        const hours = String(date.getHours()).padStart(2, '0');
+        const minutes = String(date.getMinutes()).padStart(2, '0');
+        const seconds = String(date.getSeconds()).padStart(2, '0');
+        
+        return `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
+    }
 
 }

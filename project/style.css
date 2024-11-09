@@ -59,8 +59,7 @@ h2 {
     right:0;
     bottom:0;
     display: flex;
-    background-color:green;
-}
+ }
 
 .popup-list {
     /* height: 25vh; */
@@ -74,7 +73,7 @@ h2 {
     left:0px;
     right:0px;
     padding: 0px 8px 8px 8px ; 
-    font-size: 10px;
+    font-size: 14px;
     overflow-y: auto;
     display: flex;
     flex-direction: column;
@@ -89,11 +88,26 @@ h2 {
     height: 1em;
     padding: 2px;
 }
-.popup-list>div {
+.popup-list>div { /* :not(.red) */
+    display: flex; 
+    align-items: center;
     background-color: rgba(0,0,0,0.05);
     margin: 0.5em 0px 0.5em 0px;
+    cursor: pointer;
+    border-radius: 50vh;
+    padding: 4px 8px;
+    min-height:12px;
 }
-.popup-list>div:nth-of-type(odd) {
+.popup-list>div:nth-of-type(odd) { 
     background-color: rgba(0,0,0,0.1);
 }
+.popup-list>div:hover { /* :not(.red) */
+    background-color: rgba(0,0,0,0.3);
+}
 
+
+.red {
+    color: red;
+    font-weight: 600;
+    /* cursor: default; */
+}

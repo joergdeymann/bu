@@ -117,12 +117,21 @@
 
         <div class="input-container" >
             <input type="hidden" name="equipmentId[]">
-            <input type="text" name="equipmentName[]"  placeholder="Was bringst du mit">
-            <button class="small" type="button" onclick="project.selectEquipment()">&#128315;</button>
+            <input type="text" name="equipmentName[]" class="listener" placeholder="Was bringst du mit">
+            <button class="small" type="button" onclick="equipmentList.setWindow(event)">&#128315;</button>
         </div>
+
+        <div  id="popup" class="relative mb-16px d-none">
+            <div class="blocker"></div>
+            <div id="equipment-list" class="popup-list"></div>
+        </div>
+
         <div class="input-container">
             <div></div>
-            <button class="small" type="button" onclick="project.selectCustomer()">&#10133;</button>
+            <div class="group">
+                <button class="small" type="button" onclick="equipmentList.removeInputField(event)">&#10134;</button>
+                <button class="small" type="button" onclick="equipmentList.addInputField(event)">&#10133;</button>    
+            </div>
         </div>
         <div class="input-container" >
             <div>Unterkunft nötig?</div>

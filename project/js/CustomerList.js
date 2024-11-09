@@ -89,6 +89,7 @@ export class CustomerList {
             this.listContainer.classList.add("d-none");
             this.input.style.zIndex="";
         };
+        this.input.focus(); 
     }
 
     selectCustomer(id) {

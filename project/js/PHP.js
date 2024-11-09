@@ -19,6 +19,8 @@ export class PHP {
         })
         .catch(error => {
             // ###Fehlerbehandlung für JS SCRIPT !!
+            console.log("Request:\n"+keyvalues.query);
+            console.log(data.error);
             console.error('Fehler:', error);
             throw error;
         });
