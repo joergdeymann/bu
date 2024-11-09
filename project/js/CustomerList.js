@@ -38,7 +38,7 @@ export class CustomerList {
         let firma=14; // sollte aus der Session kommen
 
         let p=new Request(`SELECT recnum,firma FROM bu_kunden where auftraggeber=${firma} ORDER BY firma;`);
-        this.data=await p.getData();
+        this.data=await p.get();
         
         this.render();
         this.listContainer.classList.remove("d-none");

@@ -33,40 +33,19 @@ export class Request {
         this.element = element;
     }
 
-    // startLoad startet das Laden der Daten über fetchData
+    // startet das Laden der Daten über fetchData
     async request(query) {
-        if (this.isLoading) return; // Wenn schon geladen wird, abbrechen
-
-        this.isLoading = true; // Ladeprozess startet
-
-        this.promise = this.fetchData({query:query}); // fetchData wird aufgerufen und ein Promise zurückgegeben
-
+        if (this.isLoading) return; 
+        this.isLoading = true; 
+        this.promise = this.fetchData({query:query}); 
         this.promise.then(() => {
-            this.isLoading = false; // Ladeprozess abgeschlossen
-            // this.content = "Der Hinzugefügte Content"; // Content setzen, wenn die Daten geladen sind
+            this.isLoading = false; 
         });
-
-        // this.promiseList.push(this.promise);
     }
 
-    // doSingle prüft, ob die Daten bereits geladen sind, und wartet notfalls
     async get() {
-        if (!this.promise) {
-            console.log("Request: Promise wurde noch nicht gestartet.");
-            return;
-        }
-
-        console.log("Request: Warte auf den Ladeprozess...");
-        await this.promise; // Warten, bis das Promise abgeschlossen ist
-
-        // Ab hier später weg
-        console.log("Request: Promise Result:", this.content); // Zeigt den geladenen Content an
-
-        if (this.element && this.content) {
-            this.element.innerHTML = this.content;
-        } else {
-            console.error("Request: Element zum Testen ist nicht gesetzt.");
-        }
+        if (!this.promise) return;
+        await this.promise;
         return this.data;
     }
 
@@ -81,15 +60,12 @@ export class Request {
                 body: JSON.stringify(keyvalues)
             });
 
-            let data = await response.json(); // Antwort in JSON umwandeln
-            this.data=data;
-            console.log("Daten vom Server:", data);
-            return data; // Rückgabe der Daten aus dem PHP-Skript
+            this.data = await response.json(); 
+            return this.data; // Rückgabe der Daten aus dem PHP-Skript
 
         } catch (error) {
-            // Fehlerbehandlung
-            console.log("Request:\n" + keyvalues.query);
             console.error("Fehler im PHP-Skript:", error);
+            console.error("Request:\n" + keyvalues.query);
             throw error;
         }
     }

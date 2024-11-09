@@ -149,11 +149,16 @@
             </div>
         </div>
 
-        <div class="input-container hotel-name d-none" >
-            <input type="hidden" name="HotelId">
-            <input type="text" name="HotelName"  placeholder="Name der Unterkunft">
-            <button class="small" type="button" onclick="project.setHotel()">&#128315;</button>
+        <div class="input-container hotel-name unterkunft-name d-none" >
+            <input type="hidden" name="unterkunftId">
+            <input type="text" name="unterkunftName"  placeholder="Name der Unterkunft">
+            <button class="small" type="button" onclick="unterkunftList.toggleWindow();">&#128315;</button>
         </div>
+        <div class="relative mb-16px d-none">
+            <div class="blocker"></div>
+            <div id="unterkunft-list" class="popup-list"></div>
+        </div>
+
 
         <textarea rows="10" placeholder="Alles Wichtige hier rein"></textarea>
 

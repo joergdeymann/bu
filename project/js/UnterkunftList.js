@@ -8,11 +8,6 @@ export class UnterkunftList {
         this.addEvents();
     }
 
-    addCalendar(calendar) {
-        this.calendar=calendar;
-    }
-
-
     /**
      * 
      * --- !!! MUST CHANGES !!! --
@@ -21,14 +16,21 @@ export class UnterkunftList {
      *  
      */
     setElements() {
-        this.list=document.getElementById("equipment-list");
+        this.list=document.getElementById("unterkunft-list");
         this.listContainer=this.list.parentElement;
-        this.input=document.getElementsByName("equipmentName[]")[0];
-        this.inputId=document.getElementsByName("equipmentId[]")[0];
+        this.input=document.getElementsByName("unterkunftName")[0];
+        this.inputId=document.getElementsByName("unterkunftId")[0];
     }
 
     filterList() {
-        return this.data.filter(e=>e.name && e.name.toLowerCase().includes(this.input.value.toLowerCase()));  
+        let [name, ort] = this.input.value.toLowerCase().split(",").map(item => item.trim());
+        let all = this.input.value.toLowerCase();
+        return this.data.filter(e => 
+            (e.name && e.name.toLowerCase().includes(name)) || 
+            (e.ort && e.ort.toLowerCase().includes(ort)) ||
+            (e.name && e.name.toLowerCase().includes(all)) || 
+            (e.ort && e.ort.toLowerCase().includes(all))
+        );  
     }
 
     /**
@@ -41,20 +43,9 @@ export class UnterkunftList {
      */
 
     async load() { 
-        let von=this.calendar.newEntry.start;
-        let bis=this.calendar.newEntry.end;
         let firma=14; // sollte aus der Session kommen
 
-        let date=`0`;
-        if (von == '' && bis != '') {
-            date=`CASE WHEN MAX(CASE WHEN eq.von <= '${bis}' THEN 1 ELSE 0 END) = 1 THEN 1 ELSE 0 END`;
-        } else if (von != '' && bis == '') {
-            date=`CASE WHEN MAX(CASE WHEN eq.bis >= '${von}' THEN 1 ELSE 0 END) = 1 THEN 1 ELSE 0 END`;
-        } else if (von != '' && bis != '') {
-            date=`CASE WHEN MAX(CASE WHEN eq.bis >= '${von}' AND eq.von <= '${bis}' THEN 1 ELSE 0 END) = 1 THEN 1 ELSE 0 END`;
-        }
-
-        let p=new Request(`SELECT art.recnum, art.name, art.netto AS art_netto, art.mwst, art.auftraggeber,eq.von,eq.bis, MAX(pj.name) AS pj_name, ${date} AS inuse FROM bu_artikel art LEFT JOIN bu_project_equipment eq ON eq.equipment_recnum = art.recnum LEFT JOIN bu_projekt pj ON pj.recnum = eq.project_recnum WHERE art.auftraggeber = ${firma} AND art.leistung = 1 GROUP BY art.recnum, art.name, art.netto, art.mwst, art.auftraggeber ORDER BY art.auftraggeber;`);         
+        let p=new Request(`SELECT recnum,name,ort FROM bu_adresse WHERE zuordnung = 10 and firmanr=${firma};`);         
         this.data=await p.get();
         
         this.render();
@@ -72,13 +63,12 @@ export class UnterkunftList {
      *  
      */
     render() {
-        let html="<h1>Was bringst du mit?</h1>";
+        let html="<h1>Wo willst du schlafen?</h1>";
         for(let row of this.filterList()) {
-            // Version 1 = nicht auswählbar: let click=+row.inuse?'class="red"':`onclick="equipmentList.selectEquipment(${row.recnum})"`;
+            // Version 1 = nicht auswählbar: let click=+row.inuse?'class="red"':`onclick="unterkunftList.selectunterkunft(${row.recnum})"`;
             
-            let click=`onclick="equipmentList.selectEquipment(${row.recnum})"`+ (+row.inuse?' class="red"':``);
-            let info=+row.inuse?`<br>(${this.getGermanDate(row.von)} - ${this.getGermanDate(row.bis)})`:``;
-            html+=/*html*/`<div ${click}>${row.name} ${info}</div>`;
+            let click=`onclick="unterkunftList.selectUnterkunft(${row.recnum})"`;
+            html+=/*html*/`<div ${click}>${row.name},${row.ort}</div>`;
         }
         this.list.innerHTML=html;
     }
@@ -87,7 +77,6 @@ export class UnterkunftList {
         this.listContainer.querySelector(".blocker").addEventListener("mousedown",event => {
             this.listContainer.classList.add("d-none");
             this.input.style.zIndex="";
-
             event.preventDefault();
             event.stopPropagation();
         })
@@ -95,97 +84,30 @@ export class UnterkunftList {
             event.preventDefault();
             event.stopPropagation();
         })
-        this.addInputEvent();
 
+        this.input.addEventListener("input",event=> {
+            if (!this.listContainer.classList.contains("d-none")) {
+                this.render();
+            }
+        })
     }
 
-    addInputEvent() {
-        this.removeInputEvent();
-
-        this.input.addEventListener("input",this.handleInputEvent);
-        this.input.classList.add("listener");
-    }
-
-
-    handleInputEvent= () => {
-        if (!this.listContainer.classList.contains("d-none")) {
-            this.render();
-        }
-    }
-
-    removeInputEvent() {
-        
-        let element=document.querySelector("input.listener");
-        if (element == null) {
-            console.log("Input Listener war schon weg");
-            return;
-        }
-        element.classList.remove("listener");
-        element.removeEventListener("input",this.handleInputEvent);
-    }
-
-    setWindow(event) {
+    toggleWindow() {
         if(this.listContainer.classList.contains("d-none")) { 
-            event.target.closest(".input-container").insertAdjacentElement("afterend", document.getElementById("popup"));
-            let parent=event.target.parentElement;
-            this.input=parent.querySelector('input[name="equipmentName[]"]');
-            this.inputId =parent.querySelector('input[name="equipmentId[]"]');
-        }
-
-
-        this.toggleWindow();
-    }
-
-    async toggleWindow() {
-        if(this.listContainer.classList.contains("d-none")) { 
-            await this.load();
+            this.load();
             this.input.style.zIndex=2;
-            this.addInputEvent();
 
         } else {
             this.listContainer.classList.add("d-none");
             this.input.style.zIndex="";
         };
-        if (this.filterList().length>5) this.input.focus(); // On demanmd
+        this.input.focus(); 
     }
 
-    selectEquipment(id) {
-        let customer=this.data.find(e => e.recnum==id);
-        this.input.value=customer.name;
-        this.inputId.value=customer.recnum;
+    selectUnterkunft(id) {
+        let data=this.data.find(e => e.recnum==id);
+        this.input.value=`${data.name},${data.ort}`;
+        this.inputId.value=data.recnum;
         this.toggleWindow();
     }
-    
-    getGermanDate(d) {
-        if (d =='' ) return '';
-        let date = new Date(d);
-        return `${String(date.getDate()).padStart(2, "0")}.${String(date.getMonth() + 1).padStart(2, "0")}.${date.getFullYear()}`;
-    }
-
-    addInputField(event) {
-        let newContainer = document.createElement("div");
-        newContainer.classList.add("input-container");
-        newContainer.classList.add("equipment");
-        newContainer.innerHTML=/*html*/`
-            <input type="hidden" name="equipmentId[]">
-            <input type="text" name="equipmentName[]"  placeholder="Was bringst du mit">
-            <button class="small" type="button" onclick="equipmentList.setWindow(event)">&#128315;</button>
-        `; 
-        
-        event.target.closest(".input-container").insertAdjacentElement("beforebegin", newContainer);
-        
-
-    }
-
-    removeInputField(event) {
-        let list=document.querySelectorAll(".input-container.equipment");
-        let len=list.length;
-        if (len>0) {
-            list[len-1].remove();
-        }
-        // event.target.parentElement.priviousElementSibling.remove();
-
-    }
-
-
 }
