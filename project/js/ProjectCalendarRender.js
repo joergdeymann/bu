@@ -213,7 +213,7 @@ export class ProjectCalendarRender {
             
 
             let floor="";
-            let d=new Date(date.getFullYear(),date.getMonth(),0).getDate(); // last day in Month
+            // let d=new Date(date.getFullYear(),date.getMonth(),0).getDate(); // last day in Month
             
             if (date.getDate() == this.getDateLastMonday(date).getDate()) {
                 floor=`class="floor-left"`;

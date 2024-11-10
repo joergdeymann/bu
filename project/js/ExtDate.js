@@ -12,7 +12,7 @@ export class ExtDate {
 
     getDateString(lang=null) {
         let returndate=this.date.toLocaleString('de-DE', { timeZone: 'Europe/Berlin' });
-        if (lang == null) returndate=this.date.toString();
+        if (lang == null) return date=this.date.toString();
         return returndate;
     }
 
@@ -55,5 +55,4 @@ export class ExtDate {
         }
         return this.date.getDay();
     }
-
 }

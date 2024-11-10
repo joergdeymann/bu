@@ -159,7 +159,15 @@ export class ProjectCalendar extends Calendar {
  
     separateDateString(date) {
         if (date=="") return "";
-        return new Date(date).toISOString().slice(0,10);
+        const d=new Date(date);
+        const year = d.getFullYear();
+        const month = String(d.getMonth() + 1).padStart(2, '0'); // Monate sind 0-basiert
+        const day = String(d.getDate()).padStart(2, '0');
+        
+        return `${year}-${month}-${day}`;
+
+        // console.log(date,new Date(date).toISOString().slice(0,10));
+        // return new Date(date).toISOString().slice(0,10);
     }
 
     separateDate(date) {
@@ -226,7 +234,11 @@ export class ProjectCalendar extends Calendar {
 
     renderCalendar(undo=true) {
         if (undo) this.undoList.push({...this.newEntry,position:this.position});
-        document.getElementById("calendar").innerHTML = this.render.renderCalendar();
+        document.getElementById("calendar").innerHTML     = this.render.renderCalendar();
+        document.getElementsByName("from")[0].value       =this.newEntry.start.substring(0,10);
+        document.getElementsByName("to")[0].value         =this.newEntry.end.substring(0,10);
+        document.getElementsByName("arival")[0].value     =this.newEntry.arrival.substring(0,10);
+        document.getElementsByName("departure")[0].value  =this.newEntry.departure.substring(0,10);
     }
 
     // addCalendarSetupListener() {
@@ -284,6 +296,19 @@ export class ProjectCalendar extends Calendar {
         this.renderCalendar(false);
         this.render.addCaledarSetupListener();
         document.getElementById("jobs").querySelector("h2").innerText=this.newEntry.jobName;
+    }
+
+    updateFromInputs(event,position) {
+        // console.log(document.activeElement);
+        // console.log(event.target);
+        // console.log(event.currentTarget);
+        // console.log("-");
+        this.position=position;
+        let value=event.target.value==""?"":event.target.value + " 00:00:00";
+        if (position==1 && this.newEntry.start=='') this.newEntry.start=value;
+        this.date=new Date(value);
+        this.setCalendarInformation(`${value}`);
+
     }
 
 }

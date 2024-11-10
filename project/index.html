@@ -107,24 +107,24 @@
         <div class="input-date-container" >
             <div> 
                 <div class="relative flex-row">
-                    <input type="date" name="from" value="tt.mm.jjjj">
+                    <input type="date" name="from" onblur="calendar.updateFromInputs(event,0)">
                     <span>Start des Events</span>
                 </div>
 
                 <div class="relative flex-row">
-                    <input type="date" name="to" value="tt.mm.jjjj">
+                    <input type="date" name="to" onblur="calendar.updateFromInputs(event,1)">
                     <span>Ende des Events</span>
                 </div>                    
             </div>
 
             <div> 
                 <div class="relative flex-row">
-                    <input type="date" name="arrival">
+                    <input type="date" name="arival" onblur="calendar.updateFromInputs(event,2)">
                     <span>Anfahrt</span>
                 </div>
 
                 <div class="relative flex-row">
-                    <input type="date" name="departure">
+                    <input type="date" name="departure"  onblur="calendar.updateFromInputs(event,3)">
                     <span>Abfahrt</span>
                 </div>                    
             </div>
@@ -188,12 +188,15 @@
         </div>
 
 
-        <textarea rows="10" placeholder="Alles Wichtige hier rein"></textarea>
+        <textarea name="importanttext" rows="10" placeholder="Alles Wichtige hier rein"></textarea>
+
+        <textarea name="invoicetxt" rows="10" placeholder="Zusatztext für die Rechnung"></textarea>
 
         <div class="buttons movement flex-araound">
             <button class="bg-green-gradient" type="button" onclick="project.saveInput()">Fertig</button>
             <button class="bg-red-gradient" type="button" onclick="project.cancel()">Abbruch!</button>
         </div>
+
 
     </form>
     <br><br>
