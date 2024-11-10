@@ -43,7 +43,7 @@ export class EquipmentList {
     async load() { 
         let von=this.calendar.newEntry.start;
         let bis=this.calendar.newEntry.end;
-        let firma=14; // sollte aus der Session kommen
+        let firma=login.companyId; 
 
         let date=`0`;
         if (von == '' && bis != '') {

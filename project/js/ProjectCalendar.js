@@ -117,7 +117,7 @@ export class ProjectCalendar extends Calendar {
 
         if (this.position == 0)  {
             this.newEntry.start=day;
-            this.newEntry.end=day;
+            if (this.newEntry.end == '') this.newEntry.end=day;
         }
         if (this.position == 1)  this.newEntry.end=day;
         if (this.position == 2)  this.newEntry.arrival=day;
@@ -154,7 +154,6 @@ export class ProjectCalendar extends Calendar {
             searchDate: this.date.toISOString()
         }
         this.entries=await php.get(parameters);   
-
     }
  
     separateDateString(date) {
@@ -165,9 +164,6 @@ export class ProjectCalendar extends Calendar {
         const day = String(d.getDate()).padStart(2, '0');
         
         return `${year}-${month}-${day}`;
-
-        // console.log(date,new Date(date).toISOString().slice(0,10));
-        // return new Date(date).toISOString().slice(0,10);
     }
 
     separateDate(date) {
@@ -200,8 +196,6 @@ export class ProjectCalendar extends Calendar {
         }
         level[(new Date(entry.arrival)).getDate()] = 1;
         level[(new Date(entry.departure)).getDate()] = 1;
-        
-
     }
 
     getLevel() {
@@ -241,17 +235,9 @@ export class ProjectCalendar extends Calendar {
         document.getElementsByName("departure")[0].value  =this.newEntry.departure.substring(0,10);
     }
 
-    // addCalendarSetupListener() {
-    //     return 
-    // }
-
     async renderJobHeadline() {
         document.getElementById("jobs").innerHTML=`<h2></h2>` + await this.jobs.renderJobHeadlines();
     }
-
-    // async getJobHeadlines() {
-    //     this.jobs.getJobHeadlines();
-    // }
 
     async getJobs(id) {
         document.getElementById("jobs").innerHTML=`<h2>${this.newEntry.jobName}</h2>`+await this.jobs.renderJobs(id);
@@ -299,16 +285,11 @@ export class ProjectCalendar extends Calendar {
     }
 
     updateFromInputs(event,position) {
-        // console.log(document.activeElement);
-        // console.log(event.target);
-        // console.log(event.currentTarget);
-        // console.log("-");
         this.position=position;
         let value=event.target.value==""?"":event.target.value + " 00:00:00";
         if (position==1 && this.newEntry.start=='') this.newEntry.start=value;
         this.date=new Date(value);
         this.setCalendarInformation(`${value}`);
-
     }
 
 }

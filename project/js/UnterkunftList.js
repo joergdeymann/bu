@@ -43,7 +43,7 @@ export class UnterkunftList {
      */
 
     async load() { 
-        let firma=14; // sollte aus der Session kommen
+        let firma=login.companyId; 
 
         let p=new Request(`SELECT recnum,name,ort FROM bu_adresse WHERE zuordnung = 10 and firmanr=${firma};`);         
         this.data=await p.get();

@@ -37,7 +37,8 @@ export class Request {
     async request(query) {
         if (this.isLoading) return; 
         this.isLoading = true; 
-        this.promise = this.fetchData({query:query}); 
+        const json = query ? { query: query } : {};
+        this.promise = this.fetchData(json); 
         this.promise.then(() => {
             this.isLoading = false; 
         });
@@ -50,17 +51,27 @@ export class Request {
     }
 
     // fetchData führt die Fetch-Anfrage durch
-    async fetchData(keyvalues) {
+    async fetchData(keyvalues = {}) {
         try {
             const response = await fetch(this.filename, {
                 method: 'POST',
                 headers: {
-                    'Content-Type': 'application/json'
+                    'Content-Type': 'application/json',
+                    'Accept': 'application/json'
                 },
                 body: JSON.stringify(keyvalues)
             });
+            this.data = await response.json();
 
-            this.data = await response.json(); 
+            /*
+            const contentType = response.headers.get("content-type");
+            if (contentType && contentType.includes("application/json")) {
+                this.data = await response.json();
+            } else {
+                const errorText = await response.text(); // HTML oder Text lesen
+                throw new Error("Unerwartete Antwort: " + errorText);
+            }
+            */
             return this.data; // Rückgabe der Daten aus dem PHP-Skript
 
         } catch (error) {

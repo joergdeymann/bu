@@ -4,13 +4,20 @@ import { Request } from './Request.js';
 import { CustomerList } from './CustomerList.js';
 import { EquipmentList } from './EquipmentList.js';
 import { UnterkunftList } from './UnterkunftList.js';
+import { Login } from './Login.js';
+
 
 
 async function init() {
+    let login=new Login();
+    window.login=login;
+    let logged=await login.getSession();
+    if (!logged) return;
+
     let calendar=new ProjectCalendar();
     calendar.renderCalendar();
-    calendar.render.addCaledarSetupListener();
     calendar.renderJobHeadline();
+
     window.calendar=calendar;
     
     let project=new ProjectInputs();
@@ -25,14 +32,6 @@ async function init() {
     
     let unterkunftList=new UnterkunftList();
     window.unterkunftList=unterkunftList;
-
-
-    // customer.load(); better loadonDemand becase possible changes inbetween, if to slow, we need to preload without show
-
-    // document.getElementById("calendar").innerHTML=calendar.render.renderCalendar();    
-    
-
-
 }
 
 

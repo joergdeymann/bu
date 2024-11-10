@@ -35,7 +35,7 @@ export class CustomerList {
      *  
      */
     async load() {
-        let firma=14; // sollte aus der Session kommen
+        let firma=login.companyId; 
 
         let p=new Request(`SELECT recnum,firma FROM bu_kunden where auftraggeber=${firma} ORDER BY firma;`);
         this.data=await p.get();
