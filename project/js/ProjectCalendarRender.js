@@ -56,7 +56,7 @@ export class ProjectCalendarRender {
         // return html;
     }
 
-    addCaledarSetupListener() {
+    addCalendarSetupListener() {
         /*
             Close Setup of Calendar
         */
