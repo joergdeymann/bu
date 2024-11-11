@@ -17,7 +17,7 @@ async function init() {
     let calendar=new ProjectCalendar();
     calendar.renderCalendar();
     calendar.renderJobHeadline();
-    calendar.addCaledarSetupListener();
+    calendar.addCalendarSetupListener();
 
     window.calendar=calendar;
     
