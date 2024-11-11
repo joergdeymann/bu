@@ -280,7 +280,7 @@ export class ProjectCalendar extends Calendar {
 
         this.calendarPosition();
         this.renderCalendar(false);
-        this.render.addCaledarSetupListener();
+        this.render.addCalendarSetupListener();
         document.getElementById("jobs").querySelector("h2").innerText=this.newEntry.jobName;
     }
 
