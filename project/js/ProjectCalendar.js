@@ -219,7 +219,7 @@ export class ProjectCalendar extends Calendar {
     
     renderCalendarAll() {
         this.renderCalendar();
-        this.render.addCaledarSetupListener();
+        this.render.addCalendarSetupListener();
     }
 
     renderCalendarDays() {
