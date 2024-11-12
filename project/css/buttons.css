@@ -127,3 +127,8 @@ button.bg-red-gradient {
 button.bg-green-gradient {
     background: linear-gradient(to top right, rgba(130, 250, 150,1), rgba(30, 230, 50,1)) !important;
 }
+
+.selector-headline {
+    background: var(--input-button);
+    font-weight: 700;
+}

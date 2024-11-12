@@ -216,18 +216,18 @@ $request.=" ORDER BY bu_projekt_aufgabe.name,bu_mitarbeiter.name";
 
 // Neuer Request ist besser:
 
-$request ="SELECT *$select from bu_projekt";
+$request ="SELECT *$select FROM bu_projekt";
 
 $request.=" RIGHT JOIN bu_projekt_aufgabe"; 
 $request.=" ON bu_projekt_aufgabe.projekt_recnum = bu_projekt.recnum";
 
-$request.=" LEFT JOIN bu_projekt_einteilung";
-$request.=" ON  bu_projekt_einteilung.projekt_recnum = bu_projekt.recnum";
-$request.=" AND bu_projekt_einteilung.aufgabe = bu_projekt_aufgabe.recnum";
+$request.=" LEFT JOIN bu_project_division pd";
+$request.=" ON  pd.projectId = bu_projekt.recnum";
+$request.=" AND CAST(pd.jobDescription AS UNSIGNED) = bu_projekt_aufgabe.recnum";
 
 $request.=" LEFT JOIN bu_projekt_arbeiter";
-$request.=" ON bu_projekt_arbeiter.recnum= bu_projekt_einteilung.arbeiter";
-$request.=" AND bu_projekt_aufgabe.recnum= bu_projekt_einteilung.aufgabe";
+$request.=" ON bu_projekt_arbeiter.recnum= pd.projectWorkerId";
+$request.=" AND bu_projekt_aufgabe.recnum= CAST(pd.jobDescription AS UNSIGNED)";
 
 $request.=" LEFT JOIN bu_adresse";
 $request.=" ON bu_projekt_arbeiter.unterkunft_recnum = bu_adresse.recnum";

@@ -64,6 +64,8 @@ export class UnterkunftList {
      */
     render() {
         let html="<h1>Wo willst du schlafen?</h1>";
+        html+=/*html*/`<div class="selector-headline" onclick="unterkunftList.clearField()">Zurücksetzten</div>`
+
         for(let row of this.filterList()) {
             // Version 1 = nicht auswählbar: let click=+row.inuse?'class="red"':`onclick="unterkunftList.selectunterkunft(${row.recnum})"`;
             
@@ -110,4 +112,10 @@ export class UnterkunftList {
         this.inputId.value=data.recnum;
         this.toggleWindow();
     }
+    clearField() {
+        this.input.value="";
+        this.inputId.value="";
+        this.toggleWindow();
+    } 
+
 }

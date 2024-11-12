@@ -35,6 +35,10 @@ export class Request {
 
     // startet das Laden der Daten über fetchData
     async request(query) {
+        if (query) {
+            query=query.replace(/\s+/g, " ").trim();
+            // DEBUG console.log(query);
+        }
         if (this.isLoading) return; 
         this.isLoading = true; 
         const json = query ? { query: query } : {};

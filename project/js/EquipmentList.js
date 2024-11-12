@@ -73,6 +73,8 @@ export class EquipmentList {
      */
     render() {
         let html="<h1>Was bringst du mit?</h1>";
+        html+=/*html*/`<div class="selector-headline" onclick="equipmentList.clearField()">Zurücksetzten</div>`
+
         for(let row of this.filterList()) {
             // Version 1 = nicht auswählbar: let click=+row.inuse?'class="red"':`onclick="equipmentList.selectEquipment(${row.recnum})"`;
             
@@ -186,6 +188,15 @@ export class EquipmentList {
         // event.target.parentElement.priviousElementSibling.remove();
 
     }
+
+    clearField() {
+        let inputId = document.activeElement.parentElement.querySelector('input[name="equipmentId[]"]');
+        let input=document.activeElement.parentElement.querySelector('input[name="equipmentName[]"]');
+
+        input.value="";
+        inputId.value="";
+        this.toggleWindow();
+    } 
 
 
 }

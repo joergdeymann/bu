@@ -55,6 +55,7 @@ export class CustomerList {
      */
     render() {
         let html="<h1>Kundenliste</h1>";
+        html+=/*html*/`<div class="selector-headline" onclick="customerList.clearField()">Zurücksetzten</div>`
         for(let row of this.filterList) {
             html+=/*html*/`<div onclick="customerList.selectCustomer(${row.recnum})">${row.firma}</div>`;
         }
@@ -98,4 +99,10 @@ export class CustomerList {
         this.inputId.value=customer.recnum;
         this.toggleWindow();
     }
+
+    clearField() {
+        this.input.value="";
+        this.inputId.value="";
+        this.toggleWindow();
+    } 
 }

@@ -3,6 +3,8 @@ class Table {
 	// protected  $table; // eigentlich $table
 	protected  $db = "";
 	protected  $name;  // Table Name
+	protected  $id = 'recnum';
+	
 
 	public $insert=false;
 	public $update=false;
@@ -145,11 +147,11 @@ class Table {
 	}
 	
 	public function loadByRecnum($recnum=0) {
-		if (($recnum==0) and !empty($this->row['recnum'])) {
-			$recnum=$this->row['recnum'];
+		if (($recnum==0) and !empty($this->row[$this->id])) {
+			$recnum=$this->row[$this->id];
 		}
-		$request="select * from ".$this->name." where recnum='".$recnum."'";
-
+		$request="select * from ".$this->name." where $this->id='".$recnum."'";
+echo $request;
 		$result = $this->db->query($request);
 		$this->row = $result->fetch_assoc();
 		
@@ -164,7 +166,7 @@ class Table {
 			$_POST[$recnum]="";
 			return "";
 		}
-		$request="select * from ".$this->name." where recnum='".$_POST[$recnum]."'";
+		$request="select * from ".$this->name." where $this->id='".$_POST[$recnum]."'";
 
 		$result = $this->db->query($request);
 		$row = $result->fetch_assoc();
@@ -190,8 +192,8 @@ class Table {
 		if (empty($row)) {
 			$row=$this->row;
 		}
-		// $recnum=$row['recnum'];
-		unset ($row['recnum']);  // zur Sicherheit
+		// $recnum=$row[$this->id];
+		unset ($row[$this->id]);  // zur Sicherheit
 		
 		$this->row=$row;
 		$values="";
@@ -218,10 +220,10 @@ class Table {
 		try  {
 			$result = $this->db->query($request);
 			if ($result) {
-				$this->row['recnum']=$this->db->insert_id;
-				$_POST['recnum']=$this->db->insert_id;
+				$this->row[$this->id]=$this->db->insert_id;
+				$_POST[$this->id]=$this->db->insert_id;
 				
-				// echo "ID=".$this->row['recnum']."<br>";				
+				// echo "ID=".$this->row[$this->id]."<br>";				
 			} 
 			return $result;
 		} catch (Exception $e) {
@@ -250,17 +252,17 @@ class Table {
 		}
 
 		$recnum=0;
-		if (isset($row['recnum'])) {
-			$recnum=$row['recnum'];
+		if (isset($row[$this->id])) {
+			$recnum=$row[$this->id];
 		} else 
-		if (isset($this->row['recnum'])) {
-			$recnum=$this->row['recnum'];
+		if (isset($this->row[$this->id])) {
+			$recnum=$this->row[$this->id];
 		}
 		if ($recnum == 0) {
 			return false; // Update ohne recnum nicht möglich
 		}
 		
-		unset($row['recnum']);
+		unset($row[$this->id]);
 		
 		$set="";
 		foreach($row as $k => $v) {
@@ -284,10 +286,10 @@ class Table {
 			$set.="`".$k."`=$values";
 		}
 		
-		$request="update ".$this->name." set $set where `recnum`='".$recnum."'";	
+		$request="update ".$this->name." set $set where `$this->id`='".$recnum."'";	
 		$result = $this->query($request);
 		
-		$this->row['recnum']=$recnum;
+		$this->row[$this->id]=$recnum;
 		return $result; // Arrayoffset = null ?
 		
 	}
@@ -296,8 +298,8 @@ class Table {
 		if (empty($row)) {
 			$row=$this->row;
 		}
-		// $recnum=$row['recnum'];
-		unset ($row['recnum']);  // zur Sicherheit
+		// $recnum=$row[$this->id];
+		unset ($row[$this->id]);  // zur Sicherheit
 		
 		$this->row=$row;
 		$set="";
@@ -330,7 +332,7 @@ class Table {
 		}
 
 		if ($result) {
-			$this->row['recnum']=$this->db->insert_id;
+			$this->row[$this->id]=$this->db->insert_id;
 			$this->insert=false;
 			$this->update=false;
 			if ($this->db->affected_rows == 1) $this->insert=true;
@@ -387,7 +389,7 @@ class Table {
 			$where=$this->where2string($recnum);
 			$request="DELETE FROM ".$this->name." ".$where;
 		} else {
-			$request="DELETE FROM ".$this->name." WHERE recnum='".$recnum."'";
+			$request="DELETE FROM ".$this->name." WHERE $this->id='".$recnum."'";
 		}
 		$this->result = $this->query($request);
 		return $this->result;
@@ -401,7 +403,7 @@ class Table {
 		}
 	}
 	public function isUpdate() {
-		if ((isset($_POST['update'])) and !empty($_POST['recnum'])) {
+		if ((isset($_POST['update'])) and !empty($_POST[$this->id])) {
 			return true;
 		} else {
 			return false;

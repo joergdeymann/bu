@@ -2,6 +2,7 @@ import { Calendar } from './Calendar.js';
 import { ProjectCalendarRender } from './ProjectCalendarRender.js';
 import { PHP } from './PHP.js';
 import { ProjectJobs } from './ProjectJobs.js';
+import { ProjectWorker } from './ProjectWorker.js';
 
 export class ProjectCalendar extends Calendar {
     position=0;
@@ -25,56 +26,56 @@ export class ProjectCalendar extends Calendar {
     start, end, arrival, departure
     start, end, arrival, departure
     */
-    entries=[
-        {
-            start:'2024-11-03',
-            end:'2024-11-05',
-            arrival:'2024-11-03',
-            departure:'2024-11-06',
-            color: '#00FF00',
-            jobId: 6   
-        },
-        {
-            start:'2024-11-10',
-            end:'2024-11-12',
-            arrival:'2024-11-09',
-            departure:'2024-11-12',
-            color: '#00CC00',
-            jobId: 1   
-        },
-        {
-            start:'2024-11-12',
-            end:'2024-11-14',
-            arrival:'2024-11-12',
-            departure:'2024-11-14',
-            color: '#009900',            
-            jobId: 2
-        },
-        {
-            start:'2024-11-15',
-            end:'2024-11-16',
-            arrival:'2024-11-15',
-            departure:'2024-11-16',
-            color: '#66FF66',            
-            jobId: 3   
-        },
-        {
-            start:'2024-11-22',
-            end:'2024-11-23',
-            arrival:'2024-11-22',
-            departure:'2024-11-23',
-            color: '#BBFFBB',            
-            jobId: 4   
-        },
-        {
-            start:'2024-11-25',
-            end:'2024-11-26',
-            arrival:'2024-11-25',
-            departure:'2024-11-26',
-            color: '#00FFAA',            
-            jobId: 5   
-        }
-    ];
+    // entries=[
+    //     {
+    //         start:'2024-11-03',
+    //         end:'2024-11-05',
+    //         arrival:'2024-11-03',
+    //         departure:'2024-11-06',
+    //         color: '#00FF00',
+    //         jobId: 6   
+    //     },
+    //     {
+    //         start:'2024-11-10',
+    //         end:'2024-11-12',
+    //         arrival:'2024-11-09',
+    //         departure:'2024-11-12',
+    //         color: '#00CC00',
+    //         jobId: 1   
+    //     },
+    //     {
+    //         start:'2024-11-12',
+    //         end:'2024-11-14',
+    //         arrival:'2024-11-12',
+    //         departure:'2024-11-14',
+    //         color: '#009900',            
+    //         jobId: 2
+    //     },
+    //     {
+    //         start:'2024-11-15',
+    //         end:'2024-11-16',
+    //         arrival:'2024-11-15',
+    //         departure:'2024-11-16',
+    //         color: '#66FF66',            
+    //         jobId: 3   
+    //     },
+    //     {
+    //         start:'2024-11-22',
+    //         end:'2024-11-23',
+    //         arrival:'2024-11-22',
+    //         departure:'2024-11-23',
+    //         color: '#BBFFBB',            
+    //         jobId: 4   
+    //     },
+    //     {
+    //         start:'2024-11-25',
+    //         end:'2024-11-26',
+    //         arrival:'2024-11-25',
+    //         departure:'2024-11-26',
+    //         color: '#00FFAA',            
+    //         jobId: 5   
+    //     }
+    // ];
 
     newEntry= {
         start:'',
@@ -98,28 +99,39 @@ export class ProjectCalendar extends Calendar {
       */
     constructor(dateString="") {
         super(dateString);
+        this.timeline=new ProjectWorker();
         this.jobs=new ProjectJobs();    
         this.render=new ProjectCalendarRender(this);
+
 
     };
 
     setMonth(month) {
         this.date.setMonth(this.date.getMonth()+month);
+        // this.position;
         this.renderCalendarAll();
     }
 
-
+    ifDisableHeadline(forcechange) {
+        return (!this.setup.calendar.period && !this.setup.calendar.travel);       
+    }
 
     changeCalendarInformation(day) {
-        if  (!this.setup.calendar.period && !this.setup.calendar.travel) {
-            return;
-        }
-
         if (this.position == 0)  {
+            if (day>this.newEntry.end) {
+                this.newEntry.end=day;
+            }
+
             this.newEntry.start=day;
-            if (this.newEntry.end == '') this.newEntry.end=day;
+            // if (this.newEntry.end == '') this.newEntry.end=day;
+            // if (this.newEntry.end == '') this.newEntry.end=day;
         }
-        if (this.position == 1)  this.newEntry.end=day;
+        if (this.position == 1)  {
+            if (day<this.newEntry.start) {
+                this.newEntry.start=day;
+            }
+            this.newEntry.end=day;
+        }
         if (this.position == 2)  this.newEntry.arrival=day;
         if (this.position == 3)  {
             this.newEntry.departure=day;
@@ -128,24 +140,30 @@ export class ProjectCalendar extends Calendar {
                 if (this.newEntry.arrival > this.newEntry.departure ) [this.newEntry.arrival,this.newEntry.departure ] = [this.newEntry.departure,this.newEntry.arrival];
             }
         }
-   }
+    }
+
    
     calendarPosition() {     
+        if (this.position == 1) {
+            if (this.newEntry.start > this.newEntry.end ) [this.newEntry.start,this.newEntry.end ] = [this.newEntry.end,this.newEntry.start];
+        }
         if  (!this.setup.calendar.period) {
             if (this.position == 0 || this.position==1) this.position=2;
         } else 
         if  (!this.setup.calendar.travel) {
             if (this.position == 2 || this.position==3) this.position=0;
         }
-        if (this.newEntry.start > this.newEntry.end ) [this.newEntry.start,this.newEntry.end ] = [this.newEntry.end,this.newEntry.start];
     }
 
     setCalendarInformation(day) {
-        this.changeCalendarInformation(day);
-        this.position = ++this.position%4;
-        this.calendarPosition();
-        this.renderCalendarAll();
-    }
+        if (!this.setup.calendar.period && !this.setup.calendar.travel) {
+            return;
+       }
+       this.changeCalendarInformation(day);
+       this.position = ++this.position%4;   
+       this.calendarPosition(); 
+       this.renderCalendarAll();
+   }
 
 
     async getRequest() {
@@ -174,6 +192,20 @@ export class ProjectCalendar extends Calendar {
         // Check if there is an enty
         let from=new Date(entry.start);
         let to=new Date(entry.end);
+
+        let calendarStart=new Date(this.date.setDate(1));
+        let calendarEnd=new Date(this.date.getFullYear(),this.date.getMonth()+1,0);
+        // if (from < calendarStart || to > calendarEnd)  return true; // Event liegt außerhalb des Kalenders
+        if (this.outVisibleCalendar(entry)) return true;
+        if (from > calendarEnd && to > calendarEnd) {
+            console.log("Beidedrüber;");
+            return true;
+        }
+        if (from < calendarStart && to < calendarStart) {
+            console.log("Beidedrüber;");
+            return true;
+        }
+        
         let day=from.getDate();
         for (let date=from;date<=to;date.setDate(date.getDate()+1)) {
             if (date.getDate() < day) break;
@@ -198,12 +230,21 @@ export class ProjectCalendar extends Calendar {
         level[(new Date(entry.departure)).getDate()] = 1;
     }
 
+    outVisibleCalendar(entry) {
+        let calendarStart=this.date.setDate(1);
+        let calendarEnd=new Date(this.date.getFullYear(),this.date.getMonth()+1,0);
+        return (entry.from < calendarStart && entry.to < calendarStart) || 
+            (entry.to > calendarEnd && entry.from > calendarEnd); // Event liegt außerhalb des Kalenders
+    }
+
     getLevel() {
         let level=new Array(32);
         let levels=[];
         let index=0;
         levels.push(level);
         for (let entry of this.entries) { 
+            // if (this.outVisibleCalendar(entry)) continue;
+
             index=0;
             while  (!this.getLevelCheck(levels[index],entry)) {
                 if (levels[++index] == null) {
@@ -217,7 +258,10 @@ export class ProjectCalendar extends Calendar {
     }
 
     
-    renderCalendarAll() {
+    async renderCalendarAll() {
+        this.timeline.load(this.date);
+        this.entries=await this.timeline.get();
+
         this.renderCalendar();
         this.render.addCalendarSetupListener();
     }
@@ -287,9 +331,24 @@ export class ProjectCalendar extends Calendar {
     updateFromInputs(event,position) {
         this.position=position;
         let value=event.target.value==""?"":event.target.value + " 00:00:00";
-        if (position==1 && this.newEntry.start=='') this.newEntry.start=value;
+
+        // if (position==1 && this.newEntry.start=='') this.newEntry.start=value;
+        // if (position==0 && this.newEntry.end=='') this.newEntry.end=value;
+        // if (position==0) this.newEntry.start=value;
+        // if (position==1) this.newEntry.end=value;
+        // if (position==2) this.newEntry.arrival=value;
+        // if (position==3) this.newEntry.departure=value;
+        
+        
+        
+        
         this.date=new Date(value);
-        this.setCalendarInformation(`${value}`);
+        this.changeCalendarInformation(`${value}`);
+        // this.setCalendarInformation(`${value}`);
+        this.calendarPosition();
+        this.renderCalendar(false);
+        this.render.addCalendarSetupListener();
+
     }
 
 }

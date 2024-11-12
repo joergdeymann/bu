@@ -6,7 +6,7 @@ export class ProjectJobs  {
 
 
     constructor() {
-        this.request=new Request("SELECT * FROM `bu_project_jobs`  ORDER BY father; "); // where firma = 14 Eben welcher eingeloggt ist
+        this.request=new Request("SELECT * FROM `bu_job`  ORDER BY father; "); // where firma = 14 Eben welcher eingeloggt ist
     }
 
     async load() {
@@ -32,9 +32,10 @@ export class ProjectJobs  {
     async renderJobHeadlines() {
         let html="";
         let jobs=await this.getJobHeadlines();
+        
 
         for(let job of jobs) {
-            html+=`<button type="button" onclick="calendar.getJobs(${job.recnum})" style="background:${job.color}">${job.name}</button>`;
+            html+=`<button type="button" onclick="calendar.getJobs(${job.id})" style="background:${job.color}">${job.name}</button>`;
         }
         return `<div class="buttons type">${html}</div>`;
     }
@@ -44,12 +45,12 @@ export class ProjectJobs  {
         let jobs=await this.getJobs(id);
 
         for(let job of jobs) {
-            html+=`<button type="button" onclick="calendar.chooseJob(${job.recnum})" style="background:${job.color}">${job.name}</button>`;
+            html+=`<button type="button" onclick="calendar.chooseJob(${job.id})" style="background:${job.color}">${job.name}</button>`;
         }
         return `<div class="buttons full">${html}</div>`;
     }
     
     getJob(id) {
-        return this.json.find(e => e.recnum == id);
+        return this.json.find(e => e.id == id);
     }
 }
