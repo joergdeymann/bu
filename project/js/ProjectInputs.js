@@ -24,4 +24,11 @@ export class ProjectInputs {
         elements[1].classList.toggle("bg-red-gradient",!status);
         document.querySelector(".input-container.hotel-name").classList.toggle("d-none",!status); 
     }
+
+    setOvertime(event,status) {
+        let elements=event.target.parentElement.querySelectorAll("button"); // 1= Yes 2=No
+        elements[0].classList.toggle("bg-green-gradient",status);
+        elements[1].classList.toggle("bg-red-gradient",!status);
+        document.querySelector(".input-container.hotel-name").classList.toggle("d-none",!status); 
+    }
 }
