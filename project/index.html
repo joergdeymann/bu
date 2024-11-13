@@ -137,11 +137,29 @@
             <input type="text" name="customerName"  placeholder="Name des Kunden">
             <button class="small" type="button" onclick="customerList.toggleWindow();">&#128315;</button>
         </div>
-
         <div class="relative mb-16px d-none">
             <div class="blocker"></div>
             <div id="customer-list" class="popup-list"></div>
         </div>
+
+
+        <div class="input-container" >
+            <input type="text" name="netto-price"  placeholder="Tagessatz">
+            <button class="small" type="button" onclick="projectprice.toggleWindow();">?</button>
+        </div>
+        <div  id="popup" class="relative mb-16px d-none">
+            <div class="blocker"></div>
+            <div id="nettoprice-list" class="popup-list"></div>
+        </div>
+
+        <div class="input-container" >
+            <div>Überstunden berechnen?</div>
+            <div class="group">
+                <button class="flex w50p" type="button" onclick="project.setOverTime(event,true)">Ja</button>
+                <button class="flex w50p" type="button" onclick="project.setOverTime(event,false)">Nein</button>    
+            </div>
+        </div>
+
 
         <div class="input-container" >
             <input type="hidden" name="equipmentId[]">
