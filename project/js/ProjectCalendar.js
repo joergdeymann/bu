@@ -117,7 +117,17 @@ export class ProjectCalendar extends Calendar {
     }
 
     changeCalendarInformation(day) {
+        //if (this.newEntry.start == '' && this.newEntry.end != '') this.newEntry.start = this.newEntry.end;
+        // if (this.newEntry.start != '' && this.newEntry.end == '') this.newEntry.end = this.newEntry.start;
+        if (day == "") {
+            if (this.position == 0 && this.newEntry.end != '') this.newEntry.start = this.newEntry.end;
+            if (this.position == 1 && this.newEntry.start != '') this.newEntry.end = this.newEntry.start;
+            day=this.newEntry.start;
+
+        }
+
         if (this.position == 0)  {
+            
             if (day>this.newEntry.end) {
                 this.newEntry.end=day;
             }
@@ -140,6 +150,7 @@ export class ProjectCalendar extends Calendar {
                 if (this.newEntry.arrival > this.newEntry.departure ) [this.newEntry.arrival,this.newEntry.departure ] = [this.newEntry.departure,this.newEntry.arrival];
             }
         }
+        
     }
 
    
@@ -342,7 +353,7 @@ export class ProjectCalendar extends Calendar {
         
         
         
-        this.date=new Date(value);
+        if (value !== "") this.date=new Date(value);
         this.changeCalendarInformation(`${value}`);
         // this.setCalendarInformation(`${value}`);
         this.calendarPosition();
