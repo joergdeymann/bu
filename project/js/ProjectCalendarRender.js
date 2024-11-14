@@ -45,7 +45,7 @@ export class ProjectCalendarRender {
                     <div>Sa</div>
                     <div>So</div>
                 </header>
-                <section>${this.calendar.renderCalendarDays()}</section>
+                <section>${this.renderCalendarDays()}</section>
 
             </div>
             
