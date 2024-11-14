@@ -76,14 +76,10 @@ export class ProjectPrice {
     async load() {
         this.loadArticlePrice();
         this.loadCustomerPrice();
+        await this.cp.get();
+        await this.ap.get();
 
-        let customerPrice = 0;
-        let articlePrice = 0;
         if (this.input.value == '') {
-            // customerPrice = (await this.cp.get()).price;
-            // articlePrice = (await this.pj.get()).price;
-            await this.cp.get();
-            await this.ap.get();
             
             this.input.value =this.getProjectPrice(this.customPrice,this.articlePrice);
         }
@@ -136,10 +132,14 @@ export class ProjectPrice {
             
         });
 
-        this.input.addEventListener('keypress', function(event) {
-            const char = String.fromCharCode(event.key);
-            const value=event.target.value;
-            if (!/^\d*\.?\d*$/.test(value)) {
+        this.input.addEventListener('keydown', function(event) {
+            const char = event.key;
+
+            const controlKeys = ['Backspace', 'ArrowLeft', 'ArrowRight', 'Delete', 'Tab', 'Enter', 'Escape', 'Clear'];
+            if (controlKeys.includes(char)) {
+                return;
+            }
+            if (!/[0-9.]/.test(char) || (char === '.' && event.target.value.includes('.'))) {
                 event.preventDefault();
             }
         });
