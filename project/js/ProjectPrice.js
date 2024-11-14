@@ -11,10 +11,10 @@ export class ProjectPrice {
     }
 
     get customPrice() {
-        return this.cp.data[0].price;
+        return this.cp.data[0].price && 0;
     }
     get articlePrice() {
-        return this.ap.data[0].price;
+        return this.ap.data[0].price && 0;
     }
     /**
      * 
@@ -56,7 +56,8 @@ export class ProjectPrice {
             JOIN bu_job j
             ON j.articleId = a.recnum
             WHERE a.auftraggeber=${login.companyId} 
-            AND a.recnum=${calendar.newEntry.jobId};`);
+            AND a.recnum=${calendar.newEntry.jobId};`
+        );
     }
 
     /**
@@ -68,8 +69,9 @@ export class ProjectPrice {
      *  
      */
     getProjectPrice(customerPrice,articlePrice) {
-        if (customerPrice>0) return customerPrice;
+        // if (customerPrice>0) return customerPrice; // Perhaps own Table with Article-Customer-Price
         if (articlePrice>0) return articlePrice;
+        if (customerPrice>0) return customerPrice; // Meanwhile this order
         return '';
     }
 
@@ -80,7 +82,8 @@ export class ProjectPrice {
         await this.ap.get();
 
         if (this.input.value == '') {
-            
+            await this.cp.get();
+            await this.ap.get();            
             this.input.value =this.getProjectPrice(this.customPrice,this.articlePrice);
         }
         this.render();
@@ -128,8 +131,7 @@ export class ProjectPrice {
         this.input.addEventListener("input",event=> {
             if (!this.listContainer.classList.contains("d-none")) {
                 this.render();
-            }
-            
+            }           
         });
 
         this.input.addEventListener('keydown', function(event) {
@@ -157,10 +159,9 @@ export class ProjectPrice {
         this.input.focus(); 
     }
 
-    selectCustomer(id) {
+    XselectCustomer(id) {
         let customer=this.data.find(e => e.recnum==id);
         this.input.value=customer.firma;
-        this.inputId.value=customer.recnum;
         this.toggleWindow();
     }
 
