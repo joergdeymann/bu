@@ -1,7 +1,7 @@
 import { ProjectInputs } from './ProjectInputs.js';
 import { ProjectCalendar } from './ProjectCalendar.js';
 import { ProjectPrice } from './ProjectPrice.js';
-import { Request } from './Request.js';
+import { Query } from './Query.js';
 import { CustomerList } from './CustomerList.js';
 import { EquipmentList } from './EquipmentList.js';
 import { UnterkunftList } from './UnterkunftList.js';
@@ -40,7 +40,7 @@ async function init() {
 
 
 async function XPHP() {
-    let p=new Request("SELECT * FROM `bu_project_jobs`  ORDER BY father; ");
+    let p=new Query("SELECT * FROM `bu_project_jobs`  ORDER BY father; ");
     let data=await p.getData();
     console.log(data);
 }

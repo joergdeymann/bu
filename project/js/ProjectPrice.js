@@ -1,4 +1,4 @@
-import { Request } from './Request.js';
+import { Query } from './Query.js';
 
 export class ProjectPrice {
     
@@ -10,11 +10,19 @@ export class ProjectPrice {
         this.addEvents();
     }
 
-    get customPrice() {
-        return this.cp.data[0].price && 0;
+    async getCustomerPrice()  {
+
+        if (this.cp ==  null) return 0;
+        await this.cp.get();
+        return this.cp.data[0]?.price || 0;
     }
-    get articlePrice() {
-        return this.ap.data[0].price && 0;
+
+    async getArticlePrice() {
+        if (this.ap ==  null) return 0;
+        await this.ap.get();
+        return this.ap.data[0]?.price || 0;
+        // await this.ap;
+        // return this.ap.data[0].price && 0;
     }
     /**
      * 
@@ -35,7 +43,7 @@ export class ProjectPrice {
 
     loadCustomerPrice() {
         if (!customerList.id) return 0;
-        this.cp=new Request(`
+        this.cp=new Query(`
             SELECT tagessatz as price
             FROM bu_kunden 
             WHERE recnum=${customerList.id}
@@ -50,13 +58,13 @@ export class ProjectPrice {
     loadArticlePrice() {
         if (!calendar.newEntry.jobId ) return 0;
 
-        this.ap=new Request(`
+        this.ap=new Query(`
             SELECT a.netto as price 
             FROM bu_artikel a 
             JOIN bu_job j
             ON j.articleId = a.recnum
             WHERE a.auftraggeber=${login.companyId} 
-            AND a.recnum=${calendar.newEntry.jobId};`
+            AND j.id=${calendar.newEntry.jobId};`
         );
     }
 
@@ -78,13 +86,12 @@ export class ProjectPrice {
     async load() {
         this.loadArticlePrice();
         this.loadCustomerPrice();
-        await this.cp.get();
-        await this.ap.get();
+        this.customerPrice=await this.getCustomerPrice();
+        this.articlePrice=await this.getArticlePrice();            
 
+        // Only the first Time ? 0 is allowed:
         if (this.input.value == '') {
-            await this.cp.get();
-            await this.ap.get();            
-            this.input.value =this.getProjectPrice(this.customPrice,this.articlePrice);
+            this.input.value =this.getProjectPrice(this.customerPrice,this.articlePrice);
         }
         this.render();
         this.listContainer.classList.remove("d-none");
@@ -103,9 +110,9 @@ export class ProjectPrice {
         let html="<h1>Tagessatz</h1>";
         html+=/*html*/`
         <div class="selector-headline" onclick="projectPrice.clearField()">Zurücksetzten</div>
-        <div onclick="projectPrice.setPrice(${this.customPrice})">
+        <div onclick="projectPrice.setPrice(${this.customerPrice})">
             <div>Kundenpreis:</div>
-            <div>${this.customPrice} €</div>
+            <div>${this.customerPrice} €</div>
         </div>
         <div onclick="projectPrice.setPrice(${this.articlePrice})">
             <div>Artikelpreis:</div>

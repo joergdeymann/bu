@@ -132,3 +132,23 @@ button.bg-green-gradient {
     background: var(--input-button);
     font-weight: 700;
 }
+
+.list-button {
+    display: flex;
+    margin: 0;
+    justify-content: space-around;
+}
+
+.list-button-group {
+    display: flex;
+    margin: 0;
+    justify-content: space-around;
+}
+
+.list-button-group>div {
+    display: flex;
+    padding: 2px 8px;
+    border-radius: 25vh;
+    font-weight:700;
+}
+

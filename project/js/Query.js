@@ -1,4 +1,4 @@
-export class Request {
+export class Query {
     promise = null;
     // promiseList = [];
     filename = "";
@@ -51,8 +51,9 @@ export class Request {
     }
 
     async get() {
-        if (!this.promise) return;
-        await this.promise;
+        if (this.promise) {
+           await this.promise;
+        }
         console.log(this.data);
         return this.data;
     }

@@ -1,4 +1,4 @@
-import { Request } from './Request.js';
+import { Query } from './Query.js';
 
 export class CustomerList {
     
@@ -16,7 +16,7 @@ export class CustomerList {
      *  
      */
     get id() {
-        return +this.inputId.value;
+        return this.inputId.value==""?0:+this.inputId.value;
     }
 
     setElements() {
@@ -41,7 +41,7 @@ export class CustomerList {
     async load() {
         let firma=login.companyId; 
 
-        let p=new Request(`SELECT recnum,firma FROM bu_kunden where auftraggeber=${firma} ORDER BY firma;`);
+        let p=new Query(`SELECT recnum,firma FROM bu_kunden where auftraggeber=${firma} ORDER BY firma;`);
         this.data=await p.get();
         
         this.render();
@@ -59,7 +59,11 @@ export class CustomerList {
      */
     render() {
         let html="<h1>Kundenliste</h1>";
-        html+=/*html*/`<div class="selector-headline" onclick="customerList.clearField()">Zurücksetzten</div>`
+        html+=/*html*/`
+        <div class="list-button-group">
+            <div class="selector-headline" onclick="customerList.clearField()">Zurücksetzten</div>
+            <div class="selector-headline" onclick="customerList.addCustomer()">Neuer Kunde</div>
+        </div>`;
         for(let row of this.filterList) {
             html+=/*html*/`<div onclick="customerList.selectCustomer(${row.recnum})">${row.firma}</div>`;
         }

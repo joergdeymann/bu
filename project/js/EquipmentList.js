@@ -1,4 +1,4 @@
-import { Request } from './Request.js';
+import { Query } from './Query.js';
 
 export class EquipmentList {
     
@@ -54,7 +54,7 @@ export class EquipmentList {
             date=`CASE WHEN MAX(CASE WHEN eq.bis >= '${von}' AND eq.von <= '${bis}' THEN 1 ELSE 0 END) = 1 THEN 1 ELSE 0 END`;
         }
 
-        let p=new Request(`SELECT art.recnum, art.name, art.netto AS art_netto, art.mwst, art.auftraggeber,eq.von,eq.bis, MAX(pj.name) AS pj_name, ${date} AS inuse FROM bu_artikel art LEFT JOIN bu_project_equipment eq ON eq.equipment_recnum = art.recnum LEFT JOIN bu_projekt pj ON pj.recnum = eq.project_recnum WHERE art.auftraggeber = ${firma} AND art.leistung = 1 GROUP BY art.recnum, art.name, art.netto, art.mwst, art.auftraggeber ORDER BY art.auftraggeber;`);         
+        let p=new Query(`SELECT art.recnum, art.name, art.netto AS art_netto, art.mwst, art.auftraggeber,eq.von,eq.bis, MAX(pj.name) AS pj_name, ${date} AS inuse FROM bu_artikel art LEFT JOIN bu_project_equipment eq ON eq.equipment_recnum = art.recnum LEFT JOIN bu_projekt pj ON pj.recnum = eq.project_recnum WHERE art.auftraggeber = ${firma} AND art.leistung = 1 GROUP BY art.recnum, art.name, art.netto, art.mwst, art.auftraggeber ORDER BY art.auftraggeber;`);         
         this.data=await p.get();
         
         this.render();

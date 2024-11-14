@@ -1,4 +1,4 @@
-import { Request } from './Request.js';
+import { Query } from './Query.js';
 
 export class Login {
     userName=null;
@@ -13,7 +13,7 @@ export class Login {
     async getSession() {
         // document.location.replace("./php/login.php");
         let filename='./php/login.php';
-        let session=new Request();
+        let session=new Query();
         session.setFilename(filename);
         // session.request(document.location.pathname);
         session.request();

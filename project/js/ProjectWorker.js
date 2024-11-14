@@ -1,4 +1,4 @@
-import { Request } from './Request.js';
+import { Query } from './Query.js';
 
 export class ProjectWorker {
     request; 
@@ -21,7 +21,7 @@ export class ProjectWorker {
         // arbeitszeit für einen Tag
         // ueberstunden_satz
 
-        this.request=new Request(`
+        this.request=new Query(`
             SELECT 
                 w.recnum as jobId,
                 w.projekt_recnum,

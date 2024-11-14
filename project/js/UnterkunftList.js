@@ -1,4 +1,4 @@
-import { Request } from './Request.js';
+import { Query } from './Query.js';
 
 export class UnterkunftList {
     
@@ -45,7 +45,7 @@ export class UnterkunftList {
     async load() { 
         let firma=login.companyId; 
 
-        let p=new Request(`SELECT recnum,name,ort FROM bu_adresse WHERE zuordnung = 10 and firmanr=${firma};`);         
+        let p=new Query(`SELECT recnum,name,ort FROM bu_adresse WHERE zuordnung = 10 and firmanr=${firma};`);         
         this.data=await p.get();
         
         this.render();

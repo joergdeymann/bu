@@ -81,3 +81,14 @@ textarea {
     font-family: inherit;
     font-size: 12px;
 }
+
+.input-container .right {
+    position: absolute;
+    right: 56px;
+    top:0px;
+    bottom: 0px;
+    display: flex;
+    align-items: center;
+    font-size: smaller;
+
+}
