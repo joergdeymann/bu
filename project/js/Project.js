@@ -1,5 +1,6 @@
 import { ProjectInputs } from './ProjectInputs.js';
 import { ProjectCalendar } from './ProjectCalendar.js';
+import { ProjectPrice } from './ProjectPrice.js';
 import { Request } from './Request.js';
 import { CustomerList } from './CustomerList.js';
 import { EquipmentList } from './EquipmentList.js';
@@ -22,6 +23,9 @@ async function init() {
     
     let project=new ProjectInputs();
     window.project=project;
+
+    let projectPrice=new ProjectPrice();
+    window.projectPrice=projectPrice;
     
     let customer=new CustomerList();
     window.customerList=customer;

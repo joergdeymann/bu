@@ -2,7 +2,7 @@ import {Request} from "../js/Request.js" // Sollte aber groß sein
 
 export class ProjectJobs  {
     request;
-    json=null;
+    data=null;
 
 
     constructor() {
@@ -10,21 +10,21 @@ export class ProjectJobs  {
     }
 
     async load() {
-        if (this.json==null) {
-            this.json=await this.request.get();
+        if (this.data==null) {
+            this.data=await this.request.get();
         }
     }
 
     async getJobHeadlines() {
         await this.load();
 
-        let filter=this.json.filter(e => e.father == null);
+        let filter=this.data.filter(e => e.father == null);
         return filter;
     }
 
     async getJobs(filterId) {
         await this.load();
-        let filter=this.json.filter(e => e.father == filterId);
+        let filter=this.data.filter(e => e.father == filterId);
         return filter;
     }
 
@@ -51,6 +51,12 @@ export class ProjectJobs  {
     }
     
     getJob(id) {
-        return this.json.find(e => e.id == id);
+        return this.data.find(e => e.id == id);
     }
+    
+    get(id) {
+        return this.data.find(e => e.id == id);
+    }
+
+
 }

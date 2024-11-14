@@ -24,7 +24,7 @@ export class ProjectWorker {
         this.request=new Request(`
             SELECT 
                 w.recnum as jobId,
-                w.projekt_recnum, 
+                w.projekt_recnum,
                 left(w.start,10) as start, 
                 left(w.ende,10) as end, 
                 left(w.anfahrt,10) as arrival,

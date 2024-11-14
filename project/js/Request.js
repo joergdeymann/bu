@@ -37,7 +37,9 @@ export class Request {
     async request(query) {
         if (query) {
             query=query.replace(/\s+/g, " ").trim();
-            // DEBUG console.log(query);
+            console.log("request:",query); //DEBUG 
+        } else {
+            console.log("request: no Parameter"); //DEBUG 
         }
         if (this.isLoading) return; 
         this.isLoading = true; 
@@ -51,6 +53,7 @@ export class Request {
     async get() {
         if (!this.promise) return;
         await this.promise;
+        console.log(this.data);
         return this.data;
     }
 

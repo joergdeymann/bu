@@ -15,6 +15,10 @@ export class CustomerList {
      * Change the right Side customerXX ind your ids given in HTML
      *  
      */
+    get id() {
+        return +this.inputId.value;
+    }
+
     setElements() {
         this.list=document.getElementById("customer-list");
         this.listContainer=this.list.parentElement;
