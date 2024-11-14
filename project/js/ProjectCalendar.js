@@ -277,9 +277,9 @@ export class ProjectCalendar extends Calendar {
         this.render.addCalendarSetupListener();
     }
 
-    renderCalendarDays() {
-        return this.render.renderCalendarDays();
-    }
+    // renderCalendarDays() {
+    //     return this.render.renderCalendarDays();
+    // }
 
     renderCalendar(undo=true) {
         if (undo) this.undoList.push({...this.newEntry,position:this.position});
