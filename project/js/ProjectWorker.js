@@ -33,9 +33,14 @@ export class ProjectWorker {
                 w.unterkunft_start, 
                 w.unterkunft_ende, 
                 w.info,
-                w.color
-
+                w.color,
+                p.name as projectName,
+                a.ort as city
             FROM bu_projekt_arbeiter w 
+            LEFT JOIN bu_projekt as p
+                ON p.recnum = w.projekt_recnum
+            LEFT JOIN bu_adresse as a
+                ON a.recnum = p.location_recnum
             WHERE w.firma_recnum=${login.companyId}
             AND (
                 (w.start between "${from}" and "${to}") OR 
@@ -46,7 +51,9 @@ export class ProjectWorker {
             ORDER BY w.start`
         );
     }
-    
+    // mitarbeiter_recnum ist hier sinnlos, da es eine eigene Date dafür gibt
+    // AND w.mitarbeiter_recnum = ${login.userId}
+
     async get() {
         this.data=await this.request.get();
         return this.data;

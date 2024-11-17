@@ -4,10 +4,20 @@ import { ProjectPrice } from './ProjectPrice.js';
 import { Query } from './Query.js';
 import { CustomerList } from './CustomerList.js';
 import { EquipmentList } from './EquipmentList.js';
+import { EquipmentPrice } from './EquipmentPrice.js';
 import { UnterkunftList } from './UnterkunftList.js';
 import { Login } from './Login.js';
+import { Setup } from './Setup.js';
 
 
+class Options {
+    calendarShowNames= false;
+    calendarOnlyMainColors= false;
+    calendarDefaultOptionDate=true;
+    calendarDefaultOptionTravel= true;
+    calendarInputDate = true;
+    calendarInputTravel = true;
+}    
 
 async function init() {
     let login=new Login();
@@ -33,9 +43,15 @@ async function init() {
     let equipmentList=new EquipmentList();
     equipmentList.addCalendar(calendar);
     window.equipmentList=equipmentList;
+
+    let equipmentPrice=new EquipmentPrice();
+    window.equipmentPrice=equipmentPrice;
     
     let unterkunftList=new UnterkunftList();
     window.unterkunftList=unterkunftList;
+
+    let setup=new Setup();
+    window.setup=setup;
 }
 
 

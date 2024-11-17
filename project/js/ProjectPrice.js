@@ -35,6 +35,8 @@ export class ProjectPrice {
         this.list=document.getElementById("price-list");
         this.listContainer=this.list.parentElement;
         this.input=document.getElementsByName("price-name")[0];
+        this.inputDisplay =this.input.closest(".input-container").querySelector('.right');
+
     }
 
     // get filterList() {
@@ -135,11 +137,15 @@ export class ProjectPrice {
             event.stopPropagation();
         });
 
+        this.input.addEventListener("focus", this.handleFocusEvent);
+        this.input.addEventListener("blur", this.handleFocusEvent);
+
         this.input.addEventListener("input",event=> {
             if (!this.listContainer.classList.contains("d-none")) {
                 this.render();
             }           
         });
+
 
         this.input.addEventListener('keydown', function(event) {
             const char = event.key;
@@ -154,16 +160,27 @@ export class ProjectPrice {
         });
     }
 
+    handleFocusEvent= (event) => {
+        if (event.target.value == "") {
+            this.inputDisplay.classList.add("d-none");
+        } else {
+            this.inputDisplay.classList.toggle("d-none",document.activeElement === this.input);
+            if (document.activeElement !== this.input) {
+                this.input.value = parseFloat("0"+this.input.value).toFixed(2) || "";   
+            }
+        }
+    }
+
     async toggleWindow() {
         if(this.listContainer.classList.contains("d-none")) { 
             await this.load();
             this.input.style.zIndex=2;
+            this.input.focus(); 
 
         } else {
             this.listContainer.classList.add("d-none");
             this.input.style.zIndex="";
         };
-        this.input.focus(); 
     }
 
     XselectCustomer(id) {
@@ -178,6 +195,7 @@ export class ProjectPrice {
     } 
     setPrice(price) {
         this.input.value=price;
+        this.input.blur();
         this.toggleWindow();
     }
 }

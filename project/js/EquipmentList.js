@@ -1,7 +1,7 @@
 import { Query } from './Query.js';
 
 export class EquipmentList {
-    
+    filteredList=[]
     
     constructor() {
         this.setElements();
@@ -25,10 +25,12 @@ export class EquipmentList {
         this.listContainer=this.list.parentElement;
         this.input=document.getElementsByName("equipmentName[]")[0];
         this.inputId=document.getElementsByName("equipmentId[]")[0];
+        this.inputDisplay =this.input.closest(".input-container").querySelector('.right');
     }
 
     filterList() {
-        return this.data.filter(e=>e.name && e.name.toLowerCase().includes(this.input.value.toLowerCase()));  
+        
+        return this.filteredList=this.data.filter(e=>e.name && e.name.toLowerCase().includes(this.input.value.toLowerCase()));  
     }
 
     /**
@@ -41,20 +43,44 @@ export class EquipmentList {
      */
 
     async load() { 
-        let von=this.calendar.newEntry.start;
-        let bis=this.calendar.newEntry.end;
-        let firma=login.companyId; 
+        let from=this.calendar.newEntry.start;
+        let to=this.calendar.newEntry.end;
+        let companyId=login.companyId; 
 
         let date=`0`;
-        if (von == '' && bis != '') {
-            date=`CASE WHEN MAX(CASE WHEN eq.von <= '${bis}' THEN 1 ELSE 0 END) = 1 THEN 1 ELSE 0 END`;
-        } else if (von != '' && bis == '') {
-            date=`CASE WHEN MAX(CASE WHEN eq.bis >= '${von}' THEN 1 ELSE 0 END) = 1 THEN 1 ELSE 0 END`;
-        } else if (von != '' && bis != '') {
-            date=`CASE WHEN MAX(CASE WHEN eq.bis >= '${von}' AND eq.von <= '${bis}' THEN 1 ELSE 0 END) = 1 THEN 1 ELSE 0 END`;
+        if (from == '' && to != '') {
+            date=`CASE WHEN MAX(CASE WHEN eq.from <= '${to}' THEN 1 ELSE 0 END) = 1 THEN 1 ELSE 0 END`;
+        } else if (from != '' && to == '') {
+            date=`CASE WHEN MAX(CASE WHEN eq.to >= '${from}' THEN 1 ELSE 0 END) = 1 THEN 1 ELSE 0 END`;
+        } else if (from != '' && to != '') {
+            date=`CASE WHEN MAX(CASE WHEN eq.to >= '${from}' AND eq.from <= '${to}' THEN 1 ELSE 0 END) = 1 THEN 1 ELSE 0 END`;
         }
 
-        let p=new Query(`SELECT art.recnum, art.name, art.netto AS art_netto, art.mwst, art.auftraggeber,eq.von,eq.bis, MAX(pj.name) AS pj_name, ${date} AS inuse FROM bu_artikel art LEFT JOIN bu_project_equipment eq ON eq.equipment_recnum = art.recnum LEFT JOIN bu_projekt pj ON pj.recnum = eq.project_recnum WHERE art.auftraggeber = ${firma} AND art.leistung = 1 GROUP BY art.recnum, art.name, art.netto, art.mwst, art.auftraggeber ORDER BY art.auftraggeber;`);         
+        let p=new Query(`
+            SELECT 
+                art.recnum, 
+                art.name, 
+                art.netto AS art_netto, 
+                art.mwst, 
+                art.auftraggeber,
+                eq.articleId,
+                eq.from,
+                eq.to, 
+                MAX(pj.name) AS pj_name, 
+                ${date} AS inuse 
+            FROM bu_artikel art 
+            LEFT JOIN bu_project_equipment eq 
+                ON eq.articleId = art.recnum 
+            LEFT JOIN bu_projekt pj 
+                ON pj.recnum = eq.projectId 
+            WHERE art.auftraggeber = ${companyId} 
+                AND art.leistung = 1 
+            GROUP BY 
+                art.recnum, 
+                art.name, art.netto, 
+                art.mwst, art.auftraggeber 
+            ORDER BY art.auftraggeber;
+        `);         
         this.data=await p.get();
         
         this.render();
@@ -79,7 +105,7 @@ export class EquipmentList {
             // Version 1 = nicht auswählbar: let click=+row.inuse?'class="red"':`onclick="equipmentList.selectEquipment(${row.recnum})"`;
             
             let click=`onclick="equipmentList.selectEquipment(${row.recnum})"`+ (+row.inuse?' class="red"':``);
-            let info=+row.inuse?`<br>(${this.getGermanDate(row.von)} - ${this.getGermanDate(row.bis)})`:``;
+            let info=+row.inuse?`<br>(${this.getGermanDate(row.from)} - ${this.getGermanDate(row.to)})`:``;
             html+=/*html*/`<div ${click}>${row.name} ${info}</div>`;
         }
         this.list.innerHTML=html;
@@ -104,8 +130,15 @@ export class EquipmentList {
     addInputEvent() {
         this.removeInputEvent();
 
+        this.input.addEventListener("change",event=> {
+            this.inputId.value="";
+            this.inputDisplay.innerText="";            
+        })
+
         this.input.addEventListener("input",this.handleInputEvent);
         this.input.classList.add("listener");
+        this.input.addEventListener("focus", this.handleFocusEvent);
+        this.input.addEventListener("blur", this.handleFocusEvent);
     }
 
 
@@ -114,6 +147,18 @@ export class EquipmentList {
             this.render();
         }
     }
+    handleFocusEvent= (event) => {
+        if (event.target.value == "") {
+            this.inputDisplay.classList.add("d-none");
+        } else {
+            this.inputDisplay.classList.toggle("d-none",document.activeElement === this.input);
+        }
+    }
+
+    showPrice() {
+        this.inputDisplay.classList.remove("d-none");
+    }
+
 
     removeInputEvent() {
         
@@ -132,6 +177,7 @@ export class EquipmentList {
             let parent=event.target.parentElement;
             this.input=parent.querySelector('input[name="equipmentName[]"]');
             this.inputId =parent.querySelector('input[name="equipmentId[]"]');
+            this.inputDisplay =this.input.closest(".input-container").querySelector('.right');
         }
 
 
@@ -143,19 +189,23 @@ export class EquipmentList {
             await this.load();
             this.input.style.zIndex=2;
             this.addInputEvent();
+            if (this.filteredList.length>5) this.input.focus(); // On demanmd
 
         } else {
             this.listContainer.classList.add("d-none");
             this.input.style.zIndex="";
         };
-        if (this.filterList().length>5) this.input.focus(); // On demanmd
     }
 
     selectEquipment(id) {
-        let customer=this.data.find(e => e.recnum==id);
-        this.input.value=customer.name;
-        this.inputId.value=customer.recnum;
+        let equipment=this.data.find(e => e.recnum==id);
+
+        this.input.blur();
+        this.input.value=equipment.name;
+        this.inputId.value=equipment.recnum;
         this.toggleWindow();
+        this.getPrice(equipment); //Neu -> equpmentPrice.getPrice(equipment)
+        this.showPrice();
     }
     
     getGermanDate(d) {
@@ -193,10 +243,16 @@ export class EquipmentList {
         let inputId = document.activeElement.parentElement.querySelector('input[name="equipmentId[]"]');
         let input=document.activeElement.parentElement.querySelector('input[name="equipmentName[]"]');
 
+        // this.input.focus();
         input.value="";
         inputId.value="";
+        this.inputDisplay.innerText="";
         this.toggleWindow();
     } 
+
+    async getPrice(equipment) {
+        this.inputDisplay.innerText = await equipmentPrice.getPrice(equipment);
+    }
 
 
 }

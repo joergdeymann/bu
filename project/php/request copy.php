@@ -5,8 +5,6 @@
 
     header('Content-Type: application/json');
 
-    //$data["query"] = Query of select or update whtaever
-    //$data["noreturn"] = if not a SELECT command
     $input = file_get_contents("php://input");
     $data = json_decode($input, true);
     if (json_last_error() !== JSON_ERROR_NONE) {
@@ -14,7 +12,6 @@
         exit;
     }
 
-    $dsn = "mysql:host=your_host;dbname=your_database;charset=utf8mb4";
     $dbname = "bu"; 
     $user="php";
     $pw="#php#8.0-..";
@@ -37,24 +34,12 @@
     $rows=[];
     $request=$data["query"];
     $result = $db->query($request);
-    if (!isset($data["noreturn"])) {
+    if (strtolower(substr($request,0,6)) == "select") {
         while($row=$result->fetch_assoc()) {
             $rows[] = $row;
         }
-    } 
-    // if (strtolower(substr($request,0,6)) == "select") {
-    //     while($row=$result->fetch_assoc()) {
-    //         $rows[] = $row;
-    //     }
-    // }
+    }
     echo json_encode($rows);
-
-
-
-
-
-
-
 
 ?>
 

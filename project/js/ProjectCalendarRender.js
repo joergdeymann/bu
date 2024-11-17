@@ -1,14 +1,15 @@
-import {ProjectJobs} from "../js/ProjectJobs.js";
+// import {ProjectJobs} from "../js/ProjectJobs.js"; // Wird nicht von innen genutzt
+
 
 export class ProjectCalendarRender {
     calendar;
-    jobs;
+    // jobs;
 
     constructor(calendar) {
         // console.log("Hallo");
         // console.log(calendar.setup);
         this.calendar=calendar;
-        this.jobs=new ProjectJobs();
+        // this.jobs=new ProjectJobs();
     }
 
 
@@ -135,7 +136,61 @@ export class ProjectCalendarRender {
 
     }
 
+    daysUntil(date, endDate) {
+        const today = new Date(date); // Gegebenes Datum
+        const targetEndDate = new Date(endDate); // Enddatum
+        if (today.getDay() == 0) return 0;
 
+        // Nächster Sonntag berechnen
+        const nextSunday = new Date(today);
+        nextSunday.setDate(today.getDate() + (7 - today.getDay())); // Tag bis Sonntag hinzufügen
+    
+        // Differenzen berechnen
+        const daysToSunday = Math.ceil((nextSunday - today) / (1000 * 60 * 60 * 24));
+        const daysToEndDate = Math.ceil((targetEndDate - today) / (1000 * 60 * 60 * 24));
+    
+        // Rückgabe: Das frühere Ziel
+        return Math.min(daysToSunday, daysToEndDate);
+    }
+
+    isSunday(date) {
+        const today = new Date(date); // Gegebenes Datum
+        return today.getDay() == 0;
+    }
+    isMonday(date) {
+        const today = new Date(date); // Gegebenes Datum
+        return today.getDay() == 1;
+    }
+
+    renderPlate(plateSize,cl,entry) {
+        let display;
+
+        display=entry.projectName;
+        display=entry.city;
+        if (!display) {
+            cl += " new";
+        }
+        return `<div style="width:calc(${plateSize} + 2px); " class="calendar-text ${cl}"><div >${display ?? "Neu"}</div></div>`;
+    }
+
+    addPlate(dt,ds,de,entry,level,levels) {
+        // dt = date
+        // de end of event
+        let add="";
+        let cl="center"
+        if (levels==2) {
+            if (level==0 || levels==0) cl="top";
+            else if (level==levels-1) cl="bottom";    
+        }
+
+        const plateSize = `${this.daysUntil(dt, de)*100+100}%`;
+
+        if ((this.isMonday(dt) && (ds<=dt) && (dt <=de)) || dt == ds) {
+            add=this.renderPlate(plateSize,cl,entry);
+        };
+        return add;
+    }
+    
 
     renderCalendarDays() {
         this.calendar.date.setDate(1); 
@@ -158,6 +213,7 @@ export class ProjectCalendarRender {
             let add="";   // Arrival or Depature
             let format="";
             let displayCount=0;
+            let hideday="";
 
             let htmlLevel=Array(levels).fill(empty);
 
@@ -166,6 +222,8 @@ export class ProjectCalendarRender {
                 let de=this.calendar.separateDateString(entry.end);
                 let arrival   =this.calendar.separateDateString(entry.arrival);
                 let departure =this.calendar.separateDateString(entry.departure);
+
+
 
                 let display=false;
                 let styles=[];
@@ -176,6 +234,9 @@ export class ProjectCalendarRender {
                 styles.push(`top: ${Math.floor(100/levels*level)}% `);
                 // styles.push(`top:calc(50% - 1px)`);
                 
+
+                add+=this.addPlate(dt,ds,de,entry,level,levels);
+
                 if (dt == ds) {
                     format+=" start";
                 } 
@@ -183,8 +244,19 @@ export class ProjectCalendarRender {
                     format+=" end";
                 } 
                 if (dt >= ds && dt <= de) {
-                    styles.push(`background:${entry.color}`);
+                    // styles.push(`filter: brightness(1.5)`);
+                    // Wenn sie überlappen
+                    
+                    let uc=calendar.jobs.get(entry.jobId).ultimateColor;
+                    let color=setup.mobileCalendarMainColors?uc:entry.color;
+                    styles.push(`background:${color}`);
                     display=true;
+                    
+                    if (levels == 3 && level==1) {
+                        // debugger;
+                        hideday="trans25";
+                    }
+
                 }
                 if (dt == arrival ) {
                     add+=`<span class="small bl">An</span>`;
@@ -198,6 +270,7 @@ export class ProjectCalendarRender {
                 }
 
                 if (display) {
+
                     ++displayCount;
                     style="";
                     if (styles.length>0) style=`style="${styles.join(";")}"`;
@@ -229,7 +302,7 @@ export class ProjectCalendarRender {
             html+=/*html*/ `
             <div ${floor}>
                 ${htmlLevel.join("")}
-                <span onclick="calendar.setCalendarInformation('${dt}')">${date.getDate()}</span>
+                <span class="${hideday}" onclick="calendar.setCalendarInformation('${dt}')">${date.getDate()}</span>
             </div>
             `;
     

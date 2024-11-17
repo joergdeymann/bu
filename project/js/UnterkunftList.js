@@ -2,6 +2,7 @@ import { Query } from './Query.js';
 
 export class UnterkunftList {
     
+    filteredList=[]    
     
     constructor() {
         this.setElements();
@@ -25,7 +26,7 @@ export class UnterkunftList {
     filterList() {
         let [name, ort] = this.input.value.toLowerCase().split(",").map(item => item.trim());
         let all = this.input.value.toLowerCase();
-        return this.data.filter(e => 
+        return this.filteredList=this.data.filter(e => 
             (e.name && e.name.toLowerCase().includes(name)) || 
             (e.ort && e.ort.toLowerCase().includes(ort)) ||
             (e.name && e.name.toLowerCase().includes(all)) || 
@@ -87,6 +88,10 @@ export class UnterkunftList {
             event.stopPropagation();
         })
 
+        this.input.addEventListener("change",event=> {
+            this.inputId.value="";
+        })
+
         this.input.addEventListener("input",event=> {
             if (!this.listContainer.classList.contains("d-none")) {
                 this.render();
@@ -98,21 +103,22 @@ export class UnterkunftList {
         if(this.listContainer.classList.contains("d-none")) { 
             this.load();
             this.input.style.zIndex=2;
-
+            if (this.filteredList>5) this.input.focus(); 
         } else {
             this.listContainer.classList.add("d-none");
             this.input.style.zIndex="";
         };
-        this.input.focus(); 
     }
 
     selectUnterkunft(id) {
         let data=this.data.find(e => e.recnum==id);
+        this.input.blur();
         this.input.value=`${data.name},${data.ort}`;
         this.inputId.value=data.recnum;
         this.toggleWindow();
     }
     clearField() {
+        this.input.focus();
         this.input.value="";
         this.inputId.value="";
         this.toggleWindow();

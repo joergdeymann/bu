@@ -134,6 +134,7 @@ Hover each event
     border-radius: 8px;
     font-size: 2rem;
     transform: scale(1.1);
+    color: rgba(0,0,0,1);
 }
 
 /*
@@ -179,6 +180,7 @@ Hover each event
 
     padding:1px;
     white-space: nowrap;
+    z-index:1;
 }
 
 .calendar .bl {
@@ -216,4 +218,44 @@ Hover each event
     flex-direction: row;
     justify-content: flex-start;
 }
+
+.calendar .calendar-text {
+    box-sizing: border-box;
+    position: absolute;
+    left:0px;
+    top:-2px;
+    bottom:-1px;
+    display:flex;
+    justify-content: flex-start; 
+    /* align-items: flex-end; /* flex-start;*/
+    width: 200%;
+    z-index:1;
+    pointer-events: none;
+    border-radius:50vh;
+    padding-top: 1px;
+    padding-bottom: 1px;
+}
+.calendar .calendar-text.new {
+    border: 2px solid red;
+}
+
+.calendar .calendar-text>div {
+    margin: 0px 12px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;      
+    font-size: 10px;
+    pointer-events: none;
+}
+
+.calendar .calendar-text.top {
+    align-items: flex-start;
+}
+.calendar .calendar-text.bottom {
+    align-items: flex-end; 
+}
+.calendar .calendar-text.center {
+    align-items: center;
+}
+
 
