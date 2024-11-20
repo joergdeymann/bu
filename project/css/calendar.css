@@ -105,6 +105,7 @@ Hover each event
     padding:0;
     border-color: var(--cell-border-hover);
     font-size: 2rem;
+    color:#0099ff80
 }
 
 /*
@@ -194,9 +195,10 @@ Hover each event
 }
 
 .calendar .big {
-    background-color: #FF33FF;
+    background: linear-gradient(to top,rgba(255,51,255,0.5), rgba(255,51,255,1));
     border-radius:50vh;
 }
+
 .calendar .floor-left {
     border-bottom-left-radius: 8px;
 }
@@ -227,22 +229,31 @@ Hover each event
     bottom:-1px;
     display:flex;
     justify-content: flex-start; 
-    /* align-items: flex-end; /* flex-start;*/
     width: 200%;
     z-index:1;
     pointer-events: none;
-    border-radius:50vh;
     padding-top: 1px;
     padding-bottom: 1px;
 }
 .calendar .calendar-text.new {
-    border: 2px solid red;
+    border-top: 2px solid red;
+    border-bottom: 2px solid red;
+}
+.calendar .calendar-text.leftradius.new {
+    border-left: 2px solid red;
+    border-top-left-radius:50vh;
+    border-bottom-left-radius:50vh;
+}
+.calendar .calendar-text.rightradius.new {
+    border-right: 2px solid red;
+    border-top-right-radius:50vh;
+    border-bottom-right-radius:50vh;
 }
 
 .calendar .calendar-text>div {
     margin: 0px 12px;
     overflow: hidden;
-    text-overflow: ellipsis;
+    /* text-overflow: ellipsis;*/
     white-space: nowrap;      
     font-size: 10px;
     pointer-events: none;

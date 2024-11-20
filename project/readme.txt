@@ -28,4 +28,13 @@ Projek anlegen:
 
 
 
+Einige Farben:
+    #colors=
+        {yellow:["#FFFF00","#DDDD33","#FFFF66","#DDDDAA","#FFEE33","#EEFF00"],
+         green:[ '#00FF00','#00CC00','#009900','#66FF66','#BBFFBB','#00FFAA']
+        };
+
+
+
+
 

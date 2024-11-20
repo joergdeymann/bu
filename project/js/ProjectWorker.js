@@ -21,9 +21,11 @@ export class ProjectWorker {
         // arbeitszeit für einen Tag
         // ueberstunden_satz
 
+        // Achtung jobId -> id umbenannt
+
         this.request=new Query(`
             SELECT 
-                w.recnum as jobId,
+                w.recnum as id,
                 w.projekt_recnum,
                 left(w.start,10) as start, 
                 left(w.ende,10) as end, 

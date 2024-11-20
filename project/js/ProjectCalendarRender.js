@@ -1,4 +1,4 @@
-// import {ProjectJobs} from "../js/ProjectJobs.js"; // Wird nicht von innen genutzt
+import {ColorAdjust} from "./ColorAdjust.js"; // Wird nicht von innen genutzt
 
 
 export class ProjectCalendarRender {
@@ -162,6 +162,25 @@ export class ProjectCalendarRender {
         return today.getDay() == 1;
     }
 
+    getSundayOfWeekAsDate(date) {
+        const today = new Date(date); // Gegebenes Datum
+        let dayOfWeek=today.getDay();
+        if (dayOfWeek == 0) dayOfWeek=7;
+        // let sundayDate=(new Date(today.getDate(today)-dayOfWeek+7)).toISOString().split("T")[0];
+        today.setDate(today.getDate() - dayOfWeek +7);
+        let sundayDate=today.toISOString().split("T")[0];
+        return sundayDate;
+    }
+
+    compareDays(dateEnd,dateNow,days) {
+        if (!dateEnd || !dateNow) return true;
+        let de=new Date(dateEnd);
+        let dt=new Date(dateNow);
+        dt.setDate(dt.getDate()+days);
+        return dt.toISOString().split("T")[0] >= de.toISOString().split("T")[0];
+        // return dt.toISOString().split("T")[0] >= de.toISOString().split("T")[0];
+    }
+
     renderPlate(plateSize,cl,entry) {
         let display;
 
@@ -183,7 +202,14 @@ export class ProjectCalendarRender {
             else if (level==levels-1) cl="bottom";    
         }
 
-        const plateSize = `${this.daysUntil(dt, de)*100+100}%`;
+        const plateSize = `${this.daysUntil(dt, de)*101+101}%`;
+
+        if (dt == ds) {
+            cl += " leftradius";
+        }
+        if (this.compareDays(de,dt,6) && this.getSundayOfWeekAsDate(dt)>=de) {
+            cl += " rightradius";
+        }
 
         if ((this.isMonday(dt) && (ds<=dt) && (dt <=de)) || dt == ds) {
             add=this.renderPlate(plateSize,cl,entry);
@@ -191,6 +217,17 @@ export class ProjectCalendarRender {
         return add;
     }
     
+    setMainColors() {
+        for(let entry of calendar.entries) {
+            if (entry.start!='' && entry.end !='') {
+                let uc=entry.color;
+                if (entry.id != null && entry.id != 0) {
+                    uc=calendar.jobs.get(entry.id)?.ultimateColor;
+                }
+                entry.color=setup.mobileCalendar.mainColors?uc:entry.color;
+            }
+        }
+    }
 
     renderCalendarDays() {
         this.calendar.date.setDate(1); 
@@ -198,7 +235,13 @@ export class ProjectCalendarRender {
         let month=date.getMonth();
         let html="";
 
+        if (setup.mobileCalendar.mainColors == true) this.setMainColors();
+
+        let colorAdjust=new ColorAdjust(this.calendar.entries);
+        colorAdjust.getColorList();
+
         this.calendar.entries.push(this.calendar.newEntry);
+        
         let levels=this.calendar.getLevel();
         // let levels=3;
         let empty=`<div class="empty"></div>`;
@@ -223,8 +266,6 @@ export class ProjectCalendarRender {
                 let arrival   =this.calendar.separateDateString(entry.arrival);
                 let departure =this.calendar.separateDateString(entry.departure);
 
-
-
                 let display=false;
                 let styles=[];
                 add="";   // Arrival or Depature
@@ -244,16 +285,11 @@ export class ProjectCalendarRender {
                     format+=" end";
                 } 
                 if (dt >= ds && dt <= de) {
-                    // styles.push(`filter: brightness(1.5)`);
-                    // Wenn sie überlappen
-                    
-                    let uc=calendar.jobs.get(entry.jobId).ultimateColor;
-                    let color=setup.mobileCalendarMainColors?uc:entry.color;
+                    let color=entry.color;
                     styles.push(`background:${color}`);
                     display=true;
                     
                     if (levels == 3 && level==1) {
-                        // debugger;
                         hideday="trans25";
                     }
 

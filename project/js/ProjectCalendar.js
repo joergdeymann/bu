@@ -7,7 +7,7 @@ import { ProjectWorker } from './ProjectWorker.js';
 export class ProjectCalendar extends Calendar {
     position=0;
     positionText=["Termin Start","Termin Ende","Anfahrt","Abfahrt"];
-    #Id="calendar";
+
     setup = {
         calendar: {
             period: true,
@@ -15,76 +15,17 @@ export class ProjectCalendar extends Calendar {
         }
     }
 
-    #colors=
-        {yellow:["#FFFF00","#DDDD33","#FFFF66","#DDDDAA","#FFEE33","#EEFF00"],
-         green:[ '#00FF00','#00CC00','#009900','#66FF66','#BBFFBB','#00FFAA']
-        };
 
-    /*
-    start, end, arrival, departure, detailinformation
-    start, end, arrival, departure
-    start, end, arrival, departure
-    start, end, arrival, departure
-    */
-    // entries=[
-    //     {
-    //         start:'2024-11-03',
-    //         end:'2024-11-05',
-    //         arrival:'2024-11-03',
-    //         departure:'2024-11-06',
-    //         color: '#00FF00',
-    //         jobId: 6   
-    //     },
-    //     {
-    //         start:'2024-11-10',
-    //         end:'2024-11-12',
-    //         arrival:'2024-11-09',
-    //         departure:'2024-11-12',
-    //         color: '#00CC00',
-    //         jobId: 1   
-    //     },
-    //     {
-    //         start:'2024-11-12',
-    //         end:'2024-11-14',
-    //         arrival:'2024-11-12',
-    //         departure:'2024-11-14',
-    //         color: '#009900',            
-    //         jobId: 2
-    //     },
-    //     {
-    //         start:'2024-11-15',
-    //         end:'2024-11-16',
-    //         arrival:'2024-11-15',
-    //         departure:'2024-11-16',
-    //         color: '#66FF66',            
-    //         jobId: 3   
-    //     },
-    //     {
-    //         start:'2024-11-22',
-    //         end:'2024-11-23',
-    //         arrival:'2024-11-22',
-    //         departure:'2024-11-23',
-    //         color: '#BBFFBB',            
-    //         jobId: 4   
-    //     },
-    //     {
-    //         start:'2024-11-25',
-    //         end:'2024-11-26',
-    //         arrival:'2024-11-25',
-    //         departure:'2024-11-26',
-    //         color: '#00FFAA',            
-    //         jobId: 5   
-    //     }
-    // ];
 
     newEntry= {
         start:'',
         end:'',
         arrival:'',
         departure:'',
-        color: 'orange',
-        jobId:null,  
-        jobName:""   
+        color: '#FFA500',
+        id:0,  
+        jobName:"",
+        ultimateColor:'#FFA500'   
     }
 
     render;
@@ -177,13 +118,13 @@ export class ProjectCalendar extends Calendar {
    }
 
 
-    async getRequest() {
-        let php=new PHP('./php/calendar_read.php');
-        let parameters = {
-            searchDate: this.date.toISOString()
-        }
-        this.entries=await php.get(parameters);   
-    }
+    // async getRequest() {
+    //     let php=new PHP('./php/calendar_read.php');
+    //     let parameters = {
+    //         searchDate: this.date.toISOString()
+    //     }
+    //     this.entries=await php.get(parameters);   
+    // }
  
     separateDateString(date) {
         if (date=="") return "";
@@ -288,8 +229,37 @@ export class ProjectCalendar extends Calendar {
         document.getElementsByName("to")[0].value         =this.newEntry.end.substring(0,10);
         document.getElementsByName("arival")[0].value     =this.newEntry.arrival.substring(0,10);
         document.getElementsByName("departure")[0].value  =this.newEntry.departure.substring(0,10);
+        this.addEvents();
     }
 
+    addEvents() {
+        document.querySelectorAll('input[type="date"]').forEach(input => {
+            input.addEventListener("focus", () => {
+                if (typeof input.showPicker === "function") {
+                    try {
+                        input.showPicker(); // Dies wird funktionieren, wenn "focus" direkt durch Benutzerinteraktion ausgelöst wird
+                    } catch (exception) {
+
+                    }
+                }
+            });
+        });
+
+
+        // for (let id of ["from","to","arival","departure"]) {
+        //     let e=document.getElementsByName(id)[0];
+
+        //     e.addEventListener("focus", () => {
+        //         if (typeof e.showPicker === "function") {
+        //             e.focus();
+        //             e.showPicker();
+        //         } else {
+        //             e.click(); // Fallback
+        //         }
+        //     });
+        // }
+    }
+     
     async renderJobHeadline() {
         document.getElementById("jobs").innerHTML=`<h2></h2>` + await this.jobs.renderJobHeadlines();
     }
@@ -301,7 +271,7 @@ export class ProjectCalendar extends Calendar {
     async chooseJob(id) {
         let job=this.jobs.getJob(id);
         this.newEntry.color=job.color;
-        this.newEntry.jobId=id;
+        this.newEntry.id=id;
         this.newEntry.jobName=job.name;
         document.getElementById("jobs").innerHTML=`<h2>${this.newEntry.jobName}</h2>` + await this.jobs.renderJobHeadlines();
         this.renderCalendarAll();

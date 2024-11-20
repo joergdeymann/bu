@@ -96,8 +96,11 @@ export class ProjectJobs  {
     }
 
     get(id) {
+        if (this.data == null) return;
         return this.data.find(e => e.id == id);
     }
+
+    
 
 
 }

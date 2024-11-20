@@ -1,16 +1,31 @@
 export class Setup {
-    mobileCalendarShowNames= false;
-    mobileCalendarMainColors= true;
-    mobileCalendarDefaultOptionDate=true;
-    mobileCalendarDefaultOptionTravel= true;
-    mobileCalendarAllowEvent = true;
-    mobileCalendarAllowTravel = true;
-    mobileCalendarDisplayPlateName = false;
-    mobileCalendarDisplayPlateCity = true;
-    mobileProjectInputDisplayEvent = true;
-    mobileProjectInputDisplayTravel = true;
-    mobileProjectInputCloseWindowOnReset = true;
-    mobileProjectInputDisplayHotel = true;
+   mobileCalendar= {
+        mainColors: true,
+        defaultOptionDate:true,
+        defaultOptionTravel: true,
+        allowEvent : true,
+        allowTravel : true,
+        displayPlateName : false,
+        displayPlateCity : true,
+    }
+
+    mobileProject= {
+        inputDisplayEvent : true,
+        inputDisplayTravel : true,
+        inputCloseWindowOnReset : true,
+        inputDisplayHotel : true,
+        saveAsProject : true
+
+    }
+
+    lang = {
+        deDE: {
+            mobileProject: {
+            }
+    
+        }
+    }
+ 
 
     constructor() {
 
