@@ -1,6 +1,5 @@
 import { Calendar } from './Calendar.js';
 import { ProjectCalendarRender } from './ProjectCalendarRender.js';
-import { PHP } from './PHP.js';
 import { ProjectJobs } from './ProjectJobs.js';
 import { ProjectWorker } from './ProjectWorker.js';
 
@@ -8,12 +7,12 @@ export class ProjectCalendar extends Calendar {
     position=0;
     positionText=["Termin Start","Termin Ende","Anfahrt","Abfahrt"];
 
-    setup = {
-        calendar: {
-            period: true,
-            travel: true
-        }
-    }
+    // setup = {
+    //     calendar: {
+    //         period: true,
+    //         travel: true
+    //     }
+    // }
 
 
 
@@ -54,7 +53,7 @@ export class ProjectCalendar extends Calendar {
     }
 
     ifDisableHeadline(forcechange) {
-        return (!this.setup.calendar.period && !this.setup.calendar.travel);       
+        return (!opt.mobileCalendar.allowEvent && !opt.mobileCalendar.allowTravel);       
     }
 
     changeCalendarInformation(day) {
@@ -99,16 +98,16 @@ export class ProjectCalendar extends Calendar {
         if (this.position == 1) {
             if (this.newEntry.start > this.newEntry.end ) [this.newEntry.start,this.newEntry.end ] = [this.newEntry.end,this.newEntry.start];
         }
-        if  (!this.setup.calendar.period) {
+        if  (!opt.mobileCalendar.allowEvent) {
             if (this.position == 0 || this.position==1) this.position=2;
         } else 
-        if  (!this.setup.calendar.travel) {
+        if  (!opt.mobileCalendar.allowTravel) {
             if (this.position == 2 || this.position==3) this.position=0;
         }
     }
 
     setCalendarInformation(day) {
-        if (!this.setup.calendar.period && !this.setup.calendar.travel) {
+        if (!opt.mobileCalendar.allowEvent && !opt.mobileCalendar.allowTravel) {
             return;
        }
        this.changeCalendarInformation(day);
@@ -209,13 +208,17 @@ export class ProjectCalendar extends Calendar {
         return levels.length;
     }
 
-    
+    async display() {
+        this.entries=await this.timeline.get();
+        this.renderCalendar();
+        this.render.addCalendarSetupListener();
+    }
+
     async renderCalendarAll() {
         this.timeline.load(this.date);
         this.entries=await this.timeline.get();
+        this.display();
 
-        this.renderCalendar();
-        this.render.addCalendarSetupListener();
     }
 
     // renderCalendarDays() {
@@ -244,20 +247,6 @@ export class ProjectCalendar extends Calendar {
                 }
             });
         });
-
-
-        // for (let id of ["from","to","arival","departure"]) {
-        //     let e=document.getElementsByName(id)[0];
-
-        //     e.addEventListener("focus", () => {
-        //         if (typeof e.showPicker === "function") {
-        //             e.focus();
-        //             e.showPicker();
-        //         } else {
-        //             e.click(); // Fallback
-        //         }
-        //     });
-        // }
     }
      
     async renderJobHeadline() {
@@ -312,24 +301,12 @@ export class ProjectCalendar extends Calendar {
     updateFromInputs(event,position) {
         this.position=position;
         let value=event.target.value==""?"":event.target.value + " 00:00:00";
-
-        // if (position==1 && this.newEntry.start=='') this.newEntry.start=value;
-        // if (position==0 && this.newEntry.end=='') this.newEntry.end=value;
-        // if (position==0) this.newEntry.start=value;
-        // if (position==1) this.newEntry.end=value;
-        // if (position==2) this.newEntry.arrival=value;
-        // if (position==3) this.newEntry.departure=value;
-        
-        
-        
         
         if (value !== "") this.date=new Date(value);
         this.changeCalendarInformation(`${value}`);
-        // this.setCalendarInformation(`${value}`);
         this.calendarPosition();
         this.renderCalendar(false);
         this.render.addCalendarSetupListener();
-
     }
 
 }

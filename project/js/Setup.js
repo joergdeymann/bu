@@ -1,19 +1,19 @@
 export class Setup {
-   mobileCalendar= {
+    mobileCalendar= {
         mainColors: true,
         defaultOptionDate:true,
         defaultOptionTravel: true,
         allowEvent : true,
         allowTravel : true,
-        displayPlateName : false,
-        displayPlateCity : true,
+        plateName : false,
+        plateCity : true,
     }
 
     mobileProject= {
-        inputDisplayEvent : true,
-        inputDisplayTravel : true,
-        inputCloseWindowOnReset : true,
-        inputDisplayHotel : true,
+        inputEvent : true,
+        inputTravel : true,
+        closeWindowOnReset : true,
+        inputHotel : true,
         saveAsProject : true
 
     }

@@ -20,6 +20,7 @@ class Options {
 }    
 
 async function init() {
+    
     let login=new Login();
     window.login=login;
     let logged=await login.getSession();
@@ -50,8 +51,9 @@ async function init() {
     let unterkunftList=new UnterkunftList();
     window.unterkunftList=unterkunftList;
 
-    let setup=new Setup();
-    window.setup=setup;
+    let opt=new Setup();
+    window.opt=opt;
+    
 }
 
 

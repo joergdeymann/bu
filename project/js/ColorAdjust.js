@@ -5,12 +5,18 @@ export class ColorAdjust {
     }
 
     // Helligkeit einer Farbe anpassen
-    adjustBrightness(hex, factor) {
+    XadjustBrightness(hex, factor) {
         console.log(hex);
+        if (hex == null ) debugger;
         let [r, g, b] = hex.match(/\w\w/g).map((x) => parseInt(x, 16));
-        r = Math.min(255, Math.max(0, r + factor));
-        g = Math.min(255, Math.max(0, g + factor));
-        b = Math.min(255, Math.max(0, b + factor));
+
+        r=(r+factor) % 255;
+        g=(g+factor) % 255;
+        b=(b+factor) % 255;
+        
+        // r = Math.min(255, Math.max(0, r + factor));
+        // g = Math.min(255, Math.max(0, g + factor));
+        // b = Math.min(255, Math.max(0, b + factor));
         return `#${r.toString(16).padStart(2, "0")}${g.toString(16).padStart(2, "0")}${b.toString(16).padStart(2, "0")}`;
     }
 
@@ -40,25 +46,40 @@ export class ColorAdjust {
 
         adjustedData.forEach((other) => {
             if (current.id !== other.id && this.doEventsOverlap(current, other)) {
-                brightnessFactor += 100; // Helligkeit erhöhen bei Überlappung
+                brightnessFactor +=50; // Helligkeit erhöhen bei Überlappung
+                if (brightnessFactor > 200) {
+                    brightnessFactor=0;
+                }
+                
             }
             // if (current.id !== other.id && !this.doEventsOverlap(current, other)) {
             //      brightnessFactor = 101; // Helligkeit erhöhen bei Überlappung
             // }
         });
 
-        return Math.max(0,brightnessFactor-100);
+        return Math.max(0,brightnessFactor-50);
+    }
+
+    isValidHexColor(color) {
+        const hexColorPattern = /^#[A-Fa-f0-9]{6}$/;
+        return hexColorPattern.test(color);
+
     }
 
     // Farben anpassen und speichern
     updateColors(adjustedData) {
         adjustedData.forEach((current) => {
+            if (!this.isValidHexColor(current.color)) {
+                this.colorList[current.id]=current.color;
+                return;                
+            }
+
             const brightnessFactor = this.calculateBrightnessFactor(
                 current,
                 adjustedData
             );
 
-            this.colorList[current.id] = this.adjustBrightness(
+            this.colorList[current.id] = this.adjustNewBrightness(
                 current.color,
                 brightnessFactor
             );
@@ -72,6 +93,22 @@ export class ColorAdjust {
             return true;
         })
     }
+
+    adjustNewBrightness(hex,brightness) {
+        console.log(hex);
+        if (hex == null ) debugger;
+
+        let [r, g, b] = hex.match(/\w\w/g).map((x) => parseInt(x, 16));
+        const luminance = 0.2126 * r + 0.7152 * g + 0.0722 * b + brightness;
+        // const scale = brightness/luminance;
+        console.log(brightness,luminance,(luminance+brightness)/luminance);
+        const scale=1+(brightness/100); // .25;
+        r = Math.min(255, Math.max(0, Math.round(r * scale)));
+        g = Math.min(255, Math.max(0, Math.round(g * scale)));
+        b = Math.min(255, Math.max(0, Math.round(b * scale)));
+        return `#${r.toString(16).padStart(2, "0")}${g.toString(16).padStart(2, "0")}${b.toString(16).padStart(2, "0")}`;
+    }
+    
     getBrightness(hex) {
         let [r, g, b] = hex.match(/\w\w/g).map((x) => parseInt(x, 16));
         const luminance = 0.2126 * r + 0.7152 * g + 0.0722 * b;

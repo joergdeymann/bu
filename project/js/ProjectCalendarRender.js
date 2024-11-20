@@ -1,3 +1,5 @@
+/* eslint-env browser */
+/* global setup */
 import {ColorAdjust} from "./ColorAdjust.js"; // Wird nicht von innen genutzt
 
 
@@ -14,8 +16,12 @@ export class ProjectCalendarRender {
 
 
     renderCalendar() {
-        let travelChecked=this.calendar.setup.calendar.travel?"checked":"";
-        let periodChecked=this.calendar.setup.calendar.period?"checked":"";
+        let travelChecked=opt.mobileCalendar.allowTravel?"checked":"";
+        let periodChecked=opt.mobileCalendar.allowEvent?"checked":"";
+        let plateNameChecked=opt.mobileCalendar.plateName?"checked":"";
+        let plateCityChecked=opt.mobileCalendar.plateCity?"checked":"";
+        let mainColorsChecked=opt.mobileCalendar.mainColors?"checked":"";
+
         
         let html=/*html*/ `
             <div class="headline">
@@ -27,6 +33,9 @@ export class ProjectCalendarRender {
                     <nav>
                         <label><input name="period" type="checkbox" ${periodChecked}>Terminstart und ende</label>
                         <label><input name="travel" type="checkbox" ${travelChecked}>An- und Abfahrt</label>
+                        <label><input name="plateName" type="checkbox" ${plateNameChecked}>Plakette als Name</label>
+                        <label><input name="plateCity" type="checkbox" ${plateCityChecked}>Plakette als Ort</label>
+                        <label><input name="mainColors" type="checkbox" ${mainColorsChecked}>nur Haupt Farben</label>
                     </nav>
                 </div>
             </div>
@@ -86,18 +95,55 @@ export class ProjectCalendarRender {
         */
         document.querySelectorAll('.calendar-setup input[type="checkbox"]').forEach(set => {
             set.addEventListener("change",event => {
-                this.calendar.setup.calendar[set.name]=event.target.checked;
+                /* global setup */
+
+                // this.calendar.opt.calendar[set.name]=event.target.checked;
+
                 if (set.name=="travel") {
+                    opt.mobileCalendar.allowTravel=event.target.checked;
                     if (!event.target.checked && (this.calendar.position == 2 || this.calendar.position ==3)) {
                         this.calendar.position=0;
                     }      
                 }
                 if (set.name=="period") {
+                    opt.mobileCalendar.allowEvent=event.target.checked;
                     if (!event.target.checked && (this.calendar.position == 0 || this.calendar.position ==1)) {
                         this.calendar.position=2;
                     }      
                 }
                 set.closest(".headline").querySelector(".theme").innerHTML=this.calendar.positionText[this.calendar.position];
+
+            
+                if (set.name=="plateName") {
+                    console.log(set.name);
+                    let city=document.getElementsByName("plateCity")[0];
+                    opt.mobileCalendar.plateName=event.target.checked;
+                    if (opt.mobileCalendar.plateName) {
+                        city.checked = false;
+                        opt.mobileCalendar.plateCity=false;
+                    }
+                    calendar.display();
+                    document.querySelector(".calendar-setup.d-none")?.classList.remove("d-none");
+                }
+
+                if (set.name=="plateCity") {
+                    console.log(set.name);
+                    let name=document.getElementsByName("plateName")[0];
+                    opt.mobileCalendar.plateCity=event.target.checked;
+                    if (opt.mobileCalendar.plateName) {
+                        name.checked = false;
+                        opt.mobileCalendar.plateName=false;
+                    }
+                    calendar.display();
+                    document.querySelector(".calendar-setup.d-none")?.classList.remove("d-none");                
+                }
+
+                if (set.name == "mainColors") {
+                    opt.mobileCalendar.mainColors=event.target.checked;
+                    calendar.display();
+                    document.querySelector(".calendar-setup.d-none")?.classList.remove("d-none");                
+                }
+
             })
         }) 
 
@@ -178,7 +224,6 @@ export class ProjectCalendarRender {
         let dt=new Date(dateNow);
         dt.setDate(dt.getDate()+days);
         return dt.toISOString().split("T")[0] >= de.toISOString().split("T")[0];
-        // return dt.toISOString().split("T")[0] >= de.toISOString().split("T")[0];
     }
 
     renderPlate(plateSize,cl,entry) {
@@ -222,9 +267,13 @@ export class ProjectCalendarRender {
             if (entry.start!='' && entry.end !='') {
                 let uc=entry.color;
                 if (entry.id != null && entry.id != 0) {
-                    uc=calendar.jobs.get(entry.id)?.ultimateColor;
+                    if (opt.mobileCalendar.mainColors) {
+                        uc=calendar.jobs.get(entry.id)?.ultimateColor;
+                    } else {
+                        uc=calendar.jobs.get(entry.id)?.color;
+                    }
                 }
-                entry.color=setup.mobileCalendar.mainColors?uc:entry.color;
+                entry.color=uc; // opt.mobileCalendar.mainColors?uc:entry.color;
             }
         }
     }
@@ -235,7 +284,8 @@ export class ProjectCalendarRender {
         let month=date.getMonth();
         let html="";
 
-        if (setup.mobileCalendar.mainColors == true) this.setMainColors();
+        // if (opt.mobileCalendar.mainColors == true) this.setMainColors();
+        this.setMainColors();
 
         let colorAdjust=new ColorAdjust(this.calendar.entries);
         colorAdjust.getColorList();
