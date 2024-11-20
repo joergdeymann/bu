@@ -57,8 +57,13 @@ export class ProjectCalendar extends Calendar {
     }
 
     changeCalendarInformation(day) {
-        //if (this.newEntry.start == '' && this.newEntry.end != '') this.newEntry.start = this.newEntry.end;
-        // if (this.newEntry.start != '' && this.newEntry.end == '') this.newEntry.end = this.newEntry.start;
+        if (this.position <2) {
+            if (this.newEntry.start && this.newEntry.end && this.newEntry.start == this.newEntry.end) { 
+                if (day < this.newEntry.start) this.newEntry.start=day;
+                if (day > this.newEntry.end) this.newEntry.end=day;
+                return;
+            }    
+        }
         if (day == "") {
             if (this.position == 0 && this.newEntry.end != '') this.newEntry.start = this.newEntry.end;
             if (this.position == 1 && this.newEntry.start != '') this.newEntry.end = this.newEntry.start;
@@ -104,6 +109,7 @@ export class ProjectCalendar extends Calendar {
         if  (!opt.mobileCalendar.allowTravel) {
             if (this.position == 2 || this.position==3) this.position=0;
         }
+
     }
 
     setCalendarInformation(day) {
@@ -209,7 +215,7 @@ export class ProjectCalendar extends Calendar {
     }
 
     async display() {
-        this.entries=await this.timeline.get();
+        // this.entries=await this.timeline.get();
         this.renderCalendar();
         this.render.addCalendarSetupListener();
     }

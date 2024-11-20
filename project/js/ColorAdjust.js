@@ -5,20 +5,20 @@ export class ColorAdjust {
     }
 
     // Helligkeit einer Farbe anpassen
-    XadjustBrightness(hex, factor) {
-        console.log(hex);
-        if (hex == null ) debugger;
-        let [r, g, b] = hex.match(/\w\w/g).map((x) => parseInt(x, 16));
+    // XadjustBrightness(hex, factor) {
+    //     console.log(hex);
+    //     if (hex == null ) debugger;
+    //     let [r, g, b] = hex.match(/\w\w/g).map((x) => parseInt(x, 16));
 
-        r=(r+factor) % 255;
-        g=(g+factor) % 255;
-        b=(b+factor) % 255;
+    //     r=(r+factor) % 255;
+    //     g=(g+factor) % 255;
+    //     b=(b+factor) % 255;
         
-        // r = Math.min(255, Math.max(0, r + factor));
-        // g = Math.min(255, Math.max(0, g + factor));
-        // b = Math.min(255, Math.max(0, b + factor));
-        return `#${r.toString(16).padStart(2, "0")}${g.toString(16).padStart(2, "0")}${b.toString(16).padStart(2, "0")}`;
-    }
+    //     // r = Math.min(255, Math.max(0, r + factor));
+    //     // g = Math.min(255, Math.max(0, g + factor));
+    //     // b = Math.min(255, Math.max(0, b + factor));
+    //     return `#${r.toString(16).padStart(2, "0")}${g.toString(16).padStart(2, "0")}${b.toString(16).padStart(2, "0")}`;
+    // }
 
 
     // Datumsanpassung: start -1 Tag, end +1 Tag
@@ -46,8 +46,8 @@ export class ColorAdjust {
 
         adjustedData.forEach((other) => {
             if (current.id !== other.id && this.doEventsOverlap(current, other)) {
-                brightnessFactor +=50; // Helligkeit erhöhen bei Überlappung
-                if (brightnessFactor > 200) {
+                brightnessFactor +=40; // Helligkeit erhöhen bei Überlappung
+                if (brightnessFactor > 90) {
                     brightnessFactor=0;
                 }
                 
@@ -99,10 +99,18 @@ export class ColorAdjust {
         if (hex == null ) debugger;
 
         let [r, g, b] = hex.match(/\w\w/g).map((x) => parseInt(x, 16));
-        const luminance = 0.2126 * r + 0.7152 * g + 0.0722 * b + brightness;
-        // const scale = brightness/luminance;
-        console.log(brightness,luminance,(luminance+brightness)/luminance);
-        const scale=1+(brightness/100); // .25;
+        const luminance = 0.2126 * r + 0.7152 * g + 0.0722 * b;
+
+        let scale=1+(brightness/100); 
+        if (brightness > 0) {
+            if (luminance <100 && brightness <50) { // and brightness > 0 
+                scale*=1.3; 
+            } else scale *=0.9;
+    
+        }
+        
+
+
         r = Math.min(255, Math.max(0, Math.round(r * scale)));
         g = Math.min(255, Math.max(0, Math.round(g * scale)));
         b = Math.min(255, Math.max(0, Math.round(b * scale)));

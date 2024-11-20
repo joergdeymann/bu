@@ -29,7 +29,7 @@ export class ProjectCalendarRender {
                 <img class="gear">
                 <div class="calendar-setup d-none">
                     <div class="screen"></div>
-                    <header>Selektionen</header>
+                    <header>Einstellungen</header>
                     <nav>
                         <label><input name="period" type="checkbox" ${periodChecked}>Terminstart und ende</label>
                         <label><input name="travel" type="checkbox" ${travelChecked}>An- und Abfahrt</label>
@@ -229,9 +229,10 @@ export class ProjectCalendarRender {
     renderPlate(plateSize,cl,entry) {
         let display;
 
-        display=entry.projectName;
-        display=entry.city;
-        if (!display) {
+        if (opt.mobileCalendar.plateName) display=entry.projectName;
+        if (opt.mobileCalendar.plateCity) display=entry.city;
+        
+        if (!entry.id) { // if (!display) {
             cl += " new";
         }
         return `<div style="width:calc(${plateSize} + 2px); " class="calendar-text ${cl}"><div >${display ?? "Neu"}</div></div>`;
@@ -286,8 +287,9 @@ export class ProjectCalendarRender {
 
         // if (opt.mobileCalendar.mainColors == true) this.setMainColors();
         this.setMainColors();
+        // calendar.entries = await calendar.timeline.get(); //## ?? 
 
-        let colorAdjust=new ColorAdjust(this.calendar.entries);
+        let colorAdjust=new ColorAdjust(calendar.entries);
         colorAdjust.getColorList();
 
         this.calendar.entries.push(this.calendar.newEntry);
