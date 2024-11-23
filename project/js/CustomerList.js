@@ -40,9 +40,8 @@ export class CustomerList {
      *  
      */
     async load() {
-        let firma=login.companyId; 
 
-        let p=new Query(`SELECT recnum,firma FROM bu_kunden where auftraggeber=${firma} ORDER BY firma;`);
+        let p=new Query(`SELECT recnum,firma FROM bu_kunden where auftraggeber=${login.companyId} ORDER BY firma;`);
         this.data=await p.get();
         
         this.render();

@@ -10,6 +10,39 @@ export class ProjectPrice {
         this.addEvents();
     }
 
+
+
+    loadCustomerPrice() {
+        if (!customerList.id) return 0;
+        this.cp=new Query(`
+            SELECT price as price
+            FROM bu_customer 
+            WHERE 
+                id=${customerList.id}
+            AND
+                companyId = ${login.companyId} 
+        ;`);
+        
+    }
+
+    loadArticlePrice() {
+        if (!calendar.newEntry.id ) return 0;
+
+        this.ap=new Query(`
+            SELECT a.price as price 
+            FROM bu_article a 
+            JOIN bu_job_definition jd
+            ON jd.articleId = a.id
+            WHERE a.companyId=${login.companyId} 
+            AND jd.id=${calendar.newEntry.id};`
+        );
+    }
+
+
+
+
+
+
     async getCustomerPrice()  {
 
         if (this.cp ==  null) return 0;
@@ -39,36 +72,6 @@ export class ProjectPrice {
 
     }
 
-    // get filterList() {
-    //     return this.data.filter(e=>e.firma.toLowerCase().includes(this.input.value.toLowerCase())); 
-    // }
-
-    loadCustomerPrice() {
-        if (!customerList.id) return 0;
-        this.cp=new Query(`
-            SELECT tagessatz as price
-            FROM bu_kunden 
-            WHERE recnum=${customerList.id}
-        ;`);
-        
-    }
-
-    /*
-        calendar.newEntry.jobId = bu_job.id
-        projectjobs.data[] = 
-    */
-    loadArticlePrice() {
-        if (!calendar.newEntry.jobId ) return 0;
-
-        this.ap=new Query(`
-            SELECT a.netto as price 
-            FROM bu_artikel a 
-            JOIN bu_job j
-            ON j.articleId = a.recnum
-            WHERE a.auftraggeber=${login.companyId} 
-            AND j.id=${calendar.newEntry.jobId};`
-        );
-    }
 
     /**
      * 
@@ -173,7 +176,7 @@ export class ProjectPrice {
 
     async toggleWindow() {
         if(this.listContainer.classList.contains("d-none")) { 
-            await this.load();
+            this.load();
             this.input.style.zIndex=2;
             this.input.focus(); 
 

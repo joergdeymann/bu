@@ -1,70 +1,24 @@
 /* eslint-env browser */
 /* global setup */
 import {ColorAdjust} from "./ColorAdjust.js"; // Wird nicht von innen genutzt
+import {ExtDate} from "./ExtDate.js"; // Wird nicht von innen genutzt
+import { Setup } from './Setup.js';
 
 
-export class ProjectCalendarRender {
+
+export class ProjectCalendarRender extends ExtDate {
     calendar;
     // jobs;
 
     constructor(calendar) {
+        super();
         // console.log("Hallo");
         // console.log(calendar.setup);
         this.calendar=calendar;
+
         // this.jobs=new ProjectJobs();
     }
 
-
-    renderCalendar() {
-        let travelChecked=opt.mobileCalendar.allowTravel?"checked":"";
-        let periodChecked=opt.mobileCalendar.allowEvent?"checked":"";
-        let plateNameChecked=opt.mobileCalendar.plateName?"checked":"";
-        let plateCityChecked=opt.mobileCalendar.plateCity?"checked":"";
-        let mainColorsChecked=opt.mobileCalendar.mainColors?"checked":"";
-
-        
-        let html=/*html*/ `
-            <div class="headline">
-                <h2 class="theme">${this.calendar.positionText[this.calendar.position]}</h2>
-                <img class="gear">
-                <div class="calendar-setup d-none">
-                    <div class="screen"></div>
-                    <header>Einstellungen</header>
-                    <nav>
-                        <label><input name="period" type="checkbox" ${periodChecked}>Terminstart und ende</label>
-                        <label><input name="travel" type="checkbox" ${travelChecked}>An- und Abfahrt</label>
-                        <label><input name="plateName" type="checkbox" ${plateNameChecked}>Plakette als Name</label>
-                        <label><input name="plateCity" type="checkbox" ${plateCityChecked}>Plakette als Ort</label>
-                        <label><input name="mainColors" type="checkbox" ${mainColorsChecked}>nur Haupt Farben</label>
-                    </nav>
-                </div>
-            </div>
-
-            <div class="calendar">
-                <nav>
-                    <img src="../img/pfeil-links.png" onclick="calendar.setMonth(-1)">
-                    <span onclick="calender(0)">${this.calendar.getDateMMMJJJJ()}</span>
-                    <img src="../img/pfeil-rechts.png" onclick="calendar.setMonth(1)">
-                </nav>
-                <header>
-                    <div>Mo</div>
-                    <div>Di</div>
-                    <div>Mi</div>
-                    <div>Do</div>
-                    <div>Fr</div>
-                    <div>Sa</div>
-                    <div>So</div>
-                </header>
-                <section>${this.renderCalendarDays()}</section>
-
-            </div>
-            
-
-        `;
-        // document.getElementById("calendar").innerHTML=html;
-        return html;
-        // return html;
-    }
 
     addCalendarSetupListener() {
         /*
@@ -135,12 +89,17 @@ export class ProjectCalendarRender {
                         opt.mobileCalendar.plateName=false;
                     }
                     calendar.display();
+                    // calendar.renderCalendarAll();
                     document.querySelector(".calendar-setup.d-none")?.classList.remove("d-none");                
                 }
 
                 if (set.name == "mainColors") {
                     opt.mobileCalendar.mainColors=event.target.checked;
+                    this.mainColorsSet=false;
+
+                    // this.renderCalendarDays(); 
                     calendar.display();
+                    // this.calendar.renderCalendarAll();
                     document.querySelector(".calendar-setup.d-none")?.classList.remove("d-none");                
                 }
 
@@ -149,6 +108,24 @@ export class ProjectCalendarRender {
 
     
     }
+
+    addDateEvents() {
+        document.querySelectorAll('input[type="date"]').forEach(input => {
+            input.addEventListener("focus", () => {
+                if (typeof input.showPicker === "function") {
+                    try {
+                        input.showPicker(); // Dies wird funktionieren, wenn "focus" direkt durch Benutzerinteraktion ausgelöst wird
+                    } catch (exception) {
+
+                    }
+                }
+            });
+        });
+    }
+
+
+
+
 
     /**
      * PRIVATE
@@ -178,64 +155,19 @@ export class ProjectCalendarRender {
         
     }       
 
-    getStyles(dt,ds,de) {
-
-    }
-
-    daysUntil(date, endDate) {
-        const today = new Date(date); // Gegebenes Datum
-        const targetEndDate = new Date(endDate); // Enddatum
-        if (today.getDay() == 0) return 0;
-
-        // Nächster Sonntag berechnen
-        const nextSunday = new Date(today);
-        nextSunday.setDate(today.getDate() + (7 - today.getDay())); // Tag bis Sonntag hinzufügen
     
-        // Differenzen berechnen
-        const daysToSunday = Math.ceil((nextSunday - today) / (1000 * 60 * 60 * 24));
-        const daysToEndDate = Math.ceil((targetEndDate - today) / (1000 * 60 * 60 * 24));
-    
-        // Rückgabe: Das frühere Ziel
-        return Math.min(daysToSunday, daysToEndDate);
-    }
-
-    isSunday(date) {
-        const today = new Date(date); // Gegebenes Datum
-        return today.getDay() == 0;
-    }
-    isMonday(date) {
-        const today = new Date(date); // Gegebenes Datum
-        return today.getDay() == 1;
-    }
-
-    getSundayOfWeekAsDate(date) {
-        const today = new Date(date); // Gegebenes Datum
-        let dayOfWeek=today.getDay();
-        if (dayOfWeek == 0) dayOfWeek=7;
-        // let sundayDate=(new Date(today.getDate(today)-dayOfWeek+7)).toISOString().split("T")[0];
-        today.setDate(today.getDate() - dayOfWeek +7);
-        let sundayDate=today.toISOString().split("T")[0];
-        return sundayDate;
-    }
-
-    compareDays(dateEnd,dateNow,days) {
-        if (!dateEnd || !dateNow) return true;
-        let de=new Date(dateEnd);
-        let dt=new Date(dateNow);
-        dt.setDate(dt.getDate()+days);
-        return dt.toISOString().split("T")[0] >= de.toISOString().split("T")[0];
-    }
 
     renderPlate(plateSize,cl,entry) {
-        let display;
+        let display="";
 
         if (opt.mobileCalendar.plateName) display=entry.projectName;
         if (opt.mobileCalendar.plateCity) display=entry.city;
-        
-        if (!entry.id) { // if (!display) {
+
+        if (!(entry.projectName + entry.city)) { // if (!display) {
             cl += " new";
+            display="Neu";
         }
-        return `<div style="width:calc(${plateSize} + 2px); " class="calendar-text ${cl}"><div >${display ?? "Neu"}</div></div>`;
+        return `<div style="width:calc(${plateSize} + 2px); " class="calendar-text ${cl}"><div >${display}</div></div>`;
     }
 
     addPlate(dt,ds,de,entry,level,levels) {
@@ -263,21 +195,129 @@ export class ProjectCalendarRender {
         return add;
     }
     
-    setMainColors() {
+
+    async XsetMainColors() {
+        // if (this.mainColorsSet) return;
+        this.mainColorsSet=true;
+        await job.await(); // Warte auf die Daten von `job`
+
+    
         for(let entry of calendar.entries) {
-            if (entry.start!='' && entry.end !='') {
-                let uc=entry.color;
-                if (entry.id != null && entry.id != 0) {
-                    if (opt.mobileCalendar.mainColors) {
-                        uc=calendar.jobs.get(entry.id)?.ultimateColor;
-                    } else {
-                        uc=calendar.jobs.get(entry.id)?.color;
-                    }
-                }
-                entry.color=uc; // opt.mobileCalendar.mainColors?uc:entry.color;
-            }
+            entry.color= this.determineColor(entry) ?? entry.color;
         }
+
+
+        // calendar.entries = calendar.entries.map(entry => ({
+        //     ...entry,
+        //     color: this.determineColor(entry) ?? entry.color,
+        // }));
     }
+
+
+    /**
+     * Bestimmt die korrekte Farbe basierend auf dem Eintrag und Optionen.
+     * @param {Object} entry - Der Kalendereintrag
+     * @returns {string | null} - Die neue Farbe oder null
+     */
+    XdetermineColor(entry) {
+        if (entry.start === '' || entry.end === '') {
+            return null; // Kein Start oder Enddatum, keine Farbänderung
+        }
+
+        const jobEntry = job.getById(entry.id); // das ist arbeiter ID ??####?? das geht hier so nicht !!! die id aus entry ist eine andere 
+        if (!jobEntry) {
+            return null; // Kein zugehöriger Job gefunden
+        }
+
+        // Farbentscheidung basierend auf Optionen
+        return opt.mobileCalendar.mainColors
+        ? jobEntry.ultimateColor
+        : jobEntry.color;
+    }
+
+
+    // async setMainColors() {
+    //     await job.await();
+    //     for(let entry of calendar.entries) {
+    //         if (entry.start!='' && entry.end !='') {
+    //             let uc=entry.color;
+    //             if (entry.id != null && entry.id != 0) {
+    //                 if (opt.mobileCalendar.mainColors) {
+    //                     uc=job.getById(entry.id)?.ultimateColor;
+    //                 } else {
+    //                     uc=job.getById(entry.id)?.color;
+    //                 }
+    //             }
+    //             entry.color=uc ?? entry.color; // opt.mobileCalendar.mainColors?uc:entry.color;
+    //         }
+    //     }
+    // }
+
+    updateCalendar(undo=true) {
+        console.log("updateCalendar ");
+        console.trace();
+        if (undo) calendar.undoList.push({...calendar.newEntry,position:calendar.position});
+        document.getElementById("calendar").innerHTML     = this.renderCalendar();
+
+        document.getElementsByName("from")[0].value       =calendar.newEntry.start.substring(0,10);
+        document.getElementsByName("to")[0].value         =calendar.newEntry.end.substring(0,10);
+        document.getElementsByName("arival")[0].value     =calendar.newEntry.arrival.substring(0,10);
+        document.getElementsByName("departure")[0].value  =calendar.newEntry.departure.substring(0,10);
+        // this.addDateEvents();
+    }
+
+    renderCalendar() {
+        let travelChecked=opt.mobileCalendar.allowTravel?"checked":"";
+        let periodChecked=opt.mobileCalendar.allowEvent?"checked":"";
+        let plateNameChecked=opt.mobileCalendar.plateName?"checked":"";
+        let plateCityChecked=opt.mobileCalendar.plateCity?"checked":"";
+        let mainColorsChecked=opt.mobileCalendar.mainColors?"checked":"";
+
+        
+        let html=/*html*/ `
+            <div class="headline">
+                <h2 class="theme">${this.calendar.positionText[this.calendar.position]}</h2>
+                <img class="gear">
+                <div class="calendar-setup d-none">
+                    <div class="screen"></div>
+                    <header>Einstellungen</header>
+                    <nav>
+                        <label><input name="period" type="checkbox" ${periodChecked}>Terminstart und ende</label>
+                        <label><input name="travel" type="checkbox" ${travelChecked}>An- und Abfahrt</label>
+                        <label><input name="plateName" type="checkbox" ${plateNameChecked}>Plakette als Name</label>
+                        <label><input name="plateCity" type="checkbox" ${plateCityChecked}>Plakette als Ort</label>
+                        <label><input name="mainColors" type="checkbox" ${mainColorsChecked}>nur Haupt Farben</label>
+                    </nav>
+                </div>
+            </div>
+
+            <div class="calendar">
+                <nav>
+                    <img src="../img/pfeil-links.png" onclick="calendar.setMonth(-1)">
+                    <span onclick="calender(0)">${this.calendar.getDateMMMJJJJ()}</span>
+                    <img src="../img/pfeil-rechts.png" onclick="calendar.setMonth(1)">
+                </nav>
+                <header>
+                    <div>Mo</div>
+                    <div>Di</div>
+                    <div>Mi</div>
+                    <div>Do</div>
+                    <div>Fr</div>
+                    <div>Sa</div>
+                    <div>So</div>
+                </header>
+                <section>${this.renderCalendarDays()}</section>
+
+            </div>
+            
+
+        `;
+        // document.getElementById("calendar").innerHTML=html;
+        return html;
+        // return html;
+    }
+
+
 
     renderCalendarDays() {
         this.calendar.date.setDate(1); 
@@ -286,7 +326,7 @@ export class ProjectCalendarRender {
         let html="";
 
         // if (opt.mobileCalendar.mainColors == true) this.setMainColors();
-        this.setMainColors();
+        // this.setMainColors();
         // calendar.entries = await calendar.timeline.get(); //## ?? 
 
         let colorAdjust=new ColorAdjust(calendar.entries);
@@ -327,7 +367,6 @@ export class ProjectCalendarRender {
                 styles.push(`top: ${Math.floor(100/levels*level)}% `);
                 // styles.push(`top:calc(50% - 1px)`);
                 
-
                 add+=this.addPlate(dt,ds,de,entry,level,levels);
 
                 if (dt == ds) {
@@ -337,7 +376,11 @@ export class ProjectCalendarRender {
                     format+=" end";
                 } 
                 if (dt >= ds && dt <= de) {
-                    let color=entry.color;
+                    // let color=entry.displayColor;
+                    // let color= opt.mobileCalendar.mainColors?entry.rootColor:entry.color ?? entry.color;
+                    let color = entry.modifiedColor ?? entry.color;
+                    // helligkeiten testen und 50 lumen drauf packen
+                     
                     styles.push(`background:${color}`);
                     display=true;
                     
@@ -405,26 +448,5 @@ export class ProjectCalendarRender {
         return html;
     }
 
-    getDateLastMonday(givenDate) {
-        // Monat wird in JS mit 0-indexiert (0 = Januar, 11 = Dezember)
-        let lastDay = new Date(givenDate.getFullYear(), givenDate.getMonth()+1, 0); // letzter Tag des Monats
-        let dayOfWeek = lastDay.getDay(); // Wochentag des letzten Tages (0 = Sonntag, 1 = Montag, ..., 6 = Samstag)
-    
-        let offset = (dayOfWeek >= 1) ? dayOfWeek - 1 : 6;
-    
-        lastDay.setDate(lastDay.getDate() - offset);
-        return lastDay;
-    }
-    
-    utcDate(date) {
-        const year = date.getFullYear();
-        const month = String(date.getMonth() + 1).padStart(2, '0'); // Monate sind 0-basiert
-        const day = String(date.getDate()).padStart(2, '0');
-        const hours = String(date.getHours()).padStart(2, '0');
-        const minutes = String(date.getMinutes()).padStart(2, '0');
-        const seconds = String(date.getSeconds()).padStart(2, '0');
-        
-        return `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
-    }
 
 }

@@ -4,23 +4,6 @@ export class ColorAdjust {
         this.colorList = {}; // Farbliste für angepasste Farben
     }
 
-    // Helligkeit einer Farbe anpassen
-    // XadjustBrightness(hex, factor) {
-    //     console.log(hex);
-    //     if (hex == null ) debugger;
-    //     let [r, g, b] = hex.match(/\w\w/g).map((x) => parseInt(x, 16));
-
-    //     r=(r+factor) % 255;
-    //     g=(g+factor) % 255;
-    //     b=(b+factor) % 255;
-        
-    //     // r = Math.min(255, Math.max(0, r + factor));
-    //     // g = Math.min(255, Math.max(0, g + factor));
-    //     // b = Math.min(255, Math.max(0, b + factor));
-    //     return `#${r.toString(16).padStart(2, "0")}${g.toString(16).padStart(2, "0")}${b.toString(16).padStart(2, "0")}`;
-    // }
-
-
     // Datumsanpassung: start -1 Tag, end +1 Tag
     adjustDates(entry) {
         const start = new Date(entry.start);
@@ -46,15 +29,17 @@ export class ColorAdjust {
 
         adjustedData.forEach((other) => {
             if (current.id !== other.id && this.doEventsOverlap(current, other)) {
-                brightnessFactor +=40; // Helligkeit erhöhen bei Überlappung
-                if (brightnessFactor > 90) {
-                    brightnessFactor=0;
+                // Helligkleit erhöhen wenn 
+                // 1. farbe 1 ähnlich der Farbe 2 ist
+                if (!this.isVisibleDifference(current.color,other.color)) {
+                    brightnessFactor +=40; // Helligkeit erhöhen bei Überlappung
+                    if (brightnessFactor > 90) {
+                        brightnessFactor=0;
+                    }
+    
                 }
                 
             }
-            // if (current.id !== other.id && !this.doEventsOverlap(current, other)) {
-            //      brightnessFactor = 101; // Helligkeit erhöhen bei Überlappung
-            // }
         });
 
         return Math.max(0,brightnessFactor-50);
@@ -87,15 +72,14 @@ export class ColorAdjust {
     }
 
     updateEntries() {
-        console.log ("updateEntries",this.colorList);
         this.data.filter(entry => {
-            entry.color=this.gradientColor(this.colorList[entry.id]);
+            entry.modifiedColor=this.gradientColor(this.colorList[entry.id]);
             return true;
         })
+        console.log ("updateEntries",this.data);
     }
 
     adjustNewBrightness(hex,brightness) {
-        console.log(hex);
         if (hex == null ) debugger;
 
         let [r, g, b] = hex.match(/\w\w/g).map((x) => parseInt(x, 16));
@@ -120,14 +104,11 @@ export class ColorAdjust {
     getBrightness(hex) {
         let [r, g, b] = hex.match(/\w\w/g).map((x) => parseInt(x, 16));
         const luminance = 0.2126 * r + 0.7152 * g + 0.0722 * b;
-        if (luminance < 85) return 0.7;
-        if (luminance > 170) return 0.3;
-        return 0.5;
-        
-        // Normierung auf den Bereich 0 bis 1
-        //return luminance / 255;
-
+        if (luminance < 85) return 0.5;
+        if (luminance > 170) return 0.2;
+        return 0.4;
     }
+
     gradientColor(hex) {
         let opacity=this.getBrightness(hex);
         let [r, g, b] = hex.match(/\w\w/g).map((x) => parseInt(x, 16));
@@ -141,10 +122,30 @@ export class ColorAdjust {
     getColorList() {
         console.log("getColorList");
         const adjustedData = this.data.map((entry) => this.adjustDates(entry));
+        this.useMainColors(adjustedData);
         this.updateColors(adjustedData);
         this.updateEntries();
         return this.colorList;
     }
+
+    useMainColors(entries) {
+        if (opt.mobileCalendar.mainColors) {
+            for(let entry of entries) entry.color=entry.rootColor;
+        }
+        return;
+    }
+
+    isVisibleDifference(rgb1, rgb2) {
+        let [r1, g1, b1] = rgb1.match(/\w\w/g).map((x) => parseInt(x, 16));
+        let [r2, g2, b2] = rgb2.match(/\w\w/g).map((x) => parseInt(x, 16));
+
+        const rDiff = r1 -r2;
+        const gDiff = g1 - g2;
+        const bDiff = b1 - b2;
+
+        return Math.sqrt(rDiff ** 2 + gDiff ** 2 + bDiff ** 2)>5;
+    }
+
 }
 
 function test() {

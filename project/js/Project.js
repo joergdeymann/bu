@@ -8,6 +8,8 @@ import { EquipmentPrice } from './EquipmentPrice.js';
 import { UnterkunftList } from './UnterkunftList.js';
 import { Login } from './Login.js';
 import { Setup } from './Setup.js';
+import { ProjectJob } from './ProjectJob.js';
+import { JobHierachy } from './JobHierachy.js';
 
 
 class Options {
@@ -26,11 +28,23 @@ async function init() {
     let logged=await login.getSession();
     if (!logged) return;
 
+    let opt=new Setup();
+    window.opt=opt;
+
+    let job_hierarchy=new JobHierachy();
+    await job_hierarchy.get();
+
+    let job = new ProjectJob();
+    window.job = job;
+
+
+
     let calendar=new ProjectCalendar();
     calendar.renderCalendarAll();
-    calendar.renderJobHeadline();
-
     window.calendar=calendar;
+
+    await job.outputHeadlines() ;
+    // job.renderJobHeadline();
     
     let project=new ProjectInputs();
     window.project=project;
@@ -51,9 +65,6 @@ async function init() {
     let unterkunftList=new UnterkunftList();
     window.unterkunftList=unterkunftList;
 
-    let opt=new Setup();
-    window.opt=opt;
-    
 }
 
 

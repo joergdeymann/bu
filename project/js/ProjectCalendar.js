@@ -1,20 +1,11 @@
 import { Calendar } from './Calendar.js';
 import { ProjectCalendarRender } from './ProjectCalendarRender.js';
-import { ProjectJobs } from './ProjectJobs.js';
+// import { ProjectJob } from './ProjectJob.js';
 import { ProjectWorker } from './ProjectWorker.js';
 
 export class ProjectCalendar extends Calendar {
     position=0;
     positionText=["Termin Start","Termin Ende","Anfahrt","Abfahrt"];
-
-    // setup = {
-    //     calendar: {
-    //         period: true,
-    //         travel: true
-    //     }
-    // }
-
-
 
     newEntry= {
         start:'',
@@ -22,13 +13,16 @@ export class ProjectCalendar extends Calendar {
         arrival:'',
         departure:'',
         color: '#FFA500',
-        id:0,  
-        jobName:"",
-        ultimateColor:'#FFA500'   
+        id:null,
+        displayColor:"",
+        name:"",
+        projectName:"",
+        city:""
     }
+//     ultimateColor:'#FFA500',   
+// jobId:null,  
 
     render;
-    jobs;
     undoList=[];
 
 
@@ -40,8 +34,8 @@ export class ProjectCalendar extends Calendar {
     constructor(dateString="") {
         super(dateString);
         this.timeline=new ProjectWorker();
-        this.jobs=new ProjectJobs();    
         this.render=new ProjectCalendarRender(this);
+        job.newEntry=this.newEntry;
 
 
     };
@@ -121,15 +115,6 @@ export class ProjectCalendar extends Calendar {
        this.calendarPosition(); 
        this.renderCalendarAll();
    }
-
-
-    // async getRequest() {
-    //     let php=new PHP('./php/calendar_read.php');
-    //     let parameters = {
-    //         searchDate: this.date.toISOString()
-    //     }
-    //     this.entries=await php.get(parameters);   
-    // }
  
     separateDateString(date) {
         if (date=="") return "";
@@ -215,71 +200,30 @@ export class ProjectCalendar extends Calendar {
     }
 
     async display() {
+        console.log("calendar.Display")
         // this.entries=await this.timeline.get();
-        this.renderCalendar();
+        // this.renderCalendar();
+        this.render.updateCalendar();
         this.render.addCalendarSetupListener();
+        this.render.addDateEvents();
     }
 
     async renderCalendarAll() {
+        console.log("calendar.renderAll")
         this.timeline.load(this.date);
         this.entries=await this.timeline.get();
         this.display();
-
     }
 
-    // renderCalendarDays() {
-    //     return this.render.renderCalendarDays();
-    // }
 
-    renderCalendar(undo=true) {
-        if (undo) this.undoList.push({...this.newEntry,position:this.position});
-        document.getElementById("calendar").innerHTML     = this.render.renderCalendar();
-        document.getElementsByName("from")[0].value       =this.newEntry.start.substring(0,10);
-        document.getElementsByName("to")[0].value         =this.newEntry.end.substring(0,10);
-        document.getElementsByName("arival")[0].value     =this.newEntry.arrival.substring(0,10);
-        document.getElementsByName("departure")[0].value  =this.newEntry.departure.substring(0,10);
-        this.addEvents();
-    }
-
-    addEvents() {
-        document.querySelectorAll('input[type="date"]').forEach(input => {
-            input.addEventListener("focus", () => {
-                if (typeof input.showPicker === "function") {
-                    try {
-                        input.showPicker(); // Dies wird funktionieren, wenn "focus" direkt durch Benutzerinteraktion ausgelöst wird
-                    } catch (exception) {
-
-                    }
-                }
-            });
-        });
-    }
      
-    async renderJobHeadline() {
-        document.getElementById("jobs").innerHTML=`<h2></h2>` + await this.jobs.renderJobHeadlines();
-    }
-
-    async getJobs(id) {
-        document.getElementById("jobs").innerHTML=`<h2>${this.newEntry.jobName}</h2>`+await this.jobs.renderJobs(id);
-    }
-    
-    async chooseJob(id) {
-        let job=this.jobs.getJob(id);
-        this.newEntry.color=job.color;
-        this.newEntry.id=id;
-        this.newEntry.jobName=job.name;
-        document.getElementById("jobs").innerHTML=`<h2>${this.newEntry.jobName}</h2>` + await this.jobs.renderJobHeadlines();
-        this.renderCalendarAll();
-    }
 
     reset() {
-        this.newEntry = {
-            ...this.newEntry,  // Die restlichen Attribute behalten
-            start: '',
-            end: '',
-            arrival: '',
-            departure: ''
-        };        
+        this.newEntry.start = '';
+        this.newEntry.end = '';
+        this.newEntry.arrival = '';
+        this.newEntry.departure = '';
+
         this.position=0;
         this.renderCalendarAll();    
     }
@@ -293,15 +237,24 @@ export class ProjectCalendar extends Calendar {
     undo() {
         if (this.undoList.length<=1) return;
         this.undoList.pop();
-        this.newEntry={...this.undoList[this.undoList.length-1]}; 
+
+        Object.keys(this.undoList[this.undoList.length - 1]).forEach(key => {
+            this.newEntry[key] = this.undoList[this.undoList.length - 1][key];
+        });
+
+        for (let key in this.undoList[this.undoList.length - 1]) {
+            this.newEntry[key] = this.undoList[this.undoList.length - 1][key];
+        }
+
+        // this.newEntry={...this.undoList[this.undoList.length-1]}; 
         
         // this.position = (this.position + 3) % 4;
         this.position = this.newEntry.position;
 
         this.calendarPosition();
-        this.renderCalendar(false);
+        this.render.updateCalendar(false);
         this.render.addCalendarSetupListener();
-        document.getElementById("jobs").querySelector("h2").innerText=this.newEntry.jobName;
+        document.getElementById("jobs").querySelector("h2").innerText=job.newEntry.name;
     }
 
     updateFromInputs(event,position) {
@@ -311,7 +264,7 @@ export class ProjectCalendar extends Calendar {
         if (value !== "") this.date=new Date(value);
         this.changeCalendarInformation(`${value}`);
         this.calendarPosition();
-        this.renderCalendar(false);
+        this.render.updateCalendar(false);
         this.render.addCalendarSetupListener();
     }
 

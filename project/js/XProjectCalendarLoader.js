@@ -1,6 +1,6 @@
 import { ProjectCalendar } from "./ProjectCalendar";
 
-export class CalendarLoader extends Calendar {
+export class CalendarLoader extends ProjectCalendar {
      /**
       * Set the Date we are now
       * @param dateString - A date that can ghet converted to date 
@@ -8,9 +8,8 @@ export class CalendarLoader extends Calendar {
      constructor(dateString="") {
         super(dateString);
         // this.calendar = new ProjectCalendar()
-        this.projectWorkerClass = new this.projectWorkerClass();
-
-
+        this.job = new ProjectJob();
+        this.job.renderHeadLines();
     };
 
 
@@ -25,6 +24,4 @@ export class CalendarLoader extends Calendar {
     }
 }
 
-class ProjectWorkerLoader {
 
-}
