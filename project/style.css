@@ -121,3 +121,10 @@ h2 {
     width:calc(100% - 2px);
     height:calc(100% - 2px);
 }
+
+/*
+Die Deymanns Outift
+*/
+body {
+    background: linear-gradient(to top right,rgb(0, 168, 168),rgba(0, 168, 168,0.5));
+}

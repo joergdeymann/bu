@@ -7,10 +7,14 @@ input,textarea {
     display: flex;
     font-family: inherit;
     font-size: inherit;
+
+    background-color: rgba(255, 255, 255, 0.7);
+    background: linear-gradient(to top right,rgba(255, 255, 255,0.7),rgba(255, 255, 255,0.3));
+    
 }
 
 ::placeholder {
-    color: rgb(200,200,200);
+    color: rgba(0, 0, 0,0.3)    
 }
 
 .input-container {
