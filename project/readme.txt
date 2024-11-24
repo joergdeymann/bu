@@ -38,3 +38,24 @@ Einige Farben:
 
 
 
+
+=================================================================================
+ToDo:
+==================================================================================
+2. Tagessatz: 
+    Die ID merken und wenn eine Id vorhanden ist den Wert der Oben ausgewählten Sektion
+    z.b. Lichttechniker überschreiben, beide Wert behalten und dann den neuen Wert zum Speichern nehemn
+=================================================================================
+Ideen:
+==================================================================================
+1. Was bringst du mit ?
+    Rechts ein Button der ein neues Fenster mit allen nötigen Informationen wo das
+    Equipment eingesetzt wird, oder besser auf den klick zuerst eine Übersicht anzeiegn
+3. Wenn ich die Firma ändere 
+    - muss sich der Tages Preis anpassen, falls gesetzt oder auch so
+    - muss sich die Equipment Preise anpassen, falls gesetzt oder auch so 
+
+=================================================================================
+Fehler:
+==================================================================================
+1. Wenn Firma nicht angegeben wurde, dann der Tagessatz ausgewählt wurde, kommt ein Fehler

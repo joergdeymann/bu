@@ -4,7 +4,7 @@
     // error_reporting(E_ALL);
 
     header('Content-Type: application/json');
-    error_log("Schreib was rein!!!!!!!!");
+    // error_log("Schreib was rein!!!!!!!!");
     // ini_set('error_log', 'php://stderr');
 
     //$data["query"] = Query of select or update whtaever

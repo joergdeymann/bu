@@ -56,6 +56,8 @@ export class Query {
     async request(query) {
         if (this.isLoading) return; 
 
+        if (debug) console.log(this.query);
+        
         query=this.__setParameter(query);
         this.isLoading = true; 
         const json = query ? { query: query } : {};
@@ -74,6 +76,7 @@ export class Query {
             this.data= await this.__promise();
             this.__promise=null;
         }
+        if (debug) console.log(this.data);
         // console.log(this.data);
         // console.trace("Stack Trace:");
         return this.data;

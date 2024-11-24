@@ -43,44 +43,70 @@ export class EquipmentList {
      */
 
     async load() { 
-        let from=this.calendar.newEntry.start;
-        let to=this.calendar.newEntry.end;
-        let companyId=login.companyId; 
+        const variables = {
+            to: this.calendar.newEntry.end,
+            from: this.calendar.newEntry.start,
+            customerId: calendar.newEntry.customerId,
+            companyId: login.companyId
+        };
+        
+        // let date=`0`;
+        // if (from == '' && to != '') {
+        //     date=`CASE WHEN MAX(CASE WHEN eq.from <= '${to}' THEN 1 ELSE 0 END) = 1 THEN 1 ELSE 0 END`;
+        // } else if (from != '' && to == '') {
+        //     date=`CASE WHEN MAX(CASE WHEN eq.to >= '${from}' THEN 1 ELSE 0 END) = 1 THEN 1 ELSE 0 END`;
+        // } else if (from != '' && to != '') {
+        //     date=`CASE WHEN MAX(CASE WHEN eq.to >= '${from}' AND eq.from <= '${to}' THEN 1 ELSE 0 END) = 1 THEN 1 ELSE 0 END`;
+        // }
+        // ${calendar.newEntry.customerId}
+        // ${login.companyId}
+        let request=`
+            SELECT
+                art.id,
+                art.name,
+                art.price,
+                art.vat,
+                ep.price AS customerPrice,
+                MIN(CASE 
+                        WHEN left(te.from,10) <= @to AND left(te.to,10) >= @from 
+                        THEN te.from 
+                        ELSE NULL 
+                    END) AS 'from',
+                MAX(CASE 
+                        WHEN left(te.from,10) <= @to AND left(te.to,10) >= @from 
+                        THEN te.to 
+                        ELSE NULL 
+                    END) AS 'to',
+                CASE 
+                    WHEN COUNT(CASE 
+                                WHEN left(te.from,10) <= @to AND left(te.to,10) >= @from AND @to != '' AND @from != ""
+                                THEN 1 
+                                ELSE NULL 
+                            END) > 0 
+                    THEN 1 
+                    ELSE 0 
+                END AS inUse
+            FROM
+                bu_article art
+            LEFT JOIN 
+                bu_equipment_price ep
+                ON art.id = ep.articleId
+                AND ep.customerId = @customerId
+            LEFT JOIN 
+                bu_time_equipment te
+                ON te.articleId = art.id
+                AND te.companyId = art.companyId
+            WHERE
+                art.companyId = @companyId
+                AND art.usage = 1
+            GROUP BY
+                art.id, art.name, art.price, art.vat, ep.price
+            ORDER BY
+                art.companyId;
+       `;
 
-        let date=`0`;
-        if (from == '' && to != '') {
-            date=`CASE WHEN MAX(CASE WHEN eq.from <= '${to}' THEN 1 ELSE 0 END) = 1 THEN 1 ELSE 0 END`;
-        } else if (from != '' && to == '') {
-            date=`CASE WHEN MAX(CASE WHEN eq.to >= '${from}' THEN 1 ELSE 0 END) = 1 THEN 1 ELSE 0 END`;
-        } else if (from != '' && to != '') {
-            date=`CASE WHEN MAX(CASE WHEN eq.to >= '${from}' AND eq.from <= '${to}' THEN 1 ELSE 0 END) = 1 THEN 1 ELSE 0 END`;
-        }
-
-        let p=new Query(`
-            SELECT 
-                art.recnum, 
-                art.name, 
-                art.netto AS art_netto, 
-                art.mwst, 
-                art.auftraggeber,
-                eq.articleId,
-                eq.from,
-                eq.to, 
-                MAX(pj.name) AS pj_name, 
-                ${date} AS inuse 
-            FROM bu_artikel art 
-            LEFT JOIN bu_project_equipment eq 
-                ON eq.articleId = art.recnum 
-            LEFT JOIN bu_projekt pj 
-                ON pj.recnum = eq.projectId 
-            WHERE art.auftraggeber = ${companyId} 
-                AND art.leistung = 1 
-            GROUP BY 
-                art.recnum, 
-                art.name, art.netto, 
-                art.mwst, art.auftraggeber 
-            ORDER BY art.auftraggeber;
-        `);         
+        
+        let p=new Query(this.replaceAt(request,variables));
         this.data=await p.get();
         
         this.render();
@@ -88,6 +114,15 @@ export class EquipmentList {
         // this.addInputEvent();
     }
 
+    replaceAt(sql,variables) {
+        return  sql.replace(/@\w+/g, match => {
+            const varName = match.slice(1); // Entferne das '@'
+            const value = variables[varName];
+            
+            if (value === undefined) return match; 
+            return typeof value === "string" ? `"${value}"` : value;
+        });    
+    }
     /**
      * 
      * --- !!! MUST CHANGES !!! --
@@ -104,8 +139,8 @@ export class EquipmentList {
         for(let row of this.filterList()) {
             // Version 1 = nicht auswählbar: let click=+row.inuse?'class="red"':`onclick="equipmentList.selectEquipment(${row.recnum})"`;
             
-            let click=`onclick="equipmentList.selectEquipment(${row.recnum})"`+ (+row.inuse?' class="red"':``);
-            let info=+row.inuse?`<br>(${this.getGermanDate(row.from)} - ${this.getGermanDate(row.to)})`:``;
+            let click=`onclick="equipmentList.selectEquipment(${row.id})"`+ (+row.inUse?' class="red"':``);
+            let info=+row.inUse?`<br>(${this.getGermanDate(row.from)} - ${this.getGermanDate(row.to)})`:``;
             html+=/*html*/`<div ${click}>${row.name} ${info}</div>`;
         }
         this.list.innerHTML=html;
@@ -198,11 +233,11 @@ export class EquipmentList {
     }
 
     selectEquipment(id) {
-        let equipment=this.data.find(e => e.recnum==id);
+        let equipment=this.data.find(e => e.id==id);
 
         this.input.blur();
         this.input.value=equipment.name;
-        this.inputId.value=equipment.recnum;
+        this.inputId.value=equipment.id;
         this.toggleWindow();
         this.getPrice(equipment); //Neu -> equpmentPrice.getPrice(equipment)
         this.showPrice();

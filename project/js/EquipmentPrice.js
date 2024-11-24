@@ -5,32 +5,34 @@ export class EquipmentPrice {
     }
 
     async load() {
-        let projectId=0;
+        let projectJobId=0;
 
         let p=new Query(`
             SELECT 
-                COALESCE(eq.netto, eqp.netto, art.netto) AS netto,
-                COALESCE(eq.mwst, eqp.mwst, art.mwst) AS mwst,
-                eq.netto as eq_netto,
-                eqp.netto as customer_netto,
-                art.netto as art_netto,
-                eq.mwst as eq_mwst,
-                eqp.mwst as customer_mwst,
-                art.mwst as art_mwst
+                COALESCE(eq.price, eqp.price, art.price) AS netto,
+                COALESCE(eq.vat, eqp.vat, art.vat) AS mwst,
+                
+                eq.price as eq_netto,
+                eqp.price as customer_netto,
+                art.price as art_netto,
+                
+                eq.vat as eq_mwst,
+                eqp.vat as customer_mwst,
+                art.vat as art_mwst
             FROM 
-                bu_artikel art
+                bu_article art
             LEFT JOIN 
                 bu_equipment_price eqp 
-                ON eqp.articleId = art.recnum 
-                    AND eqp.customerId = ${customerList.id}
+                ON eqp.articleId = art.id 
+                AND eqp.customerId = ${customerList.id}
             LEFT JOIN 
-                bu_project_equipment eq 
-                ON eq.articleId = art.recnum 
-                    AND eq.projectId=${projectId} 
-                    AND eq.companyId=${login.companyId} 
+                bu_time_equipment eq 
+                ON eq.articleId = art.id 
+                AND eq.projectJobId=${projectJobId} 
+                AND eq.companyId=${login.companyId} 
 
             WHERE 
-                art.recnum = ${this.equipment.recnum} and art.auftraggeber = ${login.companyId};
+                art.id = ${this.equipment.id} and art.companyId = ${login.companyId};
         `);
         this.data=await p.get();
     }

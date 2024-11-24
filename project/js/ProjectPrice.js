@@ -4,6 +4,7 @@ export class ProjectPrice {
     
     ap;
     cp;
+    ep;
 
     constructor() {
         this.setElements();
@@ -38,6 +39,27 @@ export class ProjectPrice {
         );
     }
 
+    loadEquipmentPrice() {
+        if (!customerList.id) return 0;
+        this.ep=new Query(`
+            SELECT 
+                a.name, 
+                eq.price as price 
+            FROM 
+                bu_equipment_price eq 
+            LEFT JOIN 
+                bu_article a
+            ON 
+                a.id = eq.articleId
+            WHERE 
+                eq.companyId = ${login.companyId} 
+            AND 
+                eq.customerId = ${customerList.id} 
+            ORDER BY 
+                name;
+        `);
+    }
+
 
 
 
@@ -54,6 +76,14 @@ export class ProjectPrice {
         if (this.ap ==  null) return 0;
         await this.ap.get();
         return this.ap.data[0]?.price || 0;
+        // await this.ap;
+        // return this.ap.data[0].price && 0;
+    }
+
+    async getEquipmentPrice() {
+        if (this.ep ==  null) return 0;
+        await this.ep.get();
+        return this.ep.data[0]?.price || 0;
         // await this.ap;
         // return this.ap.data[0].price && 0;
     }
@@ -91,8 +121,10 @@ export class ProjectPrice {
     async load() {
         this.loadArticlePrice();
         this.loadCustomerPrice();
+        this.loadEquipmentPrice();
         this.customerPrice=await this.getCustomerPrice();
         this.articlePrice=await this.getArticlePrice();            
+        this.equipmentPrice=await this.getEquipmentPrice();            
 
         // Only the first Time ? 0 is allowed:
         if (this.input.value == '') {
@@ -115,15 +147,26 @@ export class ProjectPrice {
         let html="<h1>Tagessatz</h1>";
         html+=/*html*/`
         <div class="selector-headline" onclick="projectPrice.clearField()">Zurücksetzten</div>
-        <div onclick="projectPrice.setPrice(${this.customerPrice})">
-            <div>Kundenpreis:</div>
-            <div>${this.customerPrice} €</div>
-        </div>
         <div onclick="projectPrice.setPrice(${this.articlePrice})">
-            <div>Artikelpreis:</div>
+            <div>${job.newEntry.name||"Artikelpreis"}:</div>
             <div>${this.articlePrice} €</div>
         </div>
+        <div onclick="projectPrice.setPrice(${this.customerPrice})">
+            <div>Kundenbasis:</div>
+            <div>${this.customerPrice} €</div>
+        </div>
         `;
+        if (this.ep.data) {
+            for (let ep of this.ep.data) {
+                html +=/*html*/`
+                <div onclick="projectPrice.setPrice(${ep.price})">
+                    <div>${ep.name||"Equipmentpreis"}:</div>
+                    <div>${ep.price} €</div>
+                </div>
+                `;
+                
+            }    
+        }
         this.list.innerHTML=html;
     }
 

@@ -12,14 +12,7 @@ import { ProjectJob } from './ProjectJob.js';
 import { JobHierachy } from './JobHierachy.js';
 
 
-class Options {
-    calendarShowNames= false;
-    calendarOnlyMainColors= false;
-    calendarDefaultOptionDate=true;
-    calendarDefaultOptionTravel= true;
-    calendarInputDate = true;
-    calendarInputTravel = true;
-}    
+window.debug= true;
 
 async function init() {
     
