@@ -1,8 +1,9 @@
-export class ProjectSaver {
+import { Win } from './Win.js';
+
+export class ProjectSave {
 
     async showPopup() {
-        const w=new Windows();
-        window.w = w;
+        const w=new Win();
     
         w.addStyle(
             {
@@ -15,7 +16,7 @@ export class ProjectSaver {
                 "justify-content": "center",
                 "align-items":"center",
                 "font-size": "1.5rem",
-                transform: "translate(0, 200vh) !important",
+                transform: "translate(0, 200vh)",
     
             }
         )
@@ -32,6 +33,43 @@ export class ProjectSaver {
         // w.hide();   
     }
     
+    save() {
+        this.showPopup();
+    }
+
+    async saveAll() {
+        try{
+            this.saveSetup();
+            if (!db_address.data?.id ) await db_address.saveAddress();
+            if (!db_project.data?.id ) await db_project.saveProject();
+            else 
+            if (calendar.fullProjectView) {
+                await db_project.updateProject(); //Falls in Projekt Ansicht
+                // Sind dor ganz andere Felder
+                // Ausserdem muss ich die Daten de sganzen Projektes laden, wenn ich in "Bearbeiten Modus bin"
+                // dann sollte es klappen
+                // im erstellen Modus wird immer ein Job angelegt
+                // also es gibt folgende MODI:
+                // 1. Erstellen Project und ProjectJob wird erstellt
+                // 2. Erweitern Project wird belassen und geladen und ProjectJob wird neu erstellt
+                // 3. änderen Project und ProjectJob kann verändert werden#
+
+            }
+
+            if (!db_projectJob.data?.id) await projectJob.saveProjectJob();
+            else projectJob.updateProjectJob();
+    
+            this.saveTimeJob();
+            this.saveTimeEquipment();
+            this.saveTimeEmplopyee();
+        } catch (e){
+            console.error("Fehler beim Speichern",e);
+        } 
+
+
+
+
+    } 
     saveSetup() {
 
     }
@@ -39,7 +77,7 @@ export class ProjectSaver {
     /**
      * All ProjectData
      */
-    saveProject() {
+    async saveProject() {
 
     }
 
@@ -48,7 +86,7 @@ export class ProjectSaver {
      * CompanyId and ProjectId
      * its for handling more JOBs for one Project
      */
-    saveProjectJob() {
+   async  saveProjectJob() {
 
 
     }

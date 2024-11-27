@@ -43,6 +43,7 @@
         $rows = [];
         $request = $data["query"];
         $return= !isset($data["noreturn"]);
+
     
         try {
             // SQL-Abfrage ausführen
@@ -56,7 +57,10 @@
             // Ergebnisse abrufen, wenn "noreturn" nicht gesetzt ist
             if ($return) {
                 $rows = $stmt->fetchAll();
+            } else {#
+                $rows["lastId"] = $pdo->lastInsertId();
             }
+
         } catch (PDOException $e) {
             // Fehler in die Fehlerlogdatei schreiben
             error_log("Datenbankabfrage-Fehler: " . $e->getMessage());

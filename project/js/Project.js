@@ -10,14 +10,10 @@ import { Login } from './Login.js';
 import { Setup } from './Setup.js';
 import { ProjectJob } from './ProjectJob.js';
 import { JobHierachy } from './JobHierachy.js';
-import { Windows } from './Windows.js';
+import { ProjectSave } from './ProjectSave.js';
+import { EventList } from './EventList.js';
+
 window.debug= true;
-console.log("CHECKPOINT");
-
-function initPopup() {
-    // w.create();
-
-}
 
 async function init() {
     
@@ -64,42 +60,14 @@ async function init() {
     let unterkunftList=new UnterkunftList();
     window.unterkunftList=unterkunftList;
 
+    let projectSave = new ProjectSave();
+    window.projectSave=projectSave;
+
+    let eventList = new EventList();
+    window.eventList=eventList;
 
 }
 
 
-
-showPopup();
 init();
-
-async function showPopup() {
-    const w=new Windows();
-    window.w = w;
-
-    w.addStyle(
-        {
-            width: "150px",
-            height: "150px" ,
-            "max-width":"50w",
-            "max-height":"50vw",
-            background: "linear-gradient(to top right,rgb(0, 168, 99),rgba(0, 230, 160,1))",
-            display: "flex",
-            "justify-content": "center",
-            "align-items":"center",
-            "font-size": "1.5rem",
-            transform: "translate(0, 200vh) !important",
-
-        }
-    )
-
-    w.setContent("<center>Erfolgreich gespeichert</center>");
-    await w.start("BottomToCenter");
-    await w.start("opacity");
-
-    // await new Promise(e => setTimeout(e,5));
-    // await w.start();
-    // w.addAnimation("opacity")
-    // await w.start(); 
-    // w.hide();   
-}
 

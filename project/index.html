@@ -24,7 +24,17 @@
     <form id="add-project" method="POST" action="" onclick="return false;">
         <input type="hidden" name="date">
 
-        <input type="text" name="name"  placeholder="Name der Veranstaltung">
+        <div class="input-container" >
+            <input type="hidden" name="eventId">
+            <input type="text" name="eventName"  placeholder="Name der Veranstaltung">
+            <button class="small" type="button" onclick="eventList.toggleWindow();">&#128315;</button>
+        </div>
+        <div class="relative mb-16px d-none">
+            <div class="blocker"></div>
+            <div id="event-list" class="popup-list"></div>
+        </div>
+
+        <!-- input type="text" name="name"  placeholder="Name der Veranstaltung"-->
         <input type="text" name="place" placeholder="Ort der Veranstaltung">
 
         <div id="calendar" class="calendar-container">
@@ -213,7 +223,7 @@
         <textarea name="invoicetxt" rows="10" placeholder="Zusatztext für die Rechnung"></textarea>
 
         <div class="buttons movement flex-araound">
-            <button class="bg-green-gradient" type="button" onclick="project.saveInput()">Fertig</button>
+            <button class="bg-green-gradient" type="button" onclick="projectSave.save()">Fertig</button>
             <button class="bg-red-gradient" type="button" onclick="project.cancel()">Abbruch!</button>
         </div>
 

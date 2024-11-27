@@ -1,4 +1,4 @@
-export class Windows {
+export class Win {
     content = "";
     style = true;
     sleepTimer = 2000;
@@ -26,10 +26,25 @@ export class Windows {
     };
 
     constructor() {
-        console.log("Erstellt");
+        // console.log("Erstellt");
         this.prepare();
         this.create();
-    }
+        // this.addStyle(
+        //     {
+        //         width: "150px",
+        //         height: "150px" ,
+        //         "max-width":"50w",
+        //         "max-height":"50vw",
+        //         background: "linear-gradient(to top right,rgb(0, 168, 99),rgba(0, 230, 160,1))",
+        //         display: "flex",
+        //         "justify-content": "center",
+        //         "align-items":"center",
+        //         "font-size": "1.5rem",
+        //         transform: "translate(0, 200vh) !important",
+    
+        //     }
+        // )
+        }
 
     hide() {
         this.container.style.display = "none";
@@ -75,7 +90,7 @@ export class Windows {
         });
     }
 
-    prepare() {
+    async prepare() {
         this.container = document.createElement("div");
         this.addStyles(this.container, this.containerStyles);
 
@@ -83,17 +98,21 @@ export class Windows {
         this.addStyles(this.win, this.styles);
         this.win.innerHTML = this.content;
         this.container.appendChild(this.win);
+        document.body.appendChild(this.container);
+        
     }
 
     create() {
-        document.body.appendChild(this.container);
     }
 
     async start(choice) {
+        this.container.classList.remove("d-none");
+        await new Promise(e => setTimeout(e,5));
         this.addAnimation(choice) ;
         await new Promise(e => setTimeout(e,5));
         this.addStyle(this.animation);
         await new Promise((e) => setTimeout(e, this.sleepTimer));
+        this.container.classList.add("d-none");
     }
 
     addAnimation(choice) {
