@@ -238,8 +238,9 @@ export class EquipmentList {
         this.input.blur();
         this.input.value=equipment.name;
         this.inputId.value=equipment.id;
+        this.inputDisplay.innerText=equipment.price
         this.toggleWindow();
-        this.getPrice(equipment); //Neu -> equpmentPrice.getPrice(equipment)
+        // this.getPrice(equipment); //Neu -> equpmentPrice.getPrice(equipment)
         this.showPrice();
     }
     
@@ -257,6 +258,7 @@ export class EquipmentList {
             <input type="hidden" name="equipmentId[]">
             <input type="text" name="equipmentName[]"  placeholder="Was bringst du mit">
             <button class="small" type="button" onclick="equipmentList.setWindow(event)">&#128315;</button>
+            <div class="right"></div>
         `; 
         
         event.target.closest(".input-container").insertAdjacentElement("beforebegin", newContainer);
@@ -285,7 +287,7 @@ export class EquipmentList {
         this.toggleWindow();
     } 
 
-    async getPrice(equipment) {
+    async XgetPrice(equipment) {
         this.inputDisplay.innerText = await equipmentPrice.getPrice(equipment);
     }
 

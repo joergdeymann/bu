@@ -45,6 +45,14 @@ ToDo:
 2. Tagessatz: 
     Die ID merken und wenn eine Id vorhanden ist den Wert der Oben ausgewählten Sektion
     z.b. Lichttechniker überschreiben, beide Wert behalten und dann den neuen Wert zum Speichern nehemn
+3. Projekt erweitern
+    Hier kann ein bestehendes Projet mit neuen Daten oder mit kopierten Daten erweiteert werden
+    Das Projekt wird dann angepasset mit der Länge der Dauer
+4. links neben Terminstart:
+    Button mit Vollerkreis minus 1/16 Kuchen = Projektansicht
+    Button mitz 1/8 Kuchen                   = TeilProjekt
+    als Toggle
+    Hinweis on the Fly: Projekt-Ansicht / Teil-Projekt-Ansicht 
 =================================================================================
 Ideen:
 ==================================================================================
@@ -54,8 +62,11 @@ Ideen:
 3. Wenn ich die Firma ändere 
     - muss sich der Tages Preis anpassen, falls gesetzt oder auch so
     - muss sich die Equipment Preise anpassen, falls gesetzt oder auch so 
+4. Option: Background Color / sheme
 
 =================================================================================
 Fehler:
 ==================================================================================
 1. Wenn Firma nicht angegeben wurde, dann der Tagessatz ausgewählt wurde, kommt ein Fehler
+    Behoben: 26.11.2024
+    

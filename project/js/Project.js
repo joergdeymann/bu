@@ -10,9 +10,14 @@ import { Login } from './Login.js';
 import { Setup } from './Setup.js';
 import { ProjectJob } from './ProjectJob.js';
 import { JobHierachy } from './JobHierachy.js';
-
-
+import { Windows } from './Windows.js';
 window.debug= true;
+console.log("CHECKPOINT");
+
+function initPopup() {
+    // w.create();
+
+}
 
 async function init() {
     
@@ -24,6 +29,7 @@ async function init() {
     let opt=new Setup();
     window.opt=opt;
 
+    
     let job_hierarchy=new JobHierachy();
     await job_hierarchy.get();
 
@@ -58,15 +64,42 @@ async function init() {
     let unterkunftList=new UnterkunftList();
     window.unterkunftList=unterkunftList;
 
+
 }
 
 
-async function XPHP() {
-    let p=new Query("SELECT * FROM `bu_project_jobs`  ORDER BY father; ");
-    let data=await p.getData();
-    console.log(data);
-}
 
-// XPHP();
+showPopup();
 init();
+
+async function showPopup() {
+    const w=new Windows();
+    window.w = w;
+
+    w.addStyle(
+        {
+            width: "150px",
+            height: "150px" ,
+            "max-width":"50w",
+            "max-height":"50vw",
+            background: "linear-gradient(to top right,rgb(0, 168, 99),rgba(0, 230, 160,1))",
+            display: "flex",
+            "justify-content": "center",
+            "align-items":"center",
+            "font-size": "1.5rem",
+            transform: "translate(0, 200vh) !important",
+
+        }
+    )
+
+    w.setContent("<center>Erfolgreich gespeichert</center>");
+    await w.start("BottomToCenter");
+    await w.start("opacity");
+
+    // await new Promise(e => setTimeout(e,5));
+    // await w.start();
+    // w.addAnimation("opacity")
+    // await w.start(); 
+    // w.hide();   
+}
 

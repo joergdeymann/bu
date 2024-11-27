@@ -3,6 +3,7 @@
     --button-border-hover: rgb(200,200,200);
     --input-button: linear-gradient(to top right, rgba(230, 230, 250, 1), rgba(180, 180, 250, 1));
     --input-shadow: inset 0px 0px 4px 2px rgba(180, 180, 180, 0.2), 2px 2px 4px 0px rgba(0, 0, 0, 0.2);
+    --company-color: linear-gradient(to top right,rgb(0, 168, 168),rgba(0, 168, 168,0.5));
 }
 
 body {
@@ -126,5 +127,5 @@ h2 {
 Die Deymanns Outift
 */
 body {
-    background: linear-gradient(to top right,rgb(0, 168, 168),rgba(0, 168, 168,0.5));
+    background: var(--company-color);
 }

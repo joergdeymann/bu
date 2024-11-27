@@ -156,7 +156,7 @@ export class ProjectPrice {
             <div>${this.customerPrice} €</div>
         </div>
         `;
-        if (this.ep.data) {
+        if (this.ep?.data) {
             for (let ep of this.ep.data) {
                 html +=/*html*/`
                 <div onclick="projectPrice.setPrice(${ep.price})">
