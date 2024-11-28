@@ -15,9 +15,9 @@ export class EventList extends SelectionList {
         this.input2=document.getElementsByName("place")[0];
 
         this.headline="Veranstaltungen";
-        this.DBid="recnum";
+        this.DBid="id";
         this.DBfield1="name";
-        this.DBfield2="ort";
+        this.DBfield2="city";
         this.classname="eventList";
         this.new="Neues Event";
         
@@ -27,14 +27,14 @@ export class EventList extends SelectionList {
 
         let p=new Query(`
             SELECT 
-                recnum,
-                name,
-                ort
+                recnum as id,
+                name as name,
+                ort as city
 
             FROM bu_adresse 
             WHERE 
                 firmanr=${login.companyId} 
-                AND location=2
+                AND location=1
             ORDER BY name;`);
 
         this.data=await p.get();

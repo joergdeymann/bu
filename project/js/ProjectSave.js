@@ -24,27 +24,22 @@ export class ProjectSave {
         w.setContent("<center>Erfolgreich gespeichert</center>");
         await w.start("BottomToCenter");
         await w.start("opacity");    
-    
-    
-        // await new Promise(e => setTimeout(e,5));
-        // await w.start();
-        // w.addAnimation("opacity")
-        // await w.start(); 
-        // w.hide();   
+        
     }
     
     save() {
         this.showPopup();
+        this.saveAll();
     }
 
     async saveAll() {
         try{
             this.saveSetup();
-            if (!db_address.data?.id ) await db_address.saveAddress();
-            if (!db_project.data?.id ) await db_project.saveProject();
-            else 
-            if (calendar.fullProjectView) {
-                await db_project.updateProject(); //Falls in Projekt Ansicht
+            if (!db_address.data?.id ) await db_address.insert();
+            // if (!db_project.data?.id ) await db_project.saveProject();
+            // else 
+            // if (calendar.fullProjectView) {
+                // await db_project.updateProject(); //Falls in Projekt Ansicht
                 // Sind dor ganz andere Felder
                 // Ausserdem muss ich die Daten de sganzen Projektes laden, wenn ich in "Bearbeiten Modus bin"
                 // dann sollte es klappen
@@ -54,10 +49,10 @@ export class ProjectSave {
                 // 2. Erweitern Project wird belassen und geladen und ProjectJob wird neu erstellt
                 // 3. änderen Project und ProjectJob kann verändert werden#
 
-            }
+            // }
 
-            if (!db_projectJob.data?.id) await projectJob.saveProjectJob();
-            else projectJob.updateProjectJob();
+            // if (!db_projectJob.data?.id) await projectJob.saveProjectJob();
+            // else projectJob.updateProjectJob();
     
             this.saveTimeJob();
             this.saveTimeEquipment();

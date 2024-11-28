@@ -16,6 +16,9 @@
         exit;
     }
 
+    // echo json_encode(["lastId" => 99]);
+    // exit;
+
     $dbname = "bu"; 
     $user = "php";
     $pw = "#php#8.0-..";
@@ -44,6 +47,9 @@
         $request = $data["query"];
         $return= !isset($data["noreturn"]);
 
+        // echo json_encode(["lastId" => 99]);
+        // exit;
+
     
         try {
             // SQL-Abfrage ausführen
@@ -54,11 +60,19 @@
                 $stmt = $pdo->query($request);
             }
             
+            if (stripos($request, "INSERT INTO") !== false) {
+                $rows["lastId"] =  $pdo->lastInsertId(); 
+                echo json_encode($rows);
+                exit; // return;
+            }
+
             // Ergebnisse abrufen, wenn "noreturn" nicht gesetzt ist
             if ($return) {
                 $rows = $stmt->fetchAll();
-            } else {#
-                $rows["lastId"] = $pdo->lastInsertId();
+            } else {
+                $rows["lastId"] =  $pdo->lastInsertId(); 
+                echo json_encode($rows);
+                exit; // return;
             }
 
         } catch (PDOException $e) {
@@ -85,6 +99,8 @@
     }
     
     // Ergebnisse zurückgeben
+    // Idee: echo json_encode(["data" => $rows]);
+    // Problem ich frage immer data direkt ab, 
     echo json_encode($rows);
-?>
+    ?>
 

@@ -12,6 +12,7 @@ import { ProjectJob } from './ProjectJob.js';
 import { JobHierachy } from './JobHierachy.js';
 import { ProjectSave } from './ProjectSave.js';
 import { EventList } from './EventList.js';
+import { DB_Address } from './DB_Address.js';
 
 window.debug= true;
 
@@ -65,6 +66,9 @@ async function init() {
 
     let eventList = new EventList();
     window.eventList=eventList;
+
+    let db_address = new DB_Address();
+    window.db_address=db_address;
 
 }
 

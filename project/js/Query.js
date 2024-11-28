@@ -56,8 +56,8 @@ export class Query {
     async request(query) {
         if (this.isLoading) return; 
 
-        if (debug) console.log(this.query);
-        
+        if (debug) console.log(query);
+
         query=this.__setParameter(query);
         this.isLoading = true; 
         const json = query ? { query: query } : {};
