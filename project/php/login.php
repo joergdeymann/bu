@@ -7,6 +7,16 @@ include "../../class/class_cookie.php";
 $worker	=new mitarbeiter($db);
 $c		=new cookielogin();
 
+// TMP START
+$json = array(
+	"userId" => 1,
+	"userName" => "Gast",
+	"companyId" => 14
+);
+header("location:".$_SESSION["filename"]);
+// TMP END
+
+
 
 $input = file_get_contents("php://input");
 $data = json_decode($input, true);

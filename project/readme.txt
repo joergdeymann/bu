@@ -43,6 +43,7 @@ Einige Farben:
 ToDo:
 ==================================================================================
 1. Name der Veranstaltung und Ort mit der Artikelliste verunden
+    Done: 28.11.2024
 
 2. Tagessatz: 
     Die ID merken und wenn eine Id vorhanden ist den Wert der Oben ausgewählten Sektion
@@ -57,6 +58,20 @@ ToDo:
     Button mitz 1/8 Kuchen                   = TeilProjekt
     als Toggle
     Hinweis on the Fly: Projekt-Ansicht / Teil-Projekt-Ansicht 
+
+5. Als Gast einloggen
+    - Werte einer Gastfirma anlegen
+    - Gast account anlegen / Gast / gast
+
+6. Buttons Anlegen mus noch überall implementiert werden.
+
+7. Ansicht in der Projectansicht
+    Schwarze Punkte für jedes Subproject
+    - erst die Projekte dann anzeigen 
+    - darüber dann die Subprojekte zeigen
+    
+
+
 =================================================================================
 Ideen:
 ==================================================================================
@@ -68,10 +83,33 @@ Ideen:
     - muss sich der Tages Preis anpassen, falls gesetzt oder auch so
     - muss sich die Equipment Preise anpassen, falls gesetzt oder auch so 
 
-4. Option: Background Color / sheme
+4. Option: 
+    Background Color / sheme
+    Texte Für Englisch Deutsch usw.
+    local JSON array mit allen Texten
+
 
 =================================================================================
 Fehler:
 ==================================================================================
 1. Wenn Firma nicht angegeben wurde, dann der Tagessatz ausgewählt wurde, kommt ein Fehler
     Fixed: 26.11.2024
+
+2. Popup Screen setzte mal z-index auf 10 wegen den Kalender
+    Fixed: 28.11.2024 z-index 2 und 3
+    
+3. Bei einzeiligen einträgen im Kalender den Text statt zentriert oben ausrichten
+    Fixed: 28.11.2024
+
+4. Der Border wird nicht richtig gerechnet 
+    Fixed: 28.11.2024
+
+5. Login mit Passwort wechsel hinweis das es geändert werden muss.
+    habe eigentlich das Passwort geändert und dann jemand anders einloggen lassen, der musste dann wieder das Passwort ändern
+    Mach einen Plan des zusammenhangs:
+        Cookies
+        Sessions
+        Login passwort/user stimmt
+
+
+    
