@@ -268,6 +268,11 @@ export class ProjectCalendar extends Calendar {
         this.render.addCalendarSetupListener();
     }
 
+    toggleProject(event) {
+        event.target.classList.toggle("full-project");
+        this.fullProject=event.target.classList.contains("full-project");
+    }
+
 
 }
 

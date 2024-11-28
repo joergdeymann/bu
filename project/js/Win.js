@@ -29,22 +29,7 @@ export class Win {
         // console.log("Erstellt");
         this.prepare();
         this.create();
-        // this.addStyle(
-        //     {
-        //         width: "150px",
-        //         height: "150px" ,
-        //         "max-width":"50w",
-        //         "max-height":"50vw",
-        //         background: "linear-gradient(to top right,rgb(0, 168, 99),rgba(0, 230, 160,1))",
-        //         display: "flex",
-        //         "justify-content": "center",
-        //         "align-items":"center",
-        //         "font-size": "1.5rem",
-        //         transform: "translate(0, 200vh) !important",
-    
-        //     }
-        // )
-        }
+    }
 
     hide() {
         this.container.style.display = "none";

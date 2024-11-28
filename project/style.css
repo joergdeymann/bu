@@ -60,7 +60,8 @@ h2 {
     right:0;
     bottom:0;
     display: flex;
-    background-color: rgba(0, 0, 0, 0.1)
+    background-color: rgba(0, 0, 0, 0.1);
+    z-index:2;
  }
 
 .popup-list {
@@ -81,7 +82,7 @@ h2 {
     flex-direction: column;
     flex:1;
     align-items: stretch;
-    z-index:1;
+    z-index:2;
 }
 .popup-list h1 {
     font-size: 14px;
@@ -128,4 +129,8 @@ Die Deymanns Outift
 */
 body {
     background: var(--company-color);
+}
+
+.fullproject {
+    content: url("./img/circle78invert.svg");
 }

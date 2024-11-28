@@ -167,7 +167,7 @@ export class ProjectCalendarRender extends ExtDate {
             cl += " new";
             display="Neu";
         }
-        return `<div style="width:calc(${plateSize} + 2px); " class="calendar-text ${cl}"><div >${display}</div></div>`;
+        return `<div style="width:${plateSize}; " class="calendar-text ${cl}"><div >${display}</div></div>`;
     }
 
     addPlate(dt,ds,de,entry,level,levels) {
@@ -179,8 +179,16 @@ export class ProjectCalendarRender extends ExtDate {
             if (level==0 || levels==0) cl="top";
             else if (level==levels-1) cl="bottom";    
         }
+        if (levels==1) {
+            cl="top";
+        }
 
-        const plateSize = `${this.daysUntil(dt, de)*101+101}%`;
+        days=this.daysUntil(dt, de);
+        size=(days+1)*100;
+        lines = days*2;
+
+        //const plateSize = `${this.daysUntil(dt, de)*101+101}%`;
+        const plateSize = `calc(${size}% + ${lines})`;
 
         if (dt == ds) {
             cl += " leftradius";
@@ -196,63 +204,6 @@ export class ProjectCalendarRender extends ExtDate {
     }
     
 
-    async XsetMainColors() {
-        // if (this.mainColorsSet) return;
-        this.mainColorsSet=true;
-        await job.await(); // Warte auf die Daten von `job`
-
-    
-        for(let entry of calendar.entries) {
-            entry.color= this.determineColor(entry) ?? entry.color;
-        }
-
-
-        // calendar.entries = calendar.entries.map(entry => ({
-        //     ...entry,
-        //     color: this.determineColor(entry) ?? entry.color,
-        // }));
-    }
-
-
-    /**
-     * Bestimmt die korrekte Farbe basierend auf dem Eintrag und Optionen.
-     * @param {Object} entry - Der Kalendereintrag
-     * @returns {string | null} - Die neue Farbe oder null
-     */
-    XdetermineColor(entry) {
-        if (entry.start === '' || entry.end === '') {
-            return null; // Kein Start oder Enddatum, keine Farbänderung
-        }
-
-        const jobEntry = job.getById(entry.id); // das ist arbeiter ID ??####?? das geht hier so nicht !!! die id aus entry ist eine andere 
-        if (!jobEntry) {
-            return null; // Kein zugehöriger Job gefunden
-        }
-
-        // Farbentscheidung basierend auf Optionen
-        return opt.mobileCalendar.mainColors
-        ? jobEntry.ultimateColor
-        : jobEntry.color;
-    }
-
-
-    // async setMainColors() {
-    //     await job.await();
-    //     for(let entry of calendar.entries) {
-    //         if (entry.start!='' && entry.end !='') {
-    //             let uc=entry.color;
-    //             if (entry.id != null && entry.id != 0) {
-    //                 if (opt.mobileCalendar.mainColors) {
-    //                     uc=job.getById(entry.id)?.ultimateColor;
-    //                 } else {
-    //                     uc=job.getById(entry.id)?.color;
-    //                 }
-    //             }
-    //             entry.color=uc ?? entry.color; // opt.mobileCalendar.mainColors?uc:entry.color;
-    //         }
-    //     }
-    // }
-
     updateCalendar(undo=true) {
         console.log("updateCalendar ");
         console.trace();
@@ -263,7 +214,6 @@ export class ProjectCalendarRender extends ExtDate {
         document.getElementsByName("to")[0].value         =calendar.newEntry.end.substring(0,10);
         document.getElementsByName("arival")[0].value     =calendar.newEntry.arrival.substring(0,10);
         document.getElementsByName("departure")[0].value  =calendar.newEntry.departure.substring(0,10);
-        // this.addDateEvents();
     }
 
     renderCalendar() {
@@ -276,6 +226,7 @@ export class ProjectCalendarRender extends ExtDate {
         
         let html=/*html*/ `
             <div class="headline">
+                <img src="../img/circle78.svg" onclick="toggleProject()">
                 <h2 class="theme">${this.calendar.positionText[this.calendar.position]}</h2>
                 <img class="gear">
                 <div class="calendar-setup d-none">
