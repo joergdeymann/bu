@@ -43,6 +43,7 @@ Einige Farben:
 ToDo:
 ==================================================================================
 1. Name der Veranstaltung und Ort mit der Artikelliste verunden
+    Done: 28.11.2024
 
 2. Tagessatz: 
     Die ID merken und wenn eine Id vorhanden ist den Wert der Oben ausgewählten Sektion
@@ -63,6 +64,12 @@ ToDo:
     - Gast account anlegen / Gast / gast
 
 6. Buttons Anlegen mus noch überall implementiert werden.
+
+7. Ansicht in der Projectansicht
+    Schwarze Punkte für jedes Subproject
+    - erst die Projekte dann anzeigen 
+    - darüber dann die Subprojekte zeigen
+    
 
 
 =================================================================================
@@ -89,15 +96,13 @@ Fehler:
     Fixed: 26.11.2024
 
 2. Popup Screen setzte mal z-index auf 10 wegen den Kalender
-
+    Fixed: 28.11.2024 z-index 2 und 3
+    
 3. Bei einzeiligen einträgen im Kalender den Text statt zentriert oben ausrichten
+    Fixed: 28.11.2024
+
 4. Der Border wird nicht richtig gerechnet 
-    ich denke hier muss man anzahl der (Tage-1) Pixel innerhal der Woche addieren 
-    bei 20 Tage beispiel: 
-    Zeile 1: Tag 01-02 = 2 Tage-1 = 1 -> Grösse 2*width of cell+2px * 1
-    Zeile 2: Tag 03-09 = 7 Tage-1 = 7 -> Grösse 7*width of cell+2px * 6
-    Zeile 3: Tag 10-16 = 7 Tage-1 = 7 -> Grösse 7*width of cell+2px * 6
-    Zeile 3: Tag 17-20 = 4 Tage-1 = 3 -> Grösse 4*width of cell+2px * 3
+    Fixed: 28.11.2024
 
 5. Login mit Passwort wechsel hinweis das es geändert werden muss.
     habe eigentlich das Passwort geändert und dann jemand anders einloggen lassen, der musste dann wieder das Passwort ändern
