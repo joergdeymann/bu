@@ -17,11 +17,24 @@ $c		=new cookielogin();
 // TMP END
 
 
+// if (!isset($_SESSION['usernr']) || empty($_SESSION['usernr'])) {
+// 	if (!isset($_COOKIE['username']) || empty($_COOKIE['username'])) {
+// 	}
+// }
 
-$input = file_get_contents("php://input");
-$data = json_decode($input, true);
-if (json_last_error() === JSON_ERROR_NONE) {
-    $_SESSION["filename"]=$data["query"] ?? "../index.html";
+$contentType = $_SERVER['HTTP_ACCEPT'] ?? '';
+if (strpos($contentType, 'application/json') !== false) {		
+	$input = file_get_contents("php://input");
+	$data = json_decode($input, true);
+	if (json_last_error() === JSON_ERROR_NONE) {
+		$_SESSION["filename"]=$data["query"] ?? "../index.html";
+        $json = array(
+            "html" => "1",
+			"error" => "JSON Decode Problem bei der Übergabe:***$input***"
+        );
+		echo json_encode($json);        
+		exit ;
+	}
 }
 
 // $c->clear(); // Cookies und Sesseion löschen
@@ -41,7 +54,7 @@ if ($c->login_cookie()) {
 	$_POST['user']=$_COOKIE['username'];
 	$worker->load($_POST['user']);
 	$display="ok";
-	session_start();
+	// session_start();
 	$_SESSION['usernr']=$worker->row['recnum'];
 } else {
 	$err=false;

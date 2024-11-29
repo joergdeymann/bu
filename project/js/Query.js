@@ -8,6 +8,7 @@ export class Query {
 
     constructor(query) {
         this.setFilename();
+        this.setHeaders();
 
         if (query) {
             this.request(query);
@@ -18,6 +19,36 @@ export class Query {
     //     setFilename();
     //     // this.promiseList = Null
     // }
+    setHeaders(headers) {
+        if (typeof headers === "String") {
+            if (headers.toUpperCase() == "HTML") {
+                this.headers = {
+                    'Content-Type': 'text/html', 
+                    'Accept': 'text/html, application/json'
+                };
+                return;
+            }       
+
+            if (headers.toUpperCase() == "JSON") {
+                this.headers = {
+                    'Content-Type': 'application/json',
+                    'Accept': 'application/json'
+                };
+                return;
+            }       
+        }
+
+        if (typeof headers === "object" && headers !== null && !Array.isArray(headers)) { 
+            this.headers=headers;
+            return;            
+        }
+
+        this.headers = {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json'
+        };
+
+    }
 
     setFilename(filename='./php/request.php') {
         this.__filename = filename;
@@ -90,13 +121,14 @@ export class Query {
         try {
             const response = await fetch(this.__filename, {
                 method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Accept': 'application/json'
-                },
+                headers: this.headers, 
                 body: JSON.stringify(keyvalues)
             });
-            this.data = await response.json();
+            const contentType=response.headers.get('Content-Type')
+            if (contentType.includes("application/json")) this.data = await response.json();
+            else if (contentType.includes("text/html")) this.data = await response.text();
+            else throw new Error("Falscher Content Type:"+contentType);
+
             if (this.data.error) {
 
             }
@@ -106,10 +138,12 @@ export class Query {
         } catch (error) {
             
             console.error(
-                "Fehler im PHP-Skript:\n", 
+                `Fehler im PHP-Skript ${this.__filename}:\n`, 
                 error,
                 "\nRequest:\n",
-                keyvalues
+                keyvalues,
+                "\nHeaders:",
+                this.headers
             );
             throw error;
         }
