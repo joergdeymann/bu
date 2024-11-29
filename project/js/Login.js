@@ -13,13 +13,16 @@ export class Login {
     async getSession() {
         // document.location.replace("./php/login.php");
         let filename='./php/login.php';
-        let session=new Query();
+        let session=new Query(); // Query ohne Parameter
         session.setFilename(filename);
+        // session.setHeaders("HTML");
         // session.request(document.location.pathname);
         session.request();
         let json=await session.get();
-        
-        if (json.html != null) {
+        if (json.error) {
+            console.log(json.error);
+        }
+        if (json.html) {
             // document.location.assign("https://www.example.com");
             // console.log(document.location.hash);  // "#sektion1"
             // console.log(document.location.search); // "?id=123&name=abc"
