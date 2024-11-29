@@ -56,7 +56,7 @@ export class Query {
     async request(query) {
         if (this.isLoading) return; 
 
-        if (debug) console.log(query);
+        if (debug) console.log(query??"Query.request:Kein query angegeben");
 
         query=this.__setParameter(query);
         this.isLoading = true; 
@@ -97,12 +97,20 @@ export class Query {
                 body: JSON.stringify(keyvalues)
             });
             this.data = await response.json();
+            if (this.data.error) {
+
+            }
 
             return this.data; // Rückgabe der Daten aus dem PHP-Skript
 
         } catch (error) {
-            console.error("Fehler im PHP-Skript:", error);
-            console.error("Request:\n" + keyvalues.query);
+            
+            console.error(
+                "Fehler im PHP-Skript:\n", 
+                error,
+                "\nRequest:\n",
+                keyvalues
+            );
             throw error;
         }
     }

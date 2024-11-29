@@ -1,69 +1,80 @@
 import {Query} from "./Query.js" 
 
 export class DB_Project extends Query {
-    // request;
-    // data=null;
-    // isLoaded=false;
-
-
     constructor() {
         super();
+        this.name=document.getElementsByName("eventName")[0];
+        this.city=document.getElementsByName("place")[0];
     }
 
-    <input type="text" name="name"  placeholder="Name der Veranstaltung">
-    <input type="text" name="place" placeholder="Ort der Veranstaltung">
+    async query() {
+        if (this.data && this.data.id) return;
+        this.request(`
+            INSERT INTO bu_project 
+                SET 
+                    start ="${calendar.newEntry.start}",
+                    end = "${calendar.newEntry.end}",
+                    addressId=${db_address.data.id},
+                    setup="${calendar.newEntry.arrival}",
+                    dismantling="${calendar.newEntry.departure}",
+                    createDate="${new Date().toISOString()}",
+                    name="${document.getElementsByName("eventName")[0].value}",
+                    companyId=${login.companyId},
+                    info = "${document.getElementsByName("importanttext")[0].value}",
+                    customerId  = db_customer.data.id
+
+            
+        `); 
+    }
+
 
     async insert() {
+        await this.query();
+        await this.get();
+
+        console.log(this.data);
+        this.data={
+            id:         +this.data.lastId,
+            start:      calendar.newEntry.start,
+            end:        calendar.newEntry.end,
+            addressId:  db_address.data.id,
+            setup:      calendar.newEntry.arrival,
+            dismantling: calendar.newEntry.departure,
+            createDate: new Date().toISOString,
+            "name":     document.getElementsByName('eventName')[0].value,
+            companyId:  login.companyId,
+            info:       document.getElementsByName('importanttext')[0].value
+        };
+    }
+
+    async update() {
+        if (!this.data.id) return;
         await this.request(`
-            INSERT INTO bu_Project p
-                SET (
-                    p.from="${calendar.newEntry.from}",
-                    p.to="${calendar.newEntry.to}",
-                    p.arival="${calendar.newEntry.arrival}",
-                    p.depature="${calendar.newEntry.departure}",
-                    p.companyId=${login.companyId},
-                    p.createDate="${new Date().toISOString}",
-                    p.name="${document.getElementsByName["name"][0]}",  
-                        //address.data.name steht unter adressId, welche erst noch eventuell gespüeichert werden muss
-
-
-
-
-        `);
-        
+            UPDATE bu_project 
+            SET 
+                start ="${calendar.newEntry.start}",
+                end = "${calendar.newEntry.end}",
+                addressId=${db_address.data.id},
+                setup="${calendar.newEntry.arrival}",
+                dismantling="${calendar.newEntry.departure}",
+                createDate="${new Date().toISOString}",
+                name="${document.getElementsByName("eventName")[0].value}",
+                companyId=${login.companyId},
+                info = "${document.getElementsByName("importanttext")[0].value}"
+            
+            WHERE id = ${this.data.id};
+        `); 
+        this.data={
+            id:+this.data.lastId,
+            name: this.name.value,
+            city: this.city.value 
+        };
     }
 
-    
-    // async load(reload=true) {
-    //     if (this.data!=null && !reload) return;
-    //     this.data=await this.request.get();
-    // }
 
-    
-    // getJob(id) {
-    //     if (this.data == null) return null;
-    //     return this.data.find(e => e.id == id);
-    // }
-
-    getRow(id) {
-        if (this.data == null) return null;
-        return this.data.find(e => e.id == id);
-    }
     getById(id) {
         if (this.data == null) return null;
         return this.data.find(e => e.id == id);
     }
-
-    getByFather(id) {
-        return this.data.filter(e => e.father == id);
-    }
-
-    filterHeadlines() {
-        let filter=this.data.filter(e => e.father == null);
-        return filter;
-    }
-
-    
-
 
 }

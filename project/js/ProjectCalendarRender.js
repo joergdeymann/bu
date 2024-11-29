@@ -182,13 +182,8 @@ export class ProjectCalendarRender extends ExtDate {
         if (levels==1) {
             cl="top";
         }
+        // if (entry == null) debugger;
 
-        days=this.daysUntil(dt, de);
-        size=(days+1)*100;
-        lines = days*2;
-
-        //const plateSize = `${this.daysUntil(dt, de)*101+101}%`;
-        const plateSize = `calc(${size}% + ${lines})`;
 
         if (dt == ds) {
             cl += " leftradius";
@@ -198,6 +193,12 @@ export class ProjectCalendarRender extends ExtDate {
         }
 
         if ((this.isMonday(dt) && (ds<=dt) && (dt <=de)) || dt == ds) {
+            const days=this.daysUntil(dt, de);
+            const size=(days+1)*100;
+            const lines = days*2;
+            const plateSize = `calc(${size}% + ${lines}px)`;
+    
+
             add=this.renderPlate(plateSize,cl,entry);
         };
         return add;
@@ -226,9 +227,9 @@ export class ProjectCalendarRender extends ExtDate {
         
         let html=/*html*/ `
             <div class="headline">
-                <img src="../img/circle78.svg" onclick="toggleProject()">
                 <h2 class="theme">${this.calendar.positionText[this.calendar.position]}</h2>
                 <img class="gear">
+                <img class="full-project" onclick="calendar.toggleProject(event)">
                 <div class="calendar-setup d-none">
                     <div class="screen"></div>
                     <header>Einstellungen</header>

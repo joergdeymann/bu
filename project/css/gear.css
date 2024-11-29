@@ -18,3 +18,15 @@
         transform: rotate(360deg);
     }
 }
+
+.full-project {
+    content: url("../img/circle78.svg");
+    position: absolute;
+    left:0;
+    width: 24px;
+    height: 24px;
+    cursor: pointer;  
+}
+.full-project.full {
+    content: url("../img/circle78invert.svg");
+}

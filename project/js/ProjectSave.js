@@ -28,15 +28,20 @@ export class ProjectSave {
     }
     
     save() {
-        this.showPopup();
         this.saveAll();
     }
 
     async saveAll() {
         try{
             this.saveSetup();
-            if (!db_address.data?.id ) await db_address.insert();
-            // if (!db_project.data?.id ) await db_project.saveProject();
+            let p=[]
+
+            if (!db_customer.data?.id ) p.push(db_customer.insert());
+            if (!db_address.data?.id )  p.push(db_address.insert());
+            await Promise.all(p);
+
+
+            if (!db_project.data?.id ) await db_project.insert();
             // else 
             // if (calendar.fullProjectView) {
                 // await db_project.updateProject(); //Falls in Projekt Ansicht
@@ -57,6 +62,7 @@ export class ProjectSave {
             this.saveTimeJob();
             this.saveTimeEquipment();
             this.saveTimeEmplopyee();
+            this.showPopup();
         } catch (e){
             console.error("Fehler beim Speichern",e);
         } 
@@ -124,6 +130,9 @@ export class ProjectSave {
      *  CompanyId, articleId, customerId, Price if we have no Id
      */
     saveNewEquipmentPrice() {
+
+    }
+    saveTimeEmplopyee() {
 
     }
 

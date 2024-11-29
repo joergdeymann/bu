@@ -13,6 +13,8 @@ import { JobHierachy } from './JobHierachy.js';
 import { ProjectSave } from './ProjectSave.js';
 import { EventList } from './EventList.js';
 import { DB_Address } from './DB_Address.js';
+import { DB_Project } from './DB_Project.js';
+
 
 window.debug= true;
 
@@ -69,6 +71,9 @@ async function init() {
 
     let db_address = new DB_Address();
     window.db_address=db_address;
+
+    let db_project = new DB_Project();
+    window.db_project=db_project;
 
 }
 

@@ -9,12 +9,30 @@
 
     //$data["query"] = Query of select or update whtaever
     //$data["noreturn"] = if not a SELECT command
-    $input = file_get_contents("php://input");
-    $data = json_decode($input, true);
-    if (json_last_error() !== JSON_ERROR_NONE) {
-        echo json_encode(["error" => "Ungültiges JSON-Format"]);
+    try {
+        $input = file_get_contents("php://input");
+        $data = json_decode($input, true);
+        if (json_last_error() !== JSON_ERROR_NONE) {
+            echo json_encode(["error" => "Ungültiges JSON-Format"]);
+            exit;
+        }
+    
+    } catch (Exception $e) {
+        error_log("PHP Requestfehler: ");
+        error_log("message" . $e->getMessage());
+        error_log("request" . $input);
+        error_log("Datei:" . $e->getFile());
+        error_log("Zeile: " . $e->getLine());
+        echo json_encode([
+            "error" => "PHP Request fehlgeschlagen",
+            "message" => $e->getMessage(),
+            "request" => $request,
+            "line" =>  $e->getLine(),
+            "file" =>  $e->getFile()
+        ]);
         exit;
-    }
+
+    }  
 
     // echo json_encode(["lastId" => 99]);
     // exit;
@@ -91,10 +109,18 @@
         }
     } catch (PDOException $e) {
         // Fehler bei der Verbindung in die Fehlerlogdatei schreiben
-        error_log("Verbindungsfehler: " . $e->getMessage());
+        error_log("Verbindungsfehler: ");
+        error_log("message" . $e->getMessage());
+        error_log("request" . $request);
         error_log("Datei:" . $e->getFile());
         error_log("Zeile: " . $e->getLine());
-        echo json_encode(["error" => "Verbindung zur Datenbank fehlgeschlagen"]);
+        echo json_encode([
+            "error" => "Verbindung zur Datenbank fehlgeschlagen",
+            "message" => $e->getMessage(),
+            "request" => $request,
+            "line" =>  $e->getLine(),
+            "file" =>  $e->getFile()
+        ]);
         exit;
     }
     
@@ -102,5 +128,5 @@
     // Idee: echo json_encode(["data" => $rows]);
     // Problem ich frage immer data direkt ab, 
     echo json_encode($rows);
-    ?>
+?>
 
