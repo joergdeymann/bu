@@ -15,6 +15,7 @@ export class Login {
         let filename='./php/login.php';
         let session=new Query(); // Query ohne Parameter
         session.setFilename(filename);
+        session.addHeader({credentials: 'include'});
         // session.setHeaders("HTML");
         // session.request(document.location.pathname);
         session.request();

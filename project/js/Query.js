@@ -5,6 +5,7 @@ export class Query {
     __element = null;
     isLoading = false;
     data = [];
+    headers=[];
 
     constructor(query) {
         this.setFilename();
@@ -52,6 +53,9 @@ export class Query {
 
     setFilename(filename='./php/request.php') {
         this.__filename = filename;
+    }
+    addHeader(header) {
+        Object.assign(this.headers, header);
     }
 
     setElement(elementId) { // element oder ElementID 
@@ -130,7 +134,7 @@ export class Query {
             else throw new Error("Falscher Content Type:"+contentType);
 
             if (this.data.error) {
-
+                throw new Error("Fehler:"+this.data.error);
             }
 
             return this.data; // Rückgabe der Daten aus dem PHP-Skript

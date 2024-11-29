@@ -7,6 +7,9 @@ include "../../class/class_cookie.php";
 $worker	=new mitarbeiter($db);
 $c		=new cookielogin();
 
+// WICHTIG: Aufruf ohne Parameter wenn von JS aus
+
+
 // TMP START
 // $json = array(
 // 	"userId" => 1,
@@ -22,20 +25,20 @@ $c		=new cookielogin();
 // 	}
 // }
 
-$contentType = $_SERVER['HTTP_ACCEPT'] ?? '';
-if (strpos($contentType, 'application/json') !== false) {		
-	$input = file_get_contents("php://input");
-	$data = json_decode($input, true);
-	if (json_last_error() === JSON_ERROR_NONE) {
-		$_SESSION["filename"]=$data["query"] ?? "../index.html";
-        $json = array(
-            "html" => "1",
-			"error" => "JSON Decode Problem bei der Übergabe:***$input***"
-        );
-		echo json_encode($json);        
-		exit ;
-	}
-}
+// $contentType = $_SERVER['HTTP_ACCEPT'] ?? '';
+// if (strpos($contentType, 'application/json') !== false) {		
+// 	$input = file_get_contents("php://input");
+// 	$data = json_decode($input, true);
+// 	if (json_last_error() === JSON_ERROR_NONE) {
+// 		$_SESSION["filename"]=$data["query"] ?? "../index.html";
+//         $json = array(
+//             "html" => "1",
+// 			"error" => "JSON Decode Problem bei der Übergabe:***$input***"
+//         );
+// 		echo json_encode($json);        
+// 		exit ;
+// 	}
+// }
 
 // $c->clear(); // Cookies und Sesseion löschen
 
@@ -109,8 +112,8 @@ if ($c->login_cookie()) {
 
 $contentType = $_SERVER['HTTP_ACCEPT'] ?? '';
 if (strpos($contentType, 'application/json') !== false) {
-    header('Content-Type: application/json');
-
+	requestFilename();
+	
     if ($display != "ok") {
         $json = array(
             "html" => "1"
@@ -126,6 +129,7 @@ if (strpos($contentType, 'application/json') !== false) {
     }
 
     // JSON-Ausgabe
+    header('Content-Type: application/json');
     echo json_encode($json);        
     exit;
 }
@@ -140,6 +144,34 @@ if ($display=="change") {
 	exit;
 }	
 
+
+function requestFilename() {
+	$input = file_get_contents("php://input");
+	$error=false;
+	$warning=false;
+	$data=null;
+	$json=[];
+
+	if ($input && $input != "{}") {
+		$data = json_decode($input, true);
+		if (json_last_error() === JSON_ERROR_NONE) {
+			$error="JSON Decode Problem bei der Übergabe:***$input***";
+		}
+	} else {
+		$warning="Keine Übergabe der Datei erfolgt";
+	}
+	$_SESSION["filename"]=$data["query"] ?? "../index.html";
+	if ($error) {
+        $json = array(
+			"error" => $error,
+			"warnung" => $warning
+        );
+
+	    header('Content-Type: application/json');
+		echo json_encode($json);        
+		exit ;
+	}
+}
 
 function headers() {
     echo '<html lang="de"><head>
