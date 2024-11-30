@@ -24,6 +24,7 @@ export class EquipmentList {
         this.list=document.getElementById("equipment-list");
         this.listContainer=this.list.parentElement;
         this.input=document.getElementsByName("equipmentName[]")[0];
+        this.inputPrice=document.getElementsByName("equipmentPrice[]")[0];
         this.inputId=document.getElementsByName("equipmentId[]")[0];
         this.inputDisplay =this.input.closest(".input-container").querySelector('.right');
     }
@@ -140,8 +141,9 @@ export class EquipmentList {
             // Version 1 = nicht auswählbar: let click=+row.inuse?'class="red"':`onclick="equipmentList.selectEquipment(${row.recnum})"`;
             
             let click=`onclick="equipmentList.selectEquipment(${row.id})"`+ (+row.inUse?' class="red"':``);
+        
             let info=+row.inUse?`<br>(${this.getGermanDate(row.from)} - ${this.getGermanDate(row.to)})`:``;
-            html+=/*html*/`<div ${click}>${row.name} ${info}</div>`;
+            html+=/*html*/`<div ${click}>${row.name}, ${row.price} €${info}</div>`;
         }
         this.list.innerHTML=html;
     }
@@ -168,6 +170,7 @@ export class EquipmentList {
         this.input.addEventListener("change",event=> {
             this.inputId.value="";
             this.inputDisplay.innerText="";            
+            this.inputPrice.value="";            
         })
 
         this.input.addEventListener("input",this.handleInputEvent);
@@ -212,6 +215,7 @@ export class EquipmentList {
             let parent=event.target.parentElement;
             this.input=parent.querySelector('input[name="equipmentName[]"]');
             this.inputId =parent.querySelector('input[name="equipmentId[]"]');
+            this.inputPrice =parent.querySelector('input[name="equipmentPrice[]"]');
             this.inputDisplay =this.input.closest(".input-container").querySelector('.right');
         }
 
@@ -222,7 +226,7 @@ export class EquipmentList {
     async toggleWindow() {
         if(this.listContainer.classList.contains("d-none")) { 
             await this.load();
-            this.input.style.zIndex=2;
+            this.input.style.zIndex=3;
             this.addInputEvent();
             if (this.filteredList.length>5) this.input.focus(); // On demanmd
 
@@ -238,7 +242,8 @@ export class EquipmentList {
         this.input.blur();
         this.input.value=equipment.name;
         this.inputId.value=equipment.id;
-        this.inputDisplay.innerText=equipment.price
+        this.inputPrice.value=equipment.price;
+        this.inputDisplay.innerText=equipment.price+" €";
         this.toggleWindow();
         // this.getPrice(equipment); //Neu -> equpmentPrice.getPrice(equipment)
         this.showPrice();
@@ -256,6 +261,7 @@ export class EquipmentList {
         newContainer.classList.add("equipment");
         newContainer.innerHTML=/*html*/`
             <input type="hidden" name="equipmentId[]">
+            <input type="hidden" name="equipmentPrice[]">
             <input type="text" name="equipmentName[]"  placeholder="Was bringst du mit">
             <button class="small" type="button" onclick="equipmentList.setWindow(event)">&#128315;</button>
             <div class="right"></div>
@@ -277,12 +283,17 @@ export class EquipmentList {
     }
 
     clearField() {
-        let inputId = document.activeElement.parentElement.querySelector('input[name="equipmentId[]"]');
-        let input=document.activeElement.parentElement.querySelector('input[name="equipmentName[]"]');
+        // let inputId = document.activeElement.parentElement.querySelector('input[name="equipmentId[]"]');
+        // let input=document.activeElement.parentElement.querySelector('input[name="equipmentName[]"]');
+        // let inputPrice=document.activeElement.parentElement.querySelector('input[name="equipmentPrice[]"]');
+        // input.value="";
+        // inputId.value="";
+        // inputPrice.value="";
 
         // this.input.focus();
-        input.value="";
-        inputId.value="";
+        this.input.value="";
+        this.inputId.value="";
+        this.inputPrice.value="";
         this.inputDisplay.innerText="";
         this.toggleWindow();
     } 

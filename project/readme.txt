@@ -69,7 +69,9 @@ ToDo:
     Schwarze Punkte für jedes Subproject
     - erst die Projekte dann anzeigen 
     - darüber dann die Subprojekte zeigen
-    
+
+8. Artikelpreis mit anzeigen in "Was bringst du mit"
+
 
 
 =================================================================================
@@ -113,3 +115,35 @@ Fehler:
 
 
     
+=================================================================================
+Hinweise:
+==================================================================================
+1. Was bringst du mit
+    a)  beim Laden sehe ich auch Kundenspezifische Preise für die Geräte
+        ich kann die Preise, aber nicht ändern
+    b)  ich kann bisher noch keine Geräte anlegen
+        Wenn ein Neues Gerät erkannt ist als recnum nicht da ist und Text nicht gefunden
+        dann soll eine Eingabeaufforderung kommen
+    c)  Wenn man den Focus verlässt und keine id Articel id vorhanden ist dann soll 
+        versucht werden den Artikel zu Laden
+        zb: man gibt als  Text Lichtpult Omchen ein und wenn ghefunden dann geladen werden#
+        ansonsten anlegen und Preis erfragen
+    d) Den Preis:
+        Es gilt, wenn es einen Preis des Artikels für den Kunden gibt, dann
+        wird dieser genommen, ansonsten der Artikel Preis
+
+
+2. Welche Einstellung ?
+    a) Autovervollständigen an: 
+        sucht automatisch in der Datei bzw in dem Vorgeladenen array nach dem jeweisl ersten Wert
+        und malt es grau dahinter, bei tab wird es dann angezeigt
+        das Grau ist ein Absolutes Feld das in der Höhe unter dem Text geblendet wird, wie man realisiert, 
+        ist wahrscheinlich komplizirter
+    b) Autovervollständigen als Liste:
+        das heust die Liste wird immer angezeigt sobal man im Focus ist
+
+    c) Autovervollständigen als manuell:
+        Der nutzer öffnet die Liste und kann dann wie bei b) nutzen
+        Diese Einstellung ist standart Voreinstellung
+    
+

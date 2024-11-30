@@ -1,7 +1,7 @@
 import { ProjectInputs } from './ProjectInputs.js';
 import { ProjectCalendar } from './ProjectCalendar.js';
 import { ProjectPrice } from './ProjectPrice.js';
-import { Query } from './Query.js';
+// import { Query } from './Query.js';
 import { CustomerList } from './CustomerList.js';
 import { EquipmentList } from './EquipmentList.js';
 import { EquipmentPrice } from './EquipmentPrice.js';
@@ -16,7 +16,8 @@ import { EventList } from './EventList.js';
 import { DB_Address } from './DB_Address.js';
 import { DB_Project } from './DB_Project.js';
 import { DB_Customer } from './DB_Customer.js';
-import { DB_EquipmentPrice } from './DB_EquipmentPrice.js';
+import { DB_Article } from './DB_Article.js';
+import { DB_EventPrice } from './DB_EventPrice.js';
 
 
 window.debug= true;
@@ -81,8 +82,11 @@ async function init() {
     let db_customer = new DB_Customer();
     window.db_customer=db_customer;
 
-    let db_equipmentPrice = new DB_EquipmentPrice();
-    window.db_equipmentPrice=db_equipmentPrice;
+    let db_articlePrice = new DB_Article();
+    window.db_articlePrice=db_articlePrice;
+
+    let db_eventPrice = new DB_EventPrice();
+    window.db_eventPrice=db_eventPrice;
 
 }
 

@@ -96,7 +96,7 @@ export class CustomerList {
     toggleWindow() {
         if(this.listContainer.classList.contains("d-none")) { 
             this.load();
-            this.input.style.zIndex=2;
+            this.input.style.zIndex=3;
             if (this.filteredList.length>5) this.input.focus(); 
         } else {
             this.listContainer.classList.add("d-none");

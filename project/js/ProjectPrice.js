@@ -147,16 +147,20 @@ export class ProjectPrice {
      *  
      */
     render() {
-        let html="<h1>Tagessatz</h1>";
-        html+=/*html*/`
+        let articleId=projectPrice.ap?.data[0]?.articleId??0;
+        let articlePriceText=articleId?`${(+this.articlePrice).toFixed(2)} €`:"Job nicht asgewählt";
+        let customerPriceText=customerList.inputId.value?`${(+this.customerPrice).toFixed(2)} €`:"Kunde nicht ausgewählt";
+
+        let html=/*html*/`
+        <h1>Tagessatz</h1>
         <div class="selector-headline" onclick="projectPrice.clearField()">Zurücksetzten</div>
-        <div onclick="projectPrice.setPrice(${this.articlePrice},${projectPrice.ap.data[0].articleId})">
+        <div onclick="projectPrice.setPrice(${this.articlePrice},${articleId})">
             <div>${job.newEntry.name||"Artikelpreis"}:</div>
-            <div>${this.articlePrice} €</div>
+            <div>${articlePriceText}</div>
         </div>
         <div onclick="projectPrice.setPrice(${this.customerPrice},0)">
             <div>Kundenbasis:</div>
-            <div>${this.customerPrice} €</div>
+            <div>${customerPriceText}</div>
         </div>
         `;
         if (this.ep?.data) {
@@ -164,7 +168,7 @@ export class ProjectPrice {
                 html +=/*html*/`
                 <div onclick="projectPrice.setPrice(${ep.price},${ep.articleId})">
                     <div>${ep.name||"Equipmentpreis"}:</div>
-                    <div>${ep.price} €</div>
+                    <div>${(+ep.price).toFixed(2)} €</div>
                 </div>
                 `;
                 
@@ -223,7 +227,7 @@ export class ProjectPrice {
     async toggleWindow() {
         if(this.listContainer.classList.contains("d-none")) { 
             this.load();
-            this.input.style.zIndex=2;
+            this.input.style.zIndex=3;
             this.input.focus(); 
 
         } else {
