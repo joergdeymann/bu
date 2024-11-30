@@ -14,6 +14,11 @@ export class Query {
         if (query) {
             this.request(query);
         }
+        this.elements();
+
+    }
+    
+    elements() {
     }
 
     // init() {
@@ -90,9 +95,7 @@ export class Query {
     // startet das Laden der Daten über fetchData
     async request(query) {
         if (this.isLoading) return; 
-
-        if (debug) console.log(query??"Query.request:Kein query angegeben");
-
+ 
         query=this.__setParameter(query);
         this.isLoading = true; 
         const json = query ? { query: query } : {};
@@ -112,8 +115,6 @@ export class Query {
             this.__promise=null;
         }
         if (debug) console.log(this.data);
-        // console.log(this.data);
-        // console.trace("Stack Trace:");
         return this.data;
     }
 
@@ -182,6 +183,28 @@ export class Query {
 
         }
     } 
+
+    
+
+    getById(id) {
+        if (this.data == null) return null;
+        return this.data.find(e => e.id == id);
+    }
+
+    async insert() {
+        if (this.id.value) return;
+        await this.insertQuery();
+        await this.get();
+        this.id.value=this.data.lastId;
+    }
+
+    async update() {
+        if (!this.id.value) return;
+        await this.updateQuery();
+        await this.get();        
+    }
+
+
 }
 
 

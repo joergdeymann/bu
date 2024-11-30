@@ -40,6 +40,7 @@ export class ProjectSave {
             if (!db_address.data?.id )  p.push(db_address.insert());
             await Promise.all(p);
 
+            await db_equipmentPrice.insert();
 
             if (!db_project.data?.id ) await db_project.insert();
             // else 

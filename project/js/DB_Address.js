@@ -3,54 +3,34 @@ import {Query} from "./Query.js"
 export class DB_Address extends Query {
     constructor() {
         super();
+    }
+
+    elements() {
         this.name=document.getElementsByName("eventName")[0];
+        this.id=document.getElementsByName("eventId")[0];
         this.city=document.getElementsByName("place")[0];
     }
 
-    async query() {
-        if (this.data && this.data.id) return;
+    async insertQuery() {
         this.request(`
-            INSERT INTO bu_adresse 
+            INSERT INTO bu_address 
             SET 
                 name = "${this.name.value}",
-                ort = "${this.city.value}",
+                city = "${this.city.value}",
+                companyId = ${login.companyId},
                 location = 1
             
         `); 
     }
-    async insert() {
-        await this.query();
-        await this.get();
 
-        console.log(this.data);
-        this.data={
-            id:+this.data.lastId,
-            name: this.name.value,
-            city: this.city.value
-        };
-    }
-
-    async update() {
-        if (!this.data.id) return;
+    async updateQuery() {
         await this.request(`
-            UPDATE bu_adresse a
+            UPDATE bu_adress a
             SET 
                 a.name = "${this.name.value}",
-                a.ort = "${this.city.value}"
-            
-            WHERE a.recnum = this.data.id;
+                a.city = "${this.city.value}"
+            WHERE a.id = ${this.id.value};
         `); 
-        this.data={
-            id:+this.data.lastId,
-            name: this.name.value,
-            city: this.city.value 
-        };
-    }
-
-
-    getById(id) {
-        if (this.data == null) return null;
-        return this.data.find(e => e.id == id);
     }
 
 }

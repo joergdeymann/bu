@@ -2,7 +2,8 @@
 <html lang="de">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <!-- meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no" -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
     <title>Document</title>
     <!-- script src="./js/calendar.js"></script-->
     <!-- <script type="module" src="./js/Modules.js" defer></script> -->
@@ -22,6 +23,7 @@
 <body>
     <H1 class="headline">Projekt anlegen</H1>
     <form id="add-project" method="POST" action="" onclick="return false;">
+        <input type="hidden" name="projectId">
         <input type="hidden" name="date">
 
         <div class="input-container" >

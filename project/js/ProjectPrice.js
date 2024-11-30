@@ -30,7 +30,9 @@ export class ProjectPrice {
         if (!calendar.newEntry.id ) return 0;
 
         this.ap=new Query(`
-            SELECT a.price as price 
+            SELECT 
+                a.price as price,
+                a.id    as articleId 
             FROM bu_article a 
             JOIN bu_job_definition jd
             ON jd.articleId = a.id
@@ -44,7 +46,8 @@ export class ProjectPrice {
         this.ep=new Query(`
             SELECT 
                 a.name, 
-                eq.price as price 
+                eq.price as price,
+                a.id as articleId 
             FROM 
                 bu_equipment_price eq 
             LEFT JOIN 
@@ -147,11 +150,11 @@ export class ProjectPrice {
         let html="<h1>Tagessatz</h1>";
         html+=/*html*/`
         <div class="selector-headline" onclick="projectPrice.clearField()">Zurücksetzten</div>
-        <div onclick="projectPrice.setPrice(${this.articlePrice})">
+        <div onclick="projectPrice.setPrice(${this.articlePrice},${projectPrice.ap.data[0].articleId})">
             <div>${job.newEntry.name||"Artikelpreis"}:</div>
             <div>${this.articlePrice} €</div>
         </div>
-        <div onclick="projectPrice.setPrice(${this.customerPrice})">
+        <div onclick="projectPrice.setPrice(${this.customerPrice},0)">
             <div>Kundenbasis:</div>
             <div>${this.customerPrice} €</div>
         </div>
@@ -159,7 +162,7 @@ export class ProjectPrice {
         if (this.ep?.data) {
             for (let ep of this.ep.data) {
                 html +=/*html*/`
-                <div onclick="projectPrice.setPrice(${ep.price})">
+                <div onclick="projectPrice.setPrice(${ep.price},${ep.articleId})">
                     <div>${ep.name||"Equipmentpreis"}:</div>
                     <div>${ep.price} €</div>
                 </div>
@@ -237,9 +240,11 @@ export class ProjectPrice {
 
     clearField() {
         this.input.value="";
+        this.articleId=null;
         this.toggleWindow();
     } 
-    setPrice(price) {
+    setPrice(price,articleId) {
+        this.articleId=articleId;
         this.input.value=price;
         this.input.blur();
         this.toggleWindow();

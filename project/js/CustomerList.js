@@ -109,6 +109,8 @@ export class CustomerList {
         this.input.blur();
         this.input.value=customer.firma;
         this.inputId.value=customer.recnum;
+        
+        
         this.toggleWindow();
     }
 

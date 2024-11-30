@@ -12,8 +12,11 @@ import { ProjectJob } from './ProjectJob.js';
 import { JobHierachy } from './JobHierachy.js';
 import { ProjectSave } from './ProjectSave.js';
 import { EventList } from './EventList.js';
+
 import { DB_Address } from './DB_Address.js';
 import { DB_Project } from './DB_Project.js';
+import { DB_Customer } from './DB_Customer.js';
+import { DB_EquipmentPrice } from './DB_EquipmentPrice.js';
 
 
 window.debug= true;
@@ -74,6 +77,12 @@ async function init() {
 
     let db_project = new DB_Project();
     window.db_project=db_project;
+
+    let db_customer = new DB_Customer();
+    window.db_customer=db_customer;
+
+    let db_equipmentPrice = new DB_EquipmentPrice();
+    window.db_equipmentPrice=db_equipmentPrice;
 
 }
 

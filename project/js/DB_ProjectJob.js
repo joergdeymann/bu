@@ -13,7 +13,8 @@ export class DB_ProjectJob extends Query {
                 job.id AS id,
                 job.name AS name,
                 job.color AS color,
-                job.father AS father
+                job.father AS father,
+                job.articleId AS articleId
             FROM bu_job_definition job 
             WHERE job.companyId = ${login.companyId}
             ORDER BY job.father,job.name
