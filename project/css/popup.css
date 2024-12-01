@@ -1,0 +1,66 @@
+.blocker {
+    position:fixed;
+    top:0;
+    left:0;
+    right:0;
+    bottom:0;
+    display: flex;
+    background-color: rgba(0, 0, 0, 0.1);
+    z-index:2;
+ }
+
+.popup-list {
+    /* height: 25vh; */
+    max-height: 25vh;
+    /* width: 100vh;*/
+    border: 1px solid rgba(0, 0, 0, 0.2);
+    background-color: rgba(255,255,255,0.9);
+    border-radius: 10px;
+    position: absolute;
+    top:-16px;
+    left:0px;
+    right:0px;
+    padding: 0px 8px 8px 8px ; 
+    font-size: 14px;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    flex:1;
+    align-items: stretch;
+    z-index:2;
+}
+.popup-list.nolist {
+    /* gap:16px; */
+    max-height: 300px;
+}
+
+
+.popup-list h1 {
+    font-size: 14px;
+    font-weight: 700; 
+    width: unset;
+    margin-bottom: 4px;
+    height: 1em;
+    padding: 2px;
+}
+.popup-list>div { /* :not(.red) */
+    display: flex; 
+    align-items: center;
+    background-color: rgba(0,0,0,0.05);
+    margin: 0.5em 0px 0.5em 0px;
+    cursor: pointer;
+    border-radius: 50vh;
+    padding: 4px 8px;
+    min-height:12px;
+}
+.popup-list>div:nth-of-type(odd) { 
+    background-color: rgba(0,0,0,0.1);
+}
+.popup-list>div:hover { /* :not(.red) */
+    background-color: rgba(0,0,0,0.3);
+}
+.popup-list.nolist>div {
+    background: none;
+}
+
+

@@ -1,0 +1,34 @@
+:root {
+    --dark: black;
+    --white: #CCCCCC;
+    --filter: invert();
+}
+
+/*
+Black
+*/
+body,
+.calendar,
+.calendar>section>div {
+    background-color:var(--dark);
+}
+
+.input-container>div,
+.calendar section>div>span,
+.calendar section>div>span:hover,
+.calendar header,
+.calendar nav {
+        color: var(--white);
+} 
+.calendar section>div>span{
+    text-shadow: 
+    -1px -1px 0 black, 
+    1px -1px 0 black, 
+    -1px 1px 0 black, 
+    1px 1px 0 black;
+}
+
+.gear {
+    filter: var(--filter);
+}
+

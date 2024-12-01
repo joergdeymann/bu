@@ -14,6 +14,10 @@ h1 {
     background: linear-gradient(45deg, #ff6b6b, #f9d423);
     background-size: 200% 200%;
     animation: pulse-gradient 3s ease infinite;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 @keyframes pulse-gradient {

@@ -1,8 +1,11 @@
 import { Win } from './Win.js';
 
 export class ProjectSave {
+    async msg(text) {
+        await this.showPopup(`<center>${text}</center>`);
+    }
 
-    async showPopup() {
+    async showPopup(text=null) {
         const w=new Win();
     
         w.addStyle(
@@ -21,7 +24,11 @@ export class ProjectSave {
             }
         )
 
-        w.setContent("<center>Erfolgreich gespeichert</center>");
+        if (text == null) {
+            text="<center>Erfolgreich gespeichert</center>";
+        }
+
+        w.setContent(text);
         await w.start("BottomToCenter");
         await w.start("opacity");    
         

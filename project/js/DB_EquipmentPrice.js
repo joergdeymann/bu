@@ -1,9 +1,17 @@
 import {Query} from "./Query.js" 
 
 export class DB_EquipmentPrice extends Query {
+    id;
+    articleId;
+    customerId;
+    price;
+
     constructor() {
         super();
     }
+
+    elements() {
+    }    
 
     async insertQuery() {
         await this.request(`
@@ -11,8 +19,8 @@ export class DB_EquipmentPrice extends Query {
             SET 
                 companyId =  ${login.companyId},
                 price =      ${this.price.value},
-                customerId = ${db_customer.id.value??0},
-                articleId  = ${this.articleId}            
+                customerId = ${this.customerId.value??0},
+                articleId  = ${this.articleId.value}            
         `); 
     }
 
@@ -22,8 +30,8 @@ export class DB_EquipmentPrice extends Query {
             SET 
                 companyId =  ${login.companyId},
                 price =      ${this.price.value},
-                customerId = ${db_customer.id.value??0},
-                articleId  = ${this.articleId}            
+                customerId = ${this.customerId.value??0},
+                articleId  = ${this.articleId.value}            
 
             WHERE a.id = ${this.id.value};
         `); 

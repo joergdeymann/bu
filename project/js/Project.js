@@ -69,7 +69,7 @@ async function init() {
 
     let projectSave = new ProjectSave();
     window.projectSave=projectSave;
-
+    
     let eventList = new EventList();
     window.eventList=eventList;
 

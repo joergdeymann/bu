@@ -30,7 +30,7 @@ button {
     width: 310px;
 }
 
-.buttons.movement button {
+.movement button {
     min-width: 90px;
     /* background: linear-gradient(to top right, rgba(1, 175, 27,0.5), rgba(1, 175, 27,1)); */
     background: linear-gradient(to top right, rgba(230, 230, 250,1), rgba(180, 180, 250,1));
@@ -57,24 +57,6 @@ button {
     box-shadow: 2px 2px 4px rgba(255,0,0,0.5);
 }
 
-.XmyButton {
-    width: 200px;
-    height: 50px;
-    font-size: 20px;
-    color: #000000;
-    background: linear-gradient(to top right, rgba(1, 175, 27,0.1), rgba(1, 175, 27,1));
-    color: rgba(1, 175, 27,1);
-
-    border: none;
-    border-radius: 10px;
-    font-family: arial;
-    transition: all 0.25s ease;
-}
-.XmyButton:hover {
-    color: #000000;
-    background: linear-gradient(to top right, #01af1b, #1dd862);
-    border-color: none;
-} 
 
 /* background: linear-gradient(to top right, rgba(1, 175, 27, 0.3), rgba(1, 175, 27, 1)); */
 
