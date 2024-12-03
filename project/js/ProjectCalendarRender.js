@@ -8,15 +8,10 @@ import { Setup } from './Setup.js';
 
 export class ProjectCalendarRender extends ExtDate {
     calendar;
-    // jobs;
 
     constructor(calendar) {
         super();
-        // console.log("Hallo");
-        // console.log(calendar.setup);
         this.calendar=calendar;
-
-        // this.jobs=new ProjectJobs();
     }
 
 

@@ -21,6 +21,7 @@
     <H1 class="headline">Projekt anlegen</H1>
     <form id="add-project" method="POST" action="" onclick="return false;">
         <input type="hidden" name="projectId">
+        <input type="hidden" name="projectJobId">
         <input type="hidden" name="date">
 
         <div class="input-container" >
@@ -172,6 +173,7 @@
 
 
         <div class="input-container relative" >
+            <input type="hidden" name="timeEquipmentId[]"  value="0">
             <input type="hidden" name="equipmentId[]">
             <input type="hidden" name="equipmentPrice[]">
             <input type="text" name="equipmentName[]" class="listener" placeholder="Was bringst du mit">

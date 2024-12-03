@@ -111,7 +111,7 @@ export class Query {
             await this.__promise;
         } else if (!this.data && query) {
             this.__promise = this.request(query);
-            this.data= await this.__promise();
+            await this.__promise;
             this.__promise=null;
         }
         if (debug) console.log(this.data);
@@ -192,14 +192,14 @@ export class Query {
     }
 
     async insert() {
-        if (this.id.value) return;
+        if (+this.id.value) return;
         await this.insertQuery();
         await this.get();
         this.id.value=this.data.lastId;
     }
 
     async update() {
-        if (!this.id.value) return;
+        if (!+this.id.value) return;
         await this.updateQuery();
         await this.get();        
     }

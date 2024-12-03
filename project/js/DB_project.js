@@ -12,19 +12,23 @@ export class DB_Project extends Query {
         this.importanttext=document.getElementsByName("importanttext")[0];
     }
 
+    get isFullProject() {
+        return document.getElementsByClassName("full-project")[0].classList.contains("full)");
+    }
+
     async insertQuery() {
         this.request(`
             INSERT INTO bu_project 
                 SET 
-                    start ="${calendar.newEntry.start}",
-                    end = "${calendar.newEntry.end}",
-                    addressId=${db_address.id.value},
-                    setup="${calendar.newEntry.arrival}",
-                    dismantling="${calendar.newEntry.departure}",
-                    createDate="${new Date().toISOString()}",
-                    name="${this.name.value}",
-                    companyId=${login.companyId},
-                    info = "${this.importanttext.value}",
+                    start ="${calendar.newEntry.start}",           
+                    end = "${calendar.newEntry.end}",              
+                    addressId=${db_address.id.value},              
+                    setup="${calendar.newEntry.arrival}",          
+                    dismantling="${calendar.newEntry.departure}",  
+                    createDate="${new Date().toISOString()}",      
+                    name="${this.name.value}",                     
+                    companyId=${login.companyId},                  
+                    info = "${this.importanttext.value}",          
                     customerId  = ${db_customer.id.value}
 
             
@@ -32,6 +36,7 @@ export class DB_Project extends Query {
     }
 
     async updateQuery() {
+        
         await this.request(`
             UPDATE bu_project 
             SET 

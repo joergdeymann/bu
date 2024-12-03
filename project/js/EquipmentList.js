@@ -1,8 +1,6 @@
-import { CustomerList } from './CustomerList.js';
 import { DB_EquipmentPrice } from './DB_EquipmentPrice.js';
 import { DB_Article } from './DB_Article.js';
 import { Query } from './Query.js';
-import { ProjectSave } from './ProjectSave.js';
 
 export class EquipmentList {
     filteredList=[]
@@ -37,6 +35,7 @@ export class EquipmentList {
     filterList() {
         return this.filteredList=this.data.filter(e=>e.name && e.name.toLowerCase().includes(this.input.value.toLowerCase()));  
     }
+
     getById(id) {
         return this.data.find(e=>e.id == id);  
     }
@@ -58,16 +57,6 @@ export class EquipmentList {
             companyId: login.companyId
         };
         
-        // let date=`0`;
-        // if (from == '' && to != '') {
-        //     date=`CASE WHEN MAX(CASE WHEN eq.from <= '${to}' THEN 1 ELSE 0 END) = 1 THEN 1 ELSE 0 END`;
-        // } else if (from != '' && to == '') {
-        //     date=`CASE WHEN MAX(CASE WHEN eq.to >= '${from}' THEN 1 ELSE 0 END) = 1 THEN 1 ELSE 0 END`;
-        // } else if (from != '' && to != '') {
-        //     date=`CASE WHEN MAX(CASE WHEN eq.to >= '${from}' AND eq.from <= '${to}' THEN 1 ELSE 0 END) = 1 THEN 1 ELSE 0 END`;
-        // }
-        // ${calendar.newEntry.customerId}
-        // ${login.companyId}
         let request=`
             SELECT
                 art.id,
@@ -119,7 +108,6 @@ export class EquipmentList {
         
         this.render();
         this.listContainer.classList.remove("d-none");
-        // this.addInputEvent();
     }
 
     replaceAt(sql,variables) {
@@ -156,15 +144,12 @@ export class EquipmentList {
     }
 
     showWindow() {
-        // this.moveElements()
         this.listContainer.classList.remove("d-none");
     }
 
     isInputValid() {
         console.log("IsValid",!!this.input.value === !!this.inputId,this.inputId);
         return !!this.input.value === !!this.inputId;
-
-        // return (this.input.value && !this.inputId) || (!this.input.value && this.inputId)
     }
 
     abortWindow() {
@@ -188,7 +173,6 @@ export class EquipmentList {
             if (!this.isInputValid()) this.input.value=""; // nur wenn ungültiger wert 
             this.list.classList.remove("nolist");
         } 
-        console.log("CLOSE");
     }
 
 
@@ -210,18 +194,15 @@ export class EquipmentList {
     }
 
     addInputEvent() {
-        // this.removeInputEvent();
-
         this.input.addEventListener("change",event=> {
             this.inputId.value="";
             this.inputDisplay.innerText="";            
             this.inputPrice.value="";            
         })
 
-        this.input.addEventListener("input",this.handleInputEvent);
         this.input.classList.add("listener");
+        this.input.addEventListener("input",this.handleInputEvent);
         this.input.addEventListener("focus", this.handleFocusEvent);
-        // this.input.addEventListener("blur", this.handleFocusEvent);
         this.input.addEventListener("blur", this.handleBlurEvent);
     }
 
@@ -245,35 +226,24 @@ export class EquipmentList {
             this.inputDisplay.classList.toggle("d-none",document.activeElement === this.input);
         }
     }
+
     hidePrice() {
         this.inputDisplay.classList.add("d-none");
     } 
 
     handleFocusEvent= (event) => {
-        console.log("got Focus: handleFocusEvent");
-        console.log(document.activeElement);
-        console.log(event);
-        
-        this.hidePrice();
         this.moveElements(event.target);
-
+        this.hidePrice();
     }
 
     handleBlurEvent = (event) => {
         this.handleEuroDisplay(event);
-
-        console.log("Blur");
-        console.log(event.currentTarget);
-
-
-
         if (event.target.value != "" && !this.inputId.value) this.newArticleInterface();
     }
 
 
 
     removeInputEvent() {
-        
         let element=document.querySelector("input.listener");
         if (element == null) {
             console.log("Input Listener war schon weg");
@@ -284,11 +254,11 @@ export class EquipmentList {
     }
 
     moveElements(element=null) {
-        console.log("moveElements",element);
-        if (element==null) {
-            console.trace();
-            debugger;
-        }
+        // console.log("moveElements",element);
+        // if (element==null) {
+        //     console.trace();
+        //     debugger;
+        // }
 
 
         if(this.listContainer.classList.contains("d-none")) { 
@@ -312,11 +282,8 @@ export class EquipmentList {
     }
 
     setWindow(event) {
-        console.log("setWindow");
         this.moveElements(event.target);
-
         event.preventDefault();    
-
         this.toggleWindow();
     }
 
@@ -324,9 +291,7 @@ export class EquipmentList {
         if(this.listContainer.classList.contains("d-none")) { 
             await this.load();
             this.input.style.zIndex=3;
-            // this.addInputEvent();
             if (this.filteredList.length>5) this.input.focus(); // On demanmd
-
         } else {
             this.closeWindow();
         };
@@ -356,6 +321,7 @@ export class EquipmentList {
         newContainer.classList.add("input-container");
         newContainer.classList.add("equipment");
         newContainer.innerHTML=/*html*/`
+            <input type="hidden" name="timeEquipmentId[]"  value="${0}">
             <input type="hidden" name="equipmentId[]">
             <input type="hidden" name="equipmentPrice[]">
             <input type="text" name="equipmentName[]"  placeholder="Was bringst du mit">
@@ -376,19 +342,9 @@ export class EquipmentList {
         if (len>0) {
             list[len-1].remove();
         }
-        // event.target.parentElement.priviousElementSibling.remove();
-
     }
 
     clearField() {
-        // let inputId = document.activeElement.parentElement.querySelector('input[name="equipmentId[]"]');
-        // let input=document.activeElement.parentElement.querySelector('input[name="equipmentName[]"]');
-        // let inputPrice=document.activeElement.parentElement.querySelector('input[name="equipmentPrice[]"]');
-        // input.value="";
-        // inputId.value="";
-        // inputPrice.value="";
-
-        // this.input.focus();
         this.input.value="";
         this.inputId.value="";
         this.inputPrice.value="";
@@ -396,16 +352,11 @@ export class EquipmentList {
         this.toggleWindow();
     } 
 
-    async XgetPrice(equipment) {
-        this.inputDisplay.innerText = await equipmentPrice.getPrice(equipment);
-    }
-
-
-
     newArticleInterface() {
         let html=/*html*/`
         <h1>Neues Equipment?</h1>
         <input type="hidden" name="newArticleId"  value="${this.inputId.value}">
+        
         <div class="input-container" >
             <input type="text" name="newArticleName" placeholder="Bezeichnung" value="${this.input.value}">
         </div>

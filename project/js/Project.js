@@ -8,7 +8,7 @@ import { EquipmentPrice } from './EquipmentPrice.js';
 import { UnterkunftList } from './UnterkunftList.js';
 import { Login } from './Login.js';
 import { Setup } from './Setup.js';
-import { ProjectJob } from './ProjectJob.js';
+import { ProjectJobDefinition } from './ProjectJobDefinition.js';
 import { JobHierachy } from './JobHierachy.js';
 import { ProjectSave } from './ProjectSave.js';
 import { EventList } from './EventList.js';
@@ -18,6 +18,8 @@ import { DB_Project } from './DB_Project.js';
 import { DB_Customer } from './DB_Customer.js';
 import { DB_Article } from './DB_Article.js';
 import { DB_EventPrice } from './DB_EventPrice.js';
+import { DB_ProjectJob } from './DB_ProjectJob.js';
+import { DB_TimeEquipmentList } from './DB_TimeEquipmentList.js';
 
 
 window.debug= true;
@@ -36,7 +38,7 @@ async function init() {
     let job_hierarchy=new JobHierachy();
     await job_hierarchy.get();
 
-    let job = new ProjectJob();
+    let job = new ProjectJobDefinition();
     window.job = job;
 
 
@@ -60,9 +62,12 @@ async function init() {
     let equipmentList=new EquipmentList();
     equipmentList.addCalendar(calendar);
     window.equipmentList=equipmentList;
-
+    
     let equipmentPrice=new EquipmentPrice();
     window.equipmentPrice=equipmentPrice;
+
+    let db_timeEquipmentList = new DB_TimeEquipmentList();
+    window.db_timeEquipmentList=db_timeEquipmentList;
     
     let unterkunftList=new UnterkunftList();
     window.unterkunftList=unterkunftList;
@@ -79,6 +84,9 @@ async function init() {
     let db_project = new DB_Project();
     window.db_project=db_project;
 
+    let db_projectJob = new DB_ProjectJob();
+    window.db_projectJob=db_projectJob;
+
     let db_customer = new DB_Customer();
     window.db_customer=db_customer;
 
@@ -87,6 +95,7 @@ async function init() {
 
     let db_eventPrice = new DB_EventPrice();
     window.db_eventPrice=db_eventPrice;
+
 
 }
 

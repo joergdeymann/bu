@@ -39,18 +39,38 @@ export class ProjectSave {
     }
 
     async saveAll() {
-        try{
+        // try{
             this.saveSetup();
             let p=[]
 
-            if (!db_customer.data?.id ) p.push(db_customer.insert());
-            if (!db_address.data?.id )  p.push(db_address.insert());
-            await Promise.all(p);
+            if (db_project.isFullProject) {
+
+            } else {
+
+                if (!db_customer.data?.id ) p.push(db_customer.insert());
+                if (!db_address.data?.id )  p.push(db_address.insert());
+                await Promise.all(p);
+                if (!db_project.data?.id ) await db_project.insert();
+                else if (db_project.isFullProject) db_project.update();
+
+                if (!db_projectJob.data?.id ) await (db_projectJob.insert()); // only link, no update Das Falsche ?
+
+                // Quick and Dirty DB
+                db_timeEquipmentList.clear();
+                db_timeEquipmentList.addAll();
+                await db_timeEquipmentList.insertAll();
+
+
+                // DIESE TESTEN OB NÖTIG
+                //  Ist das für den Tagessatz ???                
+                // await db_equipmentPrice.insert(); // db_equipmentPric
+
+            }
+        
+
+
 
             // await db_eventPrice.insert();
-            await db_articlePrice.insert();
-
-            if (!db_project.data?.id ) await db_project.insert();
             // else 
             // if (calendar.fullProjectView) {
                 // await db_project.updateProject(); //Falls in Projekt Ansicht
@@ -72,9 +92,9 @@ export class ProjectSave {
             this.saveTimeEquipment();
             this.saveTimeEmplopyee();
             this.showPopup();
-        } catch (e){
-            console.error("Fehler beim Speichern",e);
-        } 
+        // } catch (e){
+        //     console.error("Fehler beim Speichern",e);
+        // } 
 
 
 

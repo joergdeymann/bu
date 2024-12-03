@@ -1,6 +1,5 @@
 import { Calendar } from './Calendar.js';
 import { ProjectCalendarRender } from './ProjectCalendarRender.js';
-// import { ProjectJob } from './ProjectJob.js';
 import { ProjectWorker } from './ProjectWorker.js';
 
 export class ProjectCalendar extends Calendar {
@@ -19,8 +18,6 @@ export class ProjectCalendar extends Calendar {
         projectName:"",
         city:""
     }
-//     ultimateColor:'#FFA500',   
-// jobId:null,  
 
     render;
     undoList=[];

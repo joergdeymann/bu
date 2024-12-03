@@ -1,6 +1,6 @@
-import { DB_ProjectJob } from "./DB_ProjectJob.js";
+import { DB_ProjectJobDefinition } from "./DB_ProjectJobDefinition.js";
 
-export class ProjectJob extends DB_ProjectJob {
+export class ProjectJobDefinition extends DB_ProjectJobDefinition {
     newEntry= {
         start:'',
         end:'',
