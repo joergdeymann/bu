@@ -20,6 +20,8 @@ import { DB_Article } from './DB_Article.js';
 import { DB_EventPrice } from './DB_EventPrice.js';
 import { DB_ProjectJob } from './DB_ProjectJob.js';
 import { DB_TimeEquipmentList } from './DB_TimeEquipmentList.js';
+import { DB_TimeJob } from './DB_TimeJob.js';
+import { DB_TimeWorker } from './DB_TimeWorker.js';
 
 
 window.debug= true;
@@ -96,6 +98,11 @@ async function init() {
     let db_eventPrice = new DB_EventPrice();
     window.db_eventPrice=db_eventPrice;
 
+    let db_timeJob = new DB_TimeJob();
+    window.db_timeJob=db_timeJob;
+ 
+    let db_timeWorker = new DB_TimeWorker();
+    window.db_timeWorker=db_timeWorker;
 
 }
 

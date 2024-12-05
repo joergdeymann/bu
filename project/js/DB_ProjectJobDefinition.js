@@ -88,7 +88,7 @@ export class DB_ProjectJobDefinition extends Query {
     }
 
     getByFather(id) {
-        return this.data.filter(e => e.father == id);
+        return this.data.filter(e => e.father == id); 
     }
 
     filterHeadlines() {

@@ -51,10 +51,10 @@
     cursor: pointer;
     border-radius: 50vh;
     padding: 4px 8px;
-    min-height:12px;
+    /* min-height:12px; */
 }
 .popup-list>div:nth-of-type(odd) { 
-    background-color: rgba(0,0,0,0.1);
+    background-color: rgba(0,0,0,0.2);
 }
 .popup-list>div:hover { /* :not(.red) */
     background-color: rgba(0,0,0,0.3);

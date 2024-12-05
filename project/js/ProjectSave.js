@@ -41,12 +41,11 @@ export class ProjectSave {
     async saveAll() {
         // try{
             this.saveSetup();
-            let p=[]
 
             if (db_project.isFullProject) {
 
             } else {
-
+                let p=[];
                 if (!db_customer.data?.id ) p.push(db_customer.insert());
                 if (!db_address.data?.id )  p.push(db_address.insert());
                 await Promise.all(p);
@@ -55,10 +54,15 @@ export class ProjectSave {
 
                 if (!db_projectJob.data?.id ) await (db_projectJob.insert()); // only link, no update Das Falsche ?
 
+                p=[];
                 // Quick and Dirty DB
                 db_timeEquipmentList.clear();
                 db_timeEquipmentList.addAll();
-                await db_timeEquipmentList.insertAll();
+                p.push(db_timeEquipmentList.insertAll());
+                if (!db_timeWorker.data?.id ) p.push(db_timeWorker.insert());
+                if (!db_timeJob.data?.id ) p.push(db_timeJob.insert());
+                await Promise.all(p);
+
 
 
                 // DIESE TESTEN OB NÖTIG

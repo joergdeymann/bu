@@ -9,8 +9,7 @@ export class DB_ProjectJob extends Query {
         this.id = document.getElementsByName("projectJobId")[0];   // noch anlegen
         this.projectId=document.getElementsByName("projectId")[0];
         
-        // no element
-        this.companyId=login.complanyId;
+        
     }
 
     get isFullProject() {
@@ -23,6 +22,7 @@ export class DB_ProjectJob extends Query {
             SET 
                 projectId = ${+this.projectId.value},
                 companyId = ${+login.companyId}
+                
             
         `); 
     }

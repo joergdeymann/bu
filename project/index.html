@@ -22,7 +22,10 @@
     <form id="add-project" method="POST" action="" onclick="return false;">
         <input type="hidden" name="projectId">
         <input type="hidden" name="projectJobId">
+        <input type="hidden" name="timeJobId">
         <input type="hidden" name="date">
+        <input type="hidden" name="housingAddressId"> <!-- Not really in use -->
+
 
         <div class="input-container" >
             <input type="hidden" name="eventId">
@@ -220,9 +223,9 @@
         </div>
 
 
-        <textarea name="importanttext" rows="10" placeholder="Alles Wichtige hier rein"></textarea>
+        <textarea name="importantText" rows="10" placeholder="Alles Wichtige hier rein"></textarea>
 
-        <textarea name="invoicetxt" rows="10" placeholder="Zusatztext für die Rechnung"></textarea>
+        <textarea name="invoiceText" rows="10" placeholder="Zusatztext für die Rechnung"></textarea>
 
         <div class="buttons movement input-container">
             <button class="bg-green-gradient" type="button" onclick="projectSave.save()">Fertig</button>

@@ -9,7 +9,7 @@ export class DB_Project extends Query {
         this.id=document.getElementsByName("projectId")[0];
         this.name=document.getElementsByName("eventName")[0];
         this.city=document.getElementsByName("place")[0];
-        this.importanttext=document.getElementsByName("importanttext")[0];
+        this.importanttext=document.getElementsByName("importantText")[0];
     }
 
     get isFullProject() {
@@ -17,21 +17,20 @@ export class DB_Project extends Query {
     }
 
     async insertQuery() {
+        //  bu_project.name="${this.name.value}", )
         this.request(`
             INSERT INTO bu_project 
                 SET 
-                    start ="${calendar.newEntry.start}",           
-                    end = "${calendar.newEntry.end}",              
-                    addressId=${db_address.id.value},              
-                    setup="${calendar.newEntry.arrival}",          
-                    dismantling="${calendar.newEntry.departure}",  
-                    createDate="${new Date().toISOString()}",      
-                    name="${this.name.value}",                     
-                    companyId=${login.companyId},                  
-                    info = "${this.importanttext.value}",          
-                    customerId  = ${db_customer.id.value}
-
-            
+                    bu_project.start =${this.inMarks(calendar.newEntry.start)},           
+                    bu_project.end = ${this.inMarks(calendar.newEntry.end)},              
+                    bu_project.addressId=${db_address.id.value},              
+                    bu_project.setup=${this.inMarks(calendar.newEntry.arrival)},          
+                    bu_project.dismantling=${this.inMarks(calendar.newEntry.departure)},  
+                    bu_project.createDate=${this.inMarks(new Date().toISOString())},      
+                                       
+                    bu_project.companyId=${login.companyId},                  
+                    bu_project.info = "${this.importanttext.value}",          
+                    bu_project.customerId  = ${db_customer.id.value}
         `); 
     }
 

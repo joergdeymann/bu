@@ -2,7 +2,7 @@ TODO
 =======
 Projek anlegen:
     beim Speichern schaun wenn keine ID, ob der Text mit einer ID übereinstimmt
-        - Name des Kinden
+        - Name des Kunden
         - jeder Zeile Equipment
         - Name der UNterkunft
         - und Später Ort der Veranstaltung
@@ -44,6 +44,16 @@ ToDo:
 ==================================================================================
 1. Name der Veranstaltung und Ort mit der Artikelliste verunden
     Done: 28.11.2024
+8. Artikelpreis mit anzeigen in "Was bringst du mit"
+    erledigt: 03.12.2024
+
+4. links neben Terminstart:
+    Button mit Vollerkreis minus 1/16 Kuchen = Projektansicht
+    Button mitz 1/8 Kuchen                   = TeilProjekt
+    als Toggle
+    erledigt: 3.12.2024
+
+
 
 2. Tagessatz: 
     Die ID merken und wenn eine Id vorhanden ist den Wert der Oben ausgewählten Sektion
@@ -54,9 +64,7 @@ ToDo:
     Das Projekt wird dann angepasset mit der Länge der Dauer
 
 4. links neben Terminstart:
-    Button mit Vollerkreis minus 1/16 Kuchen = Projektansicht
-    Button mitz 1/8 Kuchen                   = TeilProjekt
-    als Toggle
+    Beim Toggeln
     Hinweis on the Fly: Projekt-Ansicht / Teil-Projekt-Ansicht 
 
 5. Als Gast einloggen
@@ -69,8 +77,10 @@ ToDo:
     Schwarze Punkte für jedes Subproject
     - erst die Projekte dann anzeigen 
     - darüber dann die Subprojekte zeigen
+    Der Button links über den Kalender ist dafür 
 
-8. Artikelpreis mit anzeigen in "Was bringst du mit"
+
+
 
 
 
@@ -78,8 +88,14 @@ ToDo:
 Ideen:
 ==================================================================================
 1. Was bringst du mit ?
-    Rechts ein Button der ein neues Fenster mit allen nötigen Informationen wo das
-    Equipment eingesetzt wird, oder besser auf den klick zuerst eine Übersicht anzeiegn
+    - Rechts ein Button der ein neues Fenster mit allen nötigen Informationen wo das
+      Equipment eingesetzt wird, oder besser auf den klick zuerst eine Übersicht anzeiegn
+    - Ein Rundes i an der rechten Seite des jeweiligen Items in der Liste
+      zeigt folgende Informationen
+      Einstatz der letzten Tage (von bis)
+      Standart Preis, 
+      Preise für die Firma 
+
 
 3. Wenn ich die Firma ändere 
     - muss sich der Tages Preis anpassen, falls gesetzt oder auch so
@@ -89,6 +105,26 @@ Ideen:
     Background Color / sheme
     Texte Für Englisch Deutsch usw.
     local JSON array mit allen Texten
+    
+5. own color of the event
+    - is a nice to have, 
+    - can be set, but i would it place near the calendar
+    - Idea: 
+        if you click on the in the headline of the Jobs
+        a Popup is displayed width following information:
+            - a colorpicker, 
+            - Price, 
+            - Ivoice information
+
+6. Tagespreis
+    Zeige verlassen nicht nur den Preis an sondern auch woraus er entstanden ist,
+    wie es in der Liste auch gezeigt wird
+
+
+7. Berechne den Tagespreis, schon bevor man den Buttton bei Preis drückt,
+    daurch kann man sich meherer Klicks sparen
+
+
 
 
 =================================================================================

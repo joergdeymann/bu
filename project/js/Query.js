@@ -184,6 +184,17 @@ export class Query {
         }
     } 
 
+    /**
+     * Sets the Date in Marks if defined 
+     * else null
+     * date=0            -> date = 'NULL'
+     * date=""           -> date = 'NULL'
+     * date="2020-10-01" -> date ='"2020-10-01"'
+     */
+    inMarks(date) {
+        return date?`'${date}'`:'NULL';
+    }
+    
     
 
     getById(id) {

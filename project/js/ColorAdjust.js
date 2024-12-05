@@ -102,21 +102,29 @@ export class ColorAdjust {
     }
     
     getBrightness(hex) {
-        let [r, g, b] = hex.match(/\w\w/g).map((x) => parseInt(x, 16));
-        const luminance = 0.2126 * r + 0.7152 * g + 0.0722 * b;
-        if (luminance < 85) return 0.5;
-        if (luminance > 170) return 0.2;
-        return 0.4;
+        try {
+            let [r, g, b] = hex.match(/\w\w/g).map((x) => parseInt(x, 16));
+            const luminance = 0.2126 * r + 0.7152 * g + 0.0722 * b;
+            if (luminance < 85) return 0.5;
+            if (luminance > 170) return 0.2;
+            return 0.4;
+        } catch(e) {
+            return 0;
+        }
     }
 
     gradientColor(hex) {
-        let opacity=this.getBrightness(hex);
-        let [r, g, b] = hex.match(/\w\w/g).map((x) => parseInt(x, 16));
+        try {
+            let opacity=this.getBrightness(hex);
+            let [r, g, b] = hex.match(/\w\w/g).map((x) => parseInt(x, 16));
+            return `linear-gradient(to top, rgba(${r},${g},${b},${opacity}), rgba(${r},${g},${b},1))`;    
+        } catch (e) {
+            return hex;
+        }
         // let opacity=0.7
         // if ((r|g|b)>128)  {
         //     opacity=0.3
         // } 
-        return `linear-gradient(to top, rgba(${r},${g},${b},${opacity}), rgba(${r},${g},${b},1))`;
     }
     // Hauptmethode, die die Verarbeitung steuert
     getColorList() {
@@ -136,6 +144,7 @@ export class ColorAdjust {
     }
 
     isVisibleDifference(rgb1, rgb2) {
+        if (!rgb1 || !rgb2) return true;
         let [r1, g1, b1] = rgb1.match(/\w\w/g).map((x) => parseInt(x, 16));
         let [r2, g2, b2] = rgb2.match(/\w\w/g).map((x) => parseInt(x, 16));
 

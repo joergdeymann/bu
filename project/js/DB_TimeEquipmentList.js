@@ -38,8 +38,8 @@ export class DB_TimeEquipmentList {
 
     async insertAll() {
         for (let equipment of this.data) {
-            equipment.insert();
-            this.promise.push(equipment.get());
+            this.promise.push(equipment.insert());
+            // this.promise.push(equipment.get());
         }
         await Promise.all(this.promise);
     }
