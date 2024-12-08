@@ -158,7 +158,7 @@ export class ProjectCalendarRender extends ExtDate {
         if (opt.mobileCalendar.plateName) display=entry.projectName;
         if (opt.mobileCalendar.plateCity) display=entry.city;
 
-        if (!(entry.projectName + entry.city)) { // if (!display) {
+        if (!(entry.projectName + entry.city) && !entry.id) { // if (!display) {
             cl += " new";
             display="Neu";
         }
