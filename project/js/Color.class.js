@@ -23,9 +23,9 @@ export class Color {
         ],
         "gelb": [
             "#FFFF00",  // Intensiv Gelb
-            "#CCCC00",  // Dunkleres Gelb
+            "#DDCC00",  // Dunkleres Gelb
             "#FFCF66",  // Helleres Gelb 
-            "#CFFF99",   // Sehr helles Gelb
+            "#DFFF99",   // Sehr helles Gelb"#CFFF99"
             "#EEEE33"  // Sehr dunkles Gelb #999900
         ],
         "grau": [

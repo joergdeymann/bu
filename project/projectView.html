@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+    <title>Document</title>
+    <script type="module" src="./js/Project.js" defer></script>
+    <script src="./js/ProjectView.js"></script>
+    <link rel="stylesheet" href="./style.css">
+    <link rel="stylesheet" href="./css/calendar.css">
+    <link rel="stylesheet" href="./css/calendarHeadline.css">
+    <link rel="stylesheet" href="./css/calendarSetup.css">
+    <link rel="stylesheet" href="./css/gear.css">
+    <link rel="stylesheet" href="./css/input.css">
+    <link rel="stylesheet" href="./css/buttons.css">
+    <link rel="stylesheet" href="./css/popup.css">
+    <link rel="stylesheet" href="./user01.css">
+    <link rel="stylesheet" href="./css/eventlist.css">
+
+
+</head>
+<body>
+    <H1 class="headline">Projekte</H1>
+    <form id="add-project" method="POST" action="" onclick="return false;">
+        <input type="hidden" name="projectId">
+        <input type="hidden" name="projectJobId">
+        <input type="hidden" name="timeJobId">
+        <input type="hidden" name="date">
+        <input type="hidden" name="housingAddressId"> <!-- Not really in use -->
+
+
+        <div class="input-container" >
+            <input type="hidden" name="eventId">
+            <input type="text" name="eventName"  placeholder="Name der Veranstaltung">
+            <button class="small" type="button" onclick="eventList.toggleWindow();">&#128315;</button>
+        </div>
+        <div class="relative mb-16px d-none">
+            <div class="blocker"></div>
+            <div id="event-list" class="popup-list"></div>
+        </div>
+
+        <!-- input type="text" name="name"  placeholder="Name der Veranstaltung"-->
+        <input type="text" name="place" disable>
+
+        <div id="calendar" class="calendar-container">
+            <h2 id="theme">Wann ?</h2>
+            <div class="calendar">
+                <nav>
+                    <img src="../img/pfeil-links.png" onclick="calendar(-1)">
+                    <span id="month" onclick="calender(0)">&nbsp;</span>
+                    <img src="../img/pfeil-rechts.png" onclick="calendar(1)">
+                </nav>
+                <header>
+                    <div>Mo</div>
+                    <div>Di</div>
+                    <div>Mi</div>
+                    <div>Do</div>
+                    <div>Fr</div>
+                    <div>Sa</div>
+                    <div>So</div>
+                </header>
+                <section>
+                    <div><div class="empty"></div></div>
+                    <div><div>1</div></div>
+                    <div><div>2</div></div>
+                    <div><div>3</div></div>
+                    <div><div>4</div></div>
+                    <div><div>5</div></div>
+                    <div><div>6</div></div>
+                    <div><div>7</div></div>
+                    <div><div>8</div></div>
+                    <div><div>9</div></div>
+                    <div><div>10</div></div>
+                    <div><div>11</div></div>
+                    <div><div>12</div></div>
+                    <div><div>13</div></div>
+                    <div><div>14</div></div>
+                    <div><div>15</div></div>
+                    <div><div>16</div></div>
+                    <div><div>17</div></div>
+                    <div><div>18</div></div>
+                    <div><div>19</div></div>
+                    <div><div>20</div></div>
+                    <div><div>21</div></div>
+                    <div><div>22</div></div>
+                    <div><div>23</div></div>
+                    <div><div>24</div></div>
+                    <div><div>25</div></div>
+                    <div><div>26</div></div>
+                    <div><div>27</div></div>
+                    <div><div class="floor-left">28</div></div>
+                    <div><div>29</div></div>
+                    <div><div>30</div></div>
+                    <div><div>31</div></div>
+                    <div><div class="empty"></div></div>
+                    <div><div class="empty"></div></div>
+                    <div><div class="empty floor-right"></div></div>
+                </section>
+            </div>
+        </div>
+
+        <div id="events">
+            <div class="event-frame collapse">
+                <header>
+                    <img src="./img/saw.svg">
+                    <span>Lichterfest München</span>
+                    <img class="open" src="./img/pfeil-rechts.png" onmousedown="toggleEvent(event)">
+                </header>
+                <section>
+                    <i>Datum:</i> 
+                    <p>10.10.2024 - 17.11.2024</p>
+                    
+                    <i>Ort:</i>
+                    <p>München</p>
+                    
+                    <i>Firma:</i>
+                    <p>ME-Event</p>
+    
+                    <i>Job:</i>
+                    <p>Lichoerator</p>
+ 
+                    <i>Hinweise:</i>
+                    <p>Bringe Mimipupup mit, Erwarte schönes Event, Alle in besten Händen, Gibt ne Überrachung</p>
+                    
+                    <i>Anreise:</i>
+                    <p>Name des Ortes
+                        <br>Stadelweg 14
+                        <br>99897 München
+                        <br><br>
+                        <div style="border: 1px solid black;width: 90%;height: 150px;margin-left:1rem;margin-right: 1rem;">Karte von Google</div>
+                    </p>    
+                </section>
+            </div>
+
+            <div class="event-frame">
+                <header>
+                    <img src="./img/saw.svg">
+                    <span>Lichterfest München</span>
+                    <img src="./img/pfeil-rechts.png">
+                </header>
+                <section>
+                    <i>Datum:</i> 
+                    <p>10.10.2024 - 17.11.2024</p>
+                    
+                    <i>Ort:</i>
+                    <p>München</p>
+                    
+                    <i>Firma:</i>
+                    <p>ME-Event</p>
+    
+                    <i>Job:</i>
+                    <p>Lichoerator</p>
+ 
+                    <i>Hinweise:</i>
+                    <p>Bringe Mimipupup mit, Erwarte schönes Event, Alle in besten Händen, Gibt ne Überrachung</p>
+                    
+                    <i>Anreise:</i>
+                    <p>Name des Ortes
+                        <br>Stadelweg 14
+                        <br>99897 München
+                        <br><br>
+                        <div style="border: 1px solid black;width: 90%;height: 150px;margin-left:1rem;margin-right: 1rem;">Karte von Google</div>
+                    </p>    
+                </section>
+            </div>
+
+            <div class="event-frame">
+                <header>
+                    <img src="./img/saw.svg">
+                    <span>Lichterfest München</span>
+                    <img src="./img/pfeil-rechts.png">
+                </header>
+                <div height="26px"> </div>
+                <section>
+                    <i>Datum:</i> 
+                    <p>10.10.2024 - 17.11.2024</p>
+                    
+                    <i>Ort:</i>
+                    <p>München</p>
+                    
+                    <i>Firma:</i>
+                    <p>ME-Event</p>
+    
+                    <i>Job:</i>
+                    <p>Lichoerator</p>
+ 
+                    <i>Hinweise:</i>
+                    <p>Bringe Mimipupup mit, Erwarte schönes Event, Alle in besten Händen, Gibt ne Überrachung</p>
+                    
+                    <i>Anreise:</i>
+                    <p>Name des Ortes
+                        <br>Stadelweg 14
+                        <br>99897 München
+                        <br><br>
+                        <div style="border: 1px solid black;width: 90%;height: 150px;margin-left:1rem;margin-right: 1rem;">Karte von Google</div>
+                    </p>    
+                </section>
+            </div>
+
+
+        </div>
+        <div class="buttons movement input-container">
+            <button class="bg-green-gradient" type="button" onclick="projectSave.save()">Fertig</button>
+            <button class="bg-red-gradient" type="button" onclick="project.cancel()">Abbruch!</button>
+        </div>
+
+
+    </form>
+    <br><br>
+    
+</body>
+</html>

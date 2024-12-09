@@ -1,0 +1,105 @@
+#events {
+    display: flex; 
+    flex-direction: column;
+    gap: 16px;
+}
+.event-frame {
+    position: relative;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction:row;
+    border: 2px solid orange;
+    border-radius: 10px;
+    padding: 8px;
+    /* padding-top: 26px; */
+    background: var(--input-background);
+    max-height:9999px;
+}
+
+.event-frame {
+    /* margin-top: 26px; */
+    transition: 400ms ease-in-out;
+    overflow: hidden; 
+
+}
+
+.event-frame>header {
+    box-sizing: border-box;
+    position: absolute;
+    left:-2px;
+    right:-2px;
+    top:-2px;
+    border: 2px solid orange;
+    border-radius: 10px;
+/*
+    padding: 8px;
+    height: 30px;
+    */
+    background-color: rgba(0,0,0,0.1);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    justify-content: space-between;
+}
+.event-frame>header>img {
+    height: 24px;
+    transform: rotate(270deg);
+}
+
+.event-frame section {
+    margin-top: 26px;
+}
+
+
+.event-frame p {
+    line-height: 1rem;
+    margin:0;
+    margin-left: 1rem;
+    margin-bottom: 0.5rem;
+}
+
+
+.event-frame i {
+    color: rgba(0,0,0,0.7);
+    margin-right: 0.5em;
+}
+
+.event-frame.line {
+    height:2px;
+    width:100%;
+}
+
+input[name="place"] {
+    background:transparent;
+    border: none;
+}
+
+
+.event-frame .open {
+    transition: 200ms ease-in-out;
+}
+
+
+
+
+.event-frame.collapse {
+/*
+    box-sizing: border-box;
+    border: transparent;
+    height: 28px;
+    padding:0;
+    margin-bottom: 16px;
+    border-radius: 8px;
+    */
+}
+
+.event-frame.collapse /* section */ {
+    /* transition: 200ms ease-in-out; */
+    max-height: 26px;
+    /* overflow: hidden;*/ 
+    /* display:none; */
+}
+
+.event-frame.collapse .open {
+    transform: rotate(90deg);
+}
