@@ -162,7 +162,15 @@ export class ProjectCalendarRender extends ExtDate {
             cl += " new";
             display="Neu";
         }
-        return `<div style="width:${plateSize}; " class="calendar-text ${cl}"><div >${display}</div></div>`;
+        if (!eventFrame) cl += "noclick";
+
+        return `<div style="width:${plateSize}; " class="calendar-text ${cl}" ><div >${display}</div></div>`;
+    }
+
+    scrollTo(id) {
+        if (eventFrame) {
+            eventFrame.scrollTo(id);
+        }
     }
 
     addPlate(dt,ds,de,entry,level,levels) {
@@ -349,12 +357,18 @@ export class ProjectCalendarRender extends ExtDate {
 
                 if (display) {
 
+                    let mousedown="";
+                    if (eventFrame) {
+                        mousedown=`onmousedown="calendar.render.scrollTo(${entry.id})"`;
+                    }
+
                     ++displayCount;
                     style="";
                     if (styles.length>0) style=`style="${styles.join(";")}"`;
 
+
                     htmlLevel[level]=`
-                        <div class="${format.trim()}" ${style} >
+                        <div class="${format.trim()}" ${style} ${mousedown}">
                         ${add}
                         </div>
                     `;
@@ -376,11 +390,14 @@ export class ProjectCalendarRender extends ExtDate {
             // let dateString=date.getFullYear+"-"+date.getMonth()+"-"+date.getDate() ;
             // $dt = $date
             dt=this.utcDate(date);
+            let clickevent=`onclick="calendar.setCalendarInformation('${dt}')"`;
+            if (eventFrame) clickevent=`style="pointer-events: none;"`;
+
   
             html+=/*html*/ `
             <div ${floor}>
                 ${htmlLevel.join("")}
-                <span class="${hideday}" onclick="calendar.setCalendarInformation('${dt}')">${date.getDate()}</span>
+                <span class="${hideday}" ${clickevent}>${date.getDate()}</span>
             </div>
             `;
     

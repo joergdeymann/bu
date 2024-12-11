@@ -29,7 +29,10 @@ export class EventList extends SelectionList {
             SELECT 
                 recnum as id,
                 name as name,
-                ort as city
+                ort as city,
+                plz as postcode,
+                strasse as street
+                
 
             FROM bu_adresse 
             WHERE 
@@ -42,4 +45,9 @@ export class EventList extends SelectionList {
         this.render();
         this.listContainer.classList.remove("d-none");
     }
+
+    getById(id) {
+        return this.data.find(e => e.id = id);
+    }
+            
 }

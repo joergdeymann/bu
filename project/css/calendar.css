@@ -234,12 +234,17 @@ Hover each event
     justify-content: flex-start; 
     width: 200%;
     z-index:1;
-    pointer-events: none;
     padding-top: 1px;
     padding-bottom: 1px;
     border-top: 1px solid rgb(50,50,50);
     border-bottom: 1px solid rgb(50,50,50);
+    cursor: pointer;
 }
+
+.calendar .noclick {
+    pointer-events: none;
+}
+
 
 .calendar .start .calendar-text  {
     border-top-left-radius: 50vh;
@@ -274,8 +279,12 @@ Hover each event
     /* text-overflow: ellipsis;*/
     white-space: nowrap;      
     font-size: 10px;
+    /* pointer-events: none; ########################################################################## */ 
+}
+.calendar .calendar-text.noclick>div {
     pointer-events: none;
 }
+
 
 .calendar .calendar-text.top {
     align-items: flex-start;

@@ -48,6 +48,7 @@
 
 .event-frame section {
     margin-top: 26px;
+    flex:1;
 }
 
 
@@ -102,4 +103,9 @@ input[name="place"] {
 
 .event-frame.collapse .open {
     transform: rotate(90deg);
+}
+
+.map-frame {
+    width:100%;
+    height: 250px;
 }

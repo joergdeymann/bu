@@ -34,7 +34,12 @@ Einige Farben:
          green:[ '#00FF00','#00CC00','#009900','#66FF66','#BBFFBB','#00FFAA']
         };
 
+Google Karte
+============
 
+Apple Karte
+============
+https://maps.apple.com/?q=Lipperring+36,+49733+Haren
 
 
 

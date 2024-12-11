@@ -30,6 +30,11 @@ export class ProjectWorker {
                 jd.name  AS jobName,
                 a.name AS projectName,
                 a.city AS city,
+                a.postcode AS postcode,
+                a.street AS street,
+                c.name AS customerName,
+                pj.text,
+                pj.invoiceText,
                 root_job.color AS rootColor 
 
             FROM bu_time_worker w
@@ -45,6 +50,8 @@ export class ProjectWorker {
                     ON p.id = pj.projectId
                 LEFT JOIN bu_address a
                     ON a.id = p.addressId
+                LEFT JOIN bu_customer c
+                    ON c.id = p.customerId
                 
             WHERE
                 w.companyId = ${login.companyId} 

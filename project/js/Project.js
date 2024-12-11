@@ -27,6 +27,8 @@ import { DB_TimeWorker } from './DB_TimeWorker.js';
 window.debug= true;
 
 async function init() {
+    let eventFrame=null;
+    window.eventFrame=eventFrame;
     
     let login=new Login();
     window.login=login;

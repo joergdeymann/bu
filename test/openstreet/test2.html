@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OpenStreetMap StreetView Alternative</title>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
+    <style>
+        #map {
+            width: 100%;
+            height: 400px;
+        }
+    </style>
+</head>
+<body>
+    <div id="map"></div>
+    <button onclick="loadStreetView('Lipperring 36, 49733 Haren')">StreetView anzeigen</button>
+
+    <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
+    <script>
+        // Funktion zum Geocoding der Adresse und Karte anzeigen
+        function loadStreetView(address) {
+            // Nominatim API verwenden, um Koordinaten der Adresse zu erhalten
+            fetch(`https://nominatim.openstreetmap.org/search?format=json&q=${address}`)
+                .then(response => response.json())
+                .then(data => {
+                    if (data && data.length > 0) {
+
+                        // Koordinaten extrahieren
+                        const lat = 52.78503;  // parseFloat(data[0].lat);
+                        const lon = 7.2046;    // parseFloat(data[0].lon);
+                        console.log("Koordinaten:", lat, lon);
+                        const googleMapsLink = `https://www.google.com/maps/dir/?api=1&destination=${lat},${lon}`;
+                        const appleMapsLink = `http://maps.apple.com/?daddr=${lat},${lon}`;
+
+                        // Karte anzeigen und auf den Marker zentrieren
+                        const map = L.map('map').setView([lat, lon], 15);
+
+                        // OpenStreetMap TileLayer einfügen
+                        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                            attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+                        }).addTo(map);
+
+                        // Marker für den Standort hinzufügen
+                        L.marker([lat, lon]).addTo(map)
+                            .bindPopup(`
+                                <b>${address}</b><br>
+                                <a href="${googleMapsLink}" target="_blank">Mit Google Maps navigieren</a><br>
+                                <a href="${appleMapsLink}" target="_blank">Mit Apple Maps navigieren</a>                            
+                            `)
+                            .openPopup();
+
+
+                    } else {
+                        alert("Adresse konnte nicht gefunden werden.");
+                    }
+                })
+                .catch(error => {
+                    console.error("Fehler beim Geocoding:", error);
+                });
+        }
+    </script>
+</body>
+</html>

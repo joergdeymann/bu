@@ -75,7 +75,7 @@ export class Query {
     }
 
     output(html=this.html) {
-        this.__element.innerHTML = html;
+        if (this.__element) this.__element.innerHTML = html;
     }
 
     getHTML(){
