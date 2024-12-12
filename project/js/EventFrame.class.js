@@ -47,6 +47,9 @@ export class EventFrame {
 
     }   
 
+    clearList() {
+        document.getElementById("events").innerHTML = "";
+    }
 
     renderList() {
         for (let e of calendar.timeline.data) {

@@ -1,10 +1,12 @@
 export class SelectionList {
-    
+    DBfield1;
+    DBfield2;
     filteredList=[];
 
     constructor() {
         this.setElements();
         this.addEvents();
+        if (!this.filter) this.filter=this.DBfield1;
     }
 
     /**
@@ -20,7 +22,7 @@ export class SelectionList {
 
 
     get filterList() {
-        return this.filteredList=this.data.filter(e=>e[this.DBfield1].toLowerCase().includes(this.input.value.toLowerCase())); 
+        return this.filteredList=this.data.filter(e=>e[this.filter].toLowerCase().includes(this.input.value.toLowerCase())); 
     }
 
     render() {

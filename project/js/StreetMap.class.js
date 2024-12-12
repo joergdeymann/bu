@@ -56,7 +56,7 @@ export class StreetMap {
                     // Koordinaten extrahieren
                     const lat = parseFloat(data[0].lat);
                     const lon = parseFloat(data[0].lon);
-                    console.log("Koordinaten:", lat, lon);
+                    // console.log("Koordinaten:", lat, lon);
                     const googleMapsLink = `https://www.google.com/maps/dir/?api=1&destination=${lat},${lon}`;
                     const appleMapsLink = `http://maps.apple.com/?daddr=${lat},${lon}`;
 
@@ -77,15 +77,14 @@ export class StreetMap {
                             <a href="${appleMapsLink}" target="_blank">Mit Apple Maps navigieren</a>                            
                         `)
                         .openPopup();
-//                             <b>${address}</b>br>
 
 
                 } else {
-                    alert("Adresse konnte nicht gefunden werden.");
+                    //                     alert("Adresse konnte nicht gefunden werden.");
                 }
             })
             .catch(error => {
-                console.error("Fehler beim Geocoding:", error);
+                // console.error("Fehler beim Geocoding:", error);
             });
     }
 
@@ -128,7 +127,6 @@ export class StreetMap {
      */
     googleMapsShow(address) {
         // URL-encode die Adresse für die Einbettung
-        address = "Hoher Kamp,49733 Haren";
         const encodedAddress = encodeURIComponent(address);
 
         // const iframeURL = `https://www.google.com/maps?q=${encodedAddress}&output=embed`;
@@ -173,7 +171,7 @@ export class StreetMap {
 
         fetch(url)
             .then((response) => {
-                console.log("Antwort-Status:", response.status); // Debug: Status prüfen
+                // console.log("Antwort-Status:", response.status); // Debug: Status prüfen
                 if (!response.ok) {
                     throw new Error(`HTTP-Fehler! Status: ${response.status}`);
                 }
@@ -207,11 +205,11 @@ export class StreetMap {
 
 
                 } else {
-                    alert("Adresse konnte nicht gefunden werden.");
+                    // alert("Adresse konnte nicht gefunden werden.");
                 }
             })
             .catch(error => {
-                console.error("Fehler beim Geocoding:", error);
+                // console.error("Fehler beim Geocoding:", error);
             });
     }
 

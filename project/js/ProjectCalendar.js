@@ -37,6 +37,8 @@ export class ProjectCalendar extends Calendar {
 
     };
 
+
+
     setMonth(month) {
         this.date.setMonth(this.date.getMonth()+month);
         // this.position;
@@ -196,6 +198,13 @@ export class ProjectCalendar extends Calendar {
         return levels.length;
     }
 
+    hasScript(scriptName) {
+        return Array.from(document.scripts).some(script => {
+            const scriptSrc = script.src.split('/').pop();
+            return scriptSrc === scriptName;
+        });
+    }
+
     async display() {
         console.log("calendar.Display")
         // this.entries=await this.timeline.get();
@@ -210,6 +219,11 @@ export class ProjectCalendar extends Calendar {
         this.timeline.load(this.date);
         this.entries=await this.timeline.get();
         this.display();
+        if (this.hasScript("ProjectView.js")) {
+            console.log("Script geladen");
+            eventFrame.clearList();
+            eventFrame.renderList();    
+        }
     }
 
 

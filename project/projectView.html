@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
     <title>Project View</title>
     <script type="module" src="./js/ProjectView.js" defer></script>
+    <link rel="stylesheet" href="./font/Overlock.css">
     <link rel="stylesheet" href="./style.css">
     <link rel="stylesheet" href="./css/calendar.css">
     <link rel="stylesheet" href="./css/calendarHeadline.css">
@@ -38,7 +39,7 @@
         <div class="input-container" >
             <input type="hidden" name="eventId">
             <input type="text" name="eventName"  placeholder="Name der Veranstaltung">
-            <button class="small" type="button" onclick="eventList.toggleWindow();">&#128315;</button>
+            <button class="small" type="button" onmousedown="eventTimeList.toggleWindow();">&#128315;</button>
         </div>
         <div class="relative mb-16px d-none">
             <div class="blocker"></div>
@@ -52,7 +53,7 @@
             <h2 id="theme">Wann ?</h2>
             <div class="calendar">
                 <nav>
-                    <img src="../img/pfeil-links.png" onclick="calendar(-1)">
+                    <img src="../img/pfeil-links.png" onclick="calendar(-10)">
                     <span id="month" onclick="calender(0)">&nbsp;</span>
                     <img src="../img/pfeil-rechts.png" onclick="calendar(1)">
                 </nav>

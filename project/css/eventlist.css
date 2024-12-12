@@ -109,3 +109,14 @@ input[name="place"] {
     width:100%;
     height: 250px;
 }
+
+/* h1 {
+    background: linear-gradient(45deg, #c9ba18, #04fa46);
+    background-size: 200% 200%;
+    animation: pulse-gradient 3s ease infinite;
+} */
+h1 {
+    background: linear-gradient(45deg, rgba(130, 250, 150, 1), rgba(30, 230, 50, 1));
+    background-size: 200% 200%;
+    animation: pulse-gradient 3s ease infinite;
+}
