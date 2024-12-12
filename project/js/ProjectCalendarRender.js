@@ -209,8 +209,6 @@ export class ProjectCalendarRender extends ExtDate {
     
 
     updateCalendar(undo=true) {
-        console.log("updateCalendar ");
-        console.trace();
         if (undo) calendar.undoList.push({...calendar.newEntry,position:calendar.position});
         document.getElementById("calendar").innerHTML     = this.renderCalendar();
 

@@ -206,21 +206,16 @@ export class ProjectCalendar extends Calendar {
     }
 
     async display() {
-        console.log("calendar.Display")
-        // this.entries=await this.timeline.get();
-        // this.renderCalendar();
         this.render.updateCalendar();
         this.render.addCalendarSetupListener();
         this.render.addDateEvents();
     }
 
     async renderCalendarAll() {
-        console.log("calendar.renderAll")
         this.timeline.load(this.date);
         this.entries=await this.timeline.get();
         this.display();
         if (this.hasScript("ProjectView.js")) {
-            console.log("Script geladen");
             eventFrame.clearList();
             eventFrame.renderList();    
         }

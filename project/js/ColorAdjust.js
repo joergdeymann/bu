@@ -40,22 +40,14 @@ export class ColorAdjust {
 
         let brightnessFactor = 1.0;
         let count=0;
-        console.log("calculateBrightness");
 
         adjustedData.forEach((other) => {
             if (current.id !== other.id && this.doEventsOverlap(current, other)) {
-                // Helligkleit erhöhen wenn 
-                // 1. farbe 1 ähnlich der Farbe 2 ist    
                 if (!this.isVisibleDifference(current.color,other.color)) {
 
                     let co=Object.values(this.color.rgbSplit(other.color));
-                    // if (current.id==22 || other.id==22) debugger;
                     let dominantColor=this.color.getDominantColor(...co);
-                    // let nearestColor=this.color.findClosestColor(...co);
-                    // if (this.color.colorPalette[dominantColor][count]==nearestColor) {
-                    //     ++count;
-                    //     count%=5;
-                    // }
+
                     if (this.isSimilarColor(other.color,count)) {
                         ++count;
                         count%=5;
@@ -66,23 +58,12 @@ export class ColorAdjust {
                     }
 
                     other.color=this.color.colorPalette[dominantColor][count];
-
-                    console.log("Brightness geändert",brightnessFactor);
-                    // brightnessFactor +=0.2; // Helligkeit erhöhen bei Überlappung
-                    // if (brightnessFactor > 1.6) {
-                    //     brightnessFactor=0.4;
-                    // }
-                    // let c=this.color.rgbSplit(other.color);
-                    // other.color=this.color.rgbToHex(this.color.adjustBrightness(c.r, c.g, c.b, brightnessFactor));
-                    // other.color=color.adjustNewBrightness(other.color,brightnessFactor);
                     count++;
                     count%=5;
                 }
                 
             }
         });
-
-        // return Math.max(0,brightnessFactor-50); // -50 zurückgeben nötig ? glaube hier ist keine Rückgabe mehr nötig
     }
 
     // Farben anpassen und speichern
@@ -97,16 +78,8 @@ export class ColorAdjust {
                 current,
                 adjustedData
             )
-            // const brightnessFactor = this.calculateBrightnessFactor(
-            //     current,
-            //     adjustedData
-            // );
 
             this.colorList[current.id]=current.color;
-            // this.colorList[current.id] = this.adjustNewBrightness(
-            //     current.color,
-            //     brightnessFactor
-            // );
         });
     }
 
@@ -115,12 +88,10 @@ export class ColorAdjust {
             entry.modifiedColor=this.color.getGradientColor(this.colorList[entry.id]);
             return true;
         })
-        console.log ("updateEntries",this.data);
     }
 
     adjustNewBrightness(hex,brightness) {
         if (hex == null ) debugger;
-        console.log("brightness_adjust",brightness);
         let [r, g, b] = hex.match(/\w\w/g).map((x) => parseInt(x, 16));
         const luminance = 0.2126 * r + 0.7152 * g + 0.0722 * b;
 
@@ -143,7 +114,6 @@ export class ColorAdjust {
     
     // Hauptmethode, die die Verarbeitung steuert
     getColorList() {
-        console.log("getColorList");
         const adjustedData = this.data.map((entry) => this.adjustDates(entry));
         this.useMainColors(adjustedData);
         this.updateColors(adjustedData);

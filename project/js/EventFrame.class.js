@@ -77,6 +77,8 @@ export class EventFrame {
 
 
     render(projectEvent) {
+        // console.log("Render!");
+        // console.trace("Hier bin ich!");
         // address=projectEventList.getById(projectEvent.)
         let style=`style="border-color:${projectEvent.color}"`;
         

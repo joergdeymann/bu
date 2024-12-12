@@ -35,10 +35,7 @@ async function init() {
 
     let eventFrame = new EventFrame();
     window.eventFrame=eventFrame;
-
-    await calendar.timeline.get();
     
-    eventFrame.renderList();
     
 }
 
