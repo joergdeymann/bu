@@ -86,6 +86,7 @@ ToDo:
 
 
 
+8. Speichere Rechnungstext as invoiceText in bu_project_job
 
 
 
@@ -129,6 +130,11 @@ Ideen:
 7. Berechne den Tagespreis, schon bevor man den Buttton bei Preis drückt,
     daurch kann man sich meherer Klicks sparen
 
+8. Neues Gerät:
+-Kunde nicht änderbar
+-Name veränderbar
+-Preis veränderbar
+- Anlegen / Abbruch
 
 
 
