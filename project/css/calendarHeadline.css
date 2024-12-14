@@ -8,8 +8,9 @@ h1 {
     background-color: #CCCCCC;
     border-radius: 1rem;
     margin:0px 0px;
-    width: calc(100% - 16px);
     margin-bottom:16px;
+    padding-bottom: 2px;
+    width: calc(100% - 16px);
 
     background: linear-gradient(45deg, #ff6b6b, #f9d423);
     background-size: 200% 200%;

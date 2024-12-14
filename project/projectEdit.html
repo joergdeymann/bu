@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
     <title>Document</title>
     <script type="module" src="./js/Project.js" defer></script>
-    <link rel="stylesheet" href="./font/Overlock.css">
+    <link rel="stylesheet" href="./fonts/Overlock.css">
     <link rel="stylesheet" href="./style.css">
     <link rel="stylesheet" href="./css/calendar.css">
     <link rel="stylesheet" href="./css/calendarHeadline.css">
@@ -170,8 +170,8 @@
         <div class="input-container" >
             <div>Überstunden berechnen?</div>
             <div class="group">
-                <button class="flex w50p" type="button" onclick="project.setOvertime(event,true)">Ja</button>
-                <button class="flex w50p" type="button" onclick="project.setOvertime(event,false)">Nein</button>    
+                <button class="flex w50p" name="overtime" type="button" onclick="project.setOvertime(event,true)">Ja</button>
+                <button class="flex w50p" name="overtime" type="button" onclick="project.setOvertime(event,false)">Nein</button>    
             </div>
         </div>
 
@@ -200,16 +200,16 @@
         <div class="input-container" >
             <div>Unterkunft nötig?</div>
             <div class="group">
-                <button class="flex w50p" type="button" onclick="project.setHotelNecessary(event,true)">Ja</button>
-                <button class="flex w50p" type="button" onclick="project.setHotelNecessary(event,false)">Nein</button>    
+                <button class="flex w50p" name="hotel" type="button" onclick="project.setHotelNecessary(event,true)">Ja</button>
+                <button class="flex w50p" name="hotel" type="button" onclick="project.setHotelNecessary(event,false)">Nein</button>    
             </div>
         </div>
 
         <div class="input-container hotel-given d-none" >
             <div>vom Kunden gestellt?</div>
             <div class="group">
-                <button class="flex w50p" type="button" onclick="project.setHotelGiven(event,true)">Ja</button>
-                <button class="flex w50p" type="button" onclick="project.setHotelGiven(event,false)">Nein</button>    
+                <button class="flex w50p" name="customer-payed" type="button" onclick="project.setHotelGiven(event,true)">Ja</button>
+                <button class="flex w50p" name="customer-payed" type="button" onclick="project.setHotelGiven(event,false)">Nein</button>    
             </div>
         </div>
 

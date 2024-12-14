@@ -40,7 +40,7 @@
     font-weight: 700; 
     width: unset;
     margin-bottom: 4px;
-    height: 1em;
+    /* height: 1em; */
     padding: 2px;
 }
 .popup-list>div { /* :not(.red) */

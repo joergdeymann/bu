@@ -143,6 +143,8 @@ function changepw($msg="") {
 	echo '</center></body></html>';
 }
 
+
+
 function getSek($d1,$d2) {
 	$date1=new DateTime($d1);
 	$date2=new DateTime($d2);
