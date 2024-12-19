@@ -1,0 +1,25 @@
+Project Create
+index.html
+=============
+1. Tagessatz:
+    Der Preis wird so übernommen in der datenbank
+    Feld: bu_time_worker.dayrate
+    Verarbeitung: DB_ProjectWorker.js
+    Input: Type="name" name="price-name"
+
+    für die Rechnung:
+    Der oben ausgewählte Job als Text
+    Aus der Datenbank nehmen:
+    bu_time_worker.dayrate
+    bu_time.job.job.DefinitionId -> bu_job_definition.articleId -> 
+        bu_article.vat
+        bu_article.re_text
+        bu_article.re_description (beschreibung)
+        bu_time_worker.re_text
+
+2. OvertimePrice
+    Erechne aus den Preis den Weiterführenden Link in der article Datei
+    Wurde der Preis verändert muss auch der overtimePrice verändert werden
+    price = time_worker.price.value
+
+    

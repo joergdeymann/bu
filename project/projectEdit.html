@@ -3,9 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
-    <title>Document</title>
-    <script type="module" src="./js/Project.js" defer></script>
-    <link rel="stylesheet" href="./fonts/Overlock.css">
+    <title>Edit Project</title>
+    <script type="module" src="./js/ProjectEdit.js" defer></script>
+    <link rel="stylesheet" href="./font/Overlock.css">
     <link rel="stylesheet" href="./style.css">
     <link rel="stylesheet" href="./css/calendar.css">
     <link rel="stylesheet" href="./css/calendarHeadline.css">
@@ -14,14 +14,16 @@
     <link rel="stylesheet" href="./css/input.css">
     <link rel="stylesheet" href="./css/buttons.css">
     <link rel="stylesheet" href="./css/popup.css">
+    <link rel="stylesheet" href="./css/projectEdit.css">
     <link rel="stylesheet" href="./user01.css">
     
 
 </head>
 <body>
-    <H1 class="headline">Projekt anlegen</H1>
-    <form id="add-project" method="POST" action="" onclick="return false;">
-        <input type="hidden" name="projectId">
+    <H1 class="headline">Projekt anpassen</H1>
+    <form id="add-project" method="POST" action="" onsubmit="return false;">
+        <input type="hidden" name="timeWorkerId"><!-- Vielleicht doppelt. sollte die Namen anpassen, diesen behalten -->
+        <input type="hidden" name="projectId"><!-- Projekt brauche ich im Normalfall nicht anpassen erst im MainProjekt Mododus-->
         <input type="hidden" name="projectJobId">
         <input type="hidden" name="timeJobId">
         <input type="hidden" name="date">
@@ -133,7 +135,7 @@
 
             <div> 
                 <div class="relative flex-row">
-                    <input type="date" name="arival" onblur="calendar.updateFromInputs(event,2)">
+                    <input type="date" name="arrival" onblur="calendar.updateFromInputs(event,2)">
                     <span>Anfahrt</span>
                 </div>
 
@@ -174,9 +176,20 @@
                 <button class="flex w50p" name="overtime" type="button" onclick="project.setOvertime(event,false)">Nein</button>    
             </div>
         </div>
+        
+        <div class="input-container d-none relative" >
+            <input type="text" name="overtimePrice"  placeholder="Überstunden Preis">
+            <button class="small invisible" type="button" onclick="">?</button>
+            <div class="right d-none">€</div>
+        </div>
+        <div class="relative mb-16px d-none">
+            <div class="blocker"></div>
+            <div id="overtime-list" class="popup-list"></div>
+        </div>
 
 
-        <div class="input-container relative" >
+
+        <div class="input-container equipment relative" >
             <input type="hidden" name="timeEquipmentId[]"  value="0">
             <input type="hidden" name="equipmentId[]">
             <input type="hidden" name="equipmentPrice[]">
@@ -190,13 +203,15 @@
             <div id="equipment-list" class="popup-list"></div>
         </div>
 
-        <div class="input-container">
+        <div id="more-equipment" class="input-container">
             <div></div>
             <div class="group">
                 <button class="small" type="button" onclick="equipmentList.removeInputField(event)">&#10134;</button>
                 <button class="small" type="button" onclick="equipmentList.addInputField(event)">&#10133;</button>    
             </div>
         </div>
+
+
         <div class="input-container" >
             <div>Unterkunft nötig?</div>
             <div class="group">

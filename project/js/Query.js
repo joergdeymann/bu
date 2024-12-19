@@ -150,6 +150,7 @@ export class Query {
                 "\nHeaders:",
                 this.headers
             );
+            console.trace("Trace");
             throw error;
         }
     }

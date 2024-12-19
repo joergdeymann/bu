@@ -162,7 +162,7 @@ export class ProjectCalendarRender extends ExtDate {
             cl += " new";
             display="Neu";
         }
-        if (!eventFrame) cl += "noclick";
+        if (!eventFrame) cl += " noclick";
 
         return `<div style="width:${plateSize}; " class="calendar-text ${cl}" ><div >${display}</div></div>`;
     }
@@ -198,7 +198,7 @@ export class ProjectCalendarRender extends ExtDate {
         if ((this.isMonday(dt) && (ds<=dt) && (dt <=de)) || dt == ds) {
             const days=this.daysUntil(dt, de);
             const size=(days+1)*100;
-            const lines = days*2;
+            const lines = Math.max(days*2-2,0); // vorher ohne -2 Handy Test ?
             const plateSize = `calc(${size}% + ${lines}px)`;
     
 
@@ -214,7 +214,7 @@ export class ProjectCalendarRender extends ExtDate {
 
         document.getElementsByName("from")[0].value       =calendar.newEntry.start.substring(0,10);
         document.getElementsByName("to")[0].value         =calendar.newEntry.end.substring(0,10);
-        document.getElementsByName("arival")[0].value     =calendar.newEntry.arrival.substring(0,10);
+        document.getElementsByName("arrival")[0].value     =calendar.newEntry.arrival.substring(0,10);
         document.getElementsByName("departure")[0].value  =calendar.newEntry.departure.substring(0,10);
     }
 
@@ -285,6 +285,8 @@ export class ProjectCalendarRender extends ExtDate {
         let colorAdjust=new ColorAdjust(calendar.entries);
         colorAdjust.getColorList();
 
+        this.calendar.entries=this.calendar.entries.filter(e => e.id != this.calendar.newEntry.id); // remove old Entry 
+
         this.calendar.entries.push(this.calendar.newEntry);
         
         let levels=this.calendar.getLevel();
@@ -306,6 +308,7 @@ export class ProjectCalendarRender extends ExtDate {
             let htmlLevel=Array(levels).fill(empty);
 
             for (let entry of this.calendar.entries) {
+
                 let ds=this.calendar.separateDateString(entry.start);  
                 let de=this.calendar.separateDateString(entry.end);
                 let arrival   =this.calendar.separateDateString(entry.arrival);

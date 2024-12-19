@@ -50,18 +50,21 @@ export class ProjectSave {
                 // kommt die abfrage der Id vielleicht aus der Liste der Kunden ?
                 // Wenn kunde.id =0 dann auch als 0 in dem bu_project speichern, Kunde nicht anlegen
 
-                if (!db_customer.data?.id && db_customer.name) p.push(db_customer.insert()); 
+                if (db_customer.name) {
+                    if (!db_customer.data?.id) p.push(db_customer.insert()); 
+                    else p.push(db_customer.update())
+                }
                 if (!db_address.data?.id)  p.push(db_address.insert()); // Event Addresse
+                else p.push(db_address.update());
                 await Promise.all(p);
+                
+                
+                
                 if (!db_project.data?.id ) await db_project.insert();
                 else if (db_project.isFullProject) db_project.update();
 
                 if (!db_projectJob.data?.id ) await (db_projectJob.insert()); // only link, no update Das Falsche ?
-                p=[];
-                // Quick and Dirty DB
-                db_timeEquipmentList.clear();
-                db_timeEquipmentList.addAll();
-                p.push(db_timeEquipmentList.insertAll());
+                timeEquipmentInput.save();
                 if (!db_timeWorker.data?.id ) p.push(db_timeWorker.insert());
                 if (!db_timeJob.data?.id ) p.push(db_timeJob.insert());
                 await Promise.all(p);

@@ -1,0 +1,3 @@
+.calendar section>div>div {
+    pointer-events: none;
+}

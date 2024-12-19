@@ -4,7 +4,16 @@ export class ProjectInputs {
     }
 
     toggleYesNo(event,status) {
-        let elements=event.target.parentElement.querySelectorAll("button"); // 1= Yes 2=No
+        let target;
+        if (event instanceof Event) {
+            target=event.target;
+        } else if (event instanceof Element) {
+            target=event;
+        } else {
+            return;
+        }
+
+        let elements=target.parentElement.querySelectorAll("button"); // 1= Yes 2=No
         elements[0].classList.toggle("bg-green-gradient",status);
         elements[1].classList.toggle("bg-red-gradient",!status);
     }
@@ -29,7 +38,9 @@ export class ProjectInputs {
 
     setOvertime(event,status) {
         this.toggleYesNo(event,status);
-
+        let oPrice=document.getElementsByName("overtimePrice")[0];
+        if (status) db_workPrice.load();
+        oPrice.parentElement.classList.toggle("d-none",!status);
     }
 
 }

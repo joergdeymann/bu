@@ -24,6 +24,7 @@
         <input type="hidden" name="projectId">
         <input type="hidden" name="projectJobId">
         <input type="hidden" name="timeJobId">
+        <input type="hidden" name="timeWorkerId">
         <input type="hidden" name="date">
         <input type="hidden" name="housingAddressId"> <!-- Not really in use -->
 
@@ -133,7 +134,7 @@
 
             <div> 
                 <div class="relative flex-row">
-                    <input type="date" name="arival" onblur="calendar.updateFromInputs(event,2)">
+                    <input type="date" name="arrival" onblur="calendar.updateFromInputs(event,2)">
                     <span>Anfahrt</span>
                 </div>
 
@@ -174,6 +175,17 @@
                 <button class="flex w50p" type="button" onclick="project.setOvertime(event,false)">Nein</button>    
             </div>
         </div>
+
+        <div class="input-container d-none relative" >
+            <input type="text" name="overtimePrice"  placeholder="Überstunden Preis">
+            <button class="small invisible" type="button" onclick="">?</button>
+            <div class="right d-none">€</div>
+        </div>
+        <div class="relative mb-16px d-none">
+            <div class="blocker"></div>
+            <div id="overtime-list" class="popup-list"></div>
+        </div>
+
 
 
         <div class="input-container relative" >

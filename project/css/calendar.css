@@ -236,8 +236,8 @@ Hover each event
     z-index:1;
     padding-top: 1px;
     padding-bottom: 1px;
-    border-top: 1px solid rgb(50,50,50);
-    border-bottom: 1px solid rgb(50,50,50);
+    /* border-top: 1px solid rgb(50,50,50);
+    border-bottom: 1px solid rgb(50,50,50);*/
     cursor: pointer;
 }
 
@@ -249,13 +249,13 @@ Hover each event
 .calendar .start .calendar-text  {
     border-top-left-radius: 50vh;
     border-bottom-left-radius: 50vh;
-    border-left: 1px solid rgb(50,50,50);
+    /* border-left: 1px solid rgb(50,50,50); */
 }
 
 .calendar .calendar-text.rightradius {
     border-top-right-radius: 50vh;
     border-bottom-right-radius: 50vh;
-    border-right: 1px solid rgb(50,50,50);
+    /* border-right: 1px solid rgb(50,50,50);*/
 }
 
 .calendar .calendar-text.new {

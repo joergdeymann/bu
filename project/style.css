@@ -84,3 +84,6 @@ form {
     max-width: 310px;
 }
 
+.invisible {
+    visibility: hidden;
+}

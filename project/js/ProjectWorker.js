@@ -33,8 +33,9 @@ export class ProjectWorker {
                 a.postcode AS postcode,
                 a.street AS street,
                 c.name AS customerName,
-                pj.text,
-                pj.invoiceText,
+                tj.id AS timejobId,
+                tj.text AS "text",
+                tj.invoiceText AS invoiceText,
                 root_job.color AS rootColor 
 
             FROM bu_time_worker w
@@ -72,5 +73,6 @@ export class ProjectWorker {
         this.data=await this.request.get();
         return this.data;
     }
+    
 
 }

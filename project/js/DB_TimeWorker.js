@@ -6,9 +6,10 @@ export class DB_TimeWorker extends Query {
     }
 
     elements() {
-        this.id=document.getElementsByName("timeWorkerId");
-        this.price=document.getElementsByName("price-name");
-        this.housingAddressId=document.getElementsByName("housingAddressId");
+        this.id=document.getElementsByName("timeWorkerId")[0];
+        this.price=document.getElementsByName("price-name")[0];
+        this.overtimePrice=document.getElementsByName("overtimePrice")[0];
+        this.housingAddressId=document.getElementsByName("housingAddressId")[0];
     }
 
     // housing Entries -> (vielleich new Address())
@@ -50,6 +51,7 @@ export class DB_TimeWorker extends Query {
                 housingStart = NULL, 
                 housingEnd = NULL,
                 dayrate = ${+(this.price.value??0)},
+                overtimePrice = ${+(this.overtimePrice.value??0)},
                 lumpsum =0
         `); 
 

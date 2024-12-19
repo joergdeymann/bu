@@ -1,6 +1,7 @@
 import { ProjectInputs } from './ProjectInputs.js';
 import { ProjectCalendar } from './ProjectCalendar.js';
 import { ProjectPrice } from './ProjectPrice.js';
+import { ProjectOvertime } from './ProjectOvertime.js';
 // import { Query } from './Query.js';
 import { CustomerList } from './CustomerList.js';
 import { EquipmentList } from './EquipmentList.js';
@@ -22,6 +23,7 @@ import { DB_ProjectJob } from './DB_ProjectJob.js';
 import { DB_TimeEquipmentList } from './DB_TimeEquipmentList.js';
 import { DB_TimeJob } from './DB_TimeJob.js';
 import { DB_TimeWorker } from './DB_TimeWorker.js';
+import { DB_WorkPrice } from './DB_WorkPrice.js';
 
 
 window.debug= true;
@@ -59,6 +61,9 @@ async function init() {
 
     let projectPrice=new ProjectPrice();
     window.projectPrice=projectPrice;
+ 
+    let projectOvertime=new ProjectOvertime();
+    window.projectOvertime=projectOvertime;
     
     let customer=new CustomerList();
     window.customerList=customer;
@@ -105,6 +110,10 @@ async function init() {
  
     let db_timeWorker = new DB_TimeWorker();
     window.db_timeWorker=db_timeWorker;
+
+    let db_workPrice = new DB_WorkPrice();
+    window.db_workPrice=db_workPrice;
+
 
 }
 

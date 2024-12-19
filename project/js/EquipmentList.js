@@ -26,6 +26,7 @@ export class EquipmentList {
         this.list=document.getElementById("equipment-list");
         this.listContainer=this.list.parentElement;
 
+        this.timeEquipmentId=document.getElementsByName("timeEquipmentId[]")[0];
         this.input=document.getElementsByName("equipmentName[]")[0];
         this.inputPrice=document.getElementsByName("equipmentPrice[]")[0];
         this.inputId=document.getElementsByName("equipmentId[]")[0];
@@ -195,6 +196,7 @@ export class EquipmentList {
 
     addInputEvent() {
         this.input.addEventListener("change",event=> {
+            this.timeEquipmentId.value=0;
             this.inputId.value="";
             this.inputDisplay.innerText="";            
             this.inputPrice.value="";            
@@ -274,6 +276,7 @@ export class EquipmentList {
             
             let parent=element.parentElement; // elternteil des Inputs also der container
 
+            this.timeEquipmentId=parent.querySelector('input[name="timeEquipmentId[]"]');
             this.input=parent.querySelector('input[name="equipmentName[]"]');
             this.inputId =parent.querySelector('input[name="equipmentId[]"]');
             this.inputPrice =parent.querySelector('input[name="equipmentPrice[]"]');
@@ -301,6 +304,7 @@ export class EquipmentList {
         let equipment=this.data.find(e => e.id==id);
 
         this.input.blur();
+        if (this.inputId.value != equipment.id) this.timeEquipmentId.value=0;
         this.input.value=equipment.name;
         this.inputId.value=equipment.id;
         this.inputPrice.value=equipment.price;
@@ -328,8 +332,12 @@ export class EquipmentList {
             <button class="small" type="button" onmousedown="equipmentList.setWindow(event)">&#128315;</button>
             <div class="right"></div>
         `; 
+
+        let target;
+        if (event instanceof Event) target=event.target;
+        if (event instanceof Element) target=event;
         
-        event.target.closest(".input-container").insertAdjacentElement("beforebegin", newContainer);
+        target.closest(".input-container").insertAdjacentElement("beforebegin", newContainer);
         this.moveElements(newContainer.firstElementChild); // ich brauche hier erstmal nur das input field
         this.addInputEvent() ;
         
