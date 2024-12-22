@@ -25,7 +25,7 @@ export class DB_Address extends Query {
 
     async updateQuery() {
         await this.request(`
-            UPDATE bu_adress a
+            UPDATE bu_address a
             SET 
                 a.name = "${this.name.value}",
                 a.city = "${this.city.value}"

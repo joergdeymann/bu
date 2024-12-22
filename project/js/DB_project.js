@@ -34,23 +34,41 @@ export class DB_Project extends Query {
         `); 
     }
 
-    async updateQuery() {
-        
+    async updateQueryFull() {
         await this.request(`
             UPDATE bu_project 
             SET 
-                start ="${calendar.newEntry.start}",
-                end = "${calendar.newEntry.end}",
-                addressId=${db_address.id.value},
-                setup="${calendar.newEntry.arrival}",
-                dismantling="${calendar.newEntry.departure}",
-                createDate="${new Date().toISOString}",
-                name="${this.eventName.value}",
-                companyId=${login.companyId},
-                info = "${this.importanttext.value}"
-            
+                bu_project.start =${this.inMarks(calendar.newEntry.start)},           
+                bu_project.end = ${this.inMarks(calendar.newEntry.end)},              
+                bu_project.setup=${this.inMarks(calendar.newEntry.arrival)},          
+                bu_project.dismantling=${this.inMarks(calendar.newEntry.departure)},  
+                                    
+                bu_project.addressId=${db_address.id.value},              
+                bu_project.companyId=${login.companyId},                  
+                bu_project.info = "${this.importanttext.value}",          
+                bu_project.customerId  = ${db_customer.id.value}
             WHERE id = ${this.id.value};
         `); 
+    }
+
+    async updateQueryProjectJob() {
+        await this.request(`
+            UPDATE bu_project 
+            SET 
+                bu_project.addressId=${db_address.id.value},                                                  
+                bu_project.companyId=${login.companyId},                  
+                bu_project.info = "${this.importanttext.value}",          
+                bu_project.customerId  = ${db_customer.id.value} 
+            WHERE id = ${this.id.value};
+        `); 
+    }
+    
+    async updateQuery() {
+        await this.updateQueryFull();
+        return;
+        // this is for later
+        if (this.isFullProject()) await this.updateQueryFull();
+        else                      await this.updateQueryProjectJob();
     }
 
 

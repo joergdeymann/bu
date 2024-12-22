@@ -1,0 +1,31 @@
+usage
+    0 = Dienstleistung
+    1 = Artikel
+
+re_text
+    Rechnungsrtext
+
+name    
+    Anzeigetext für den User
+
+connectedArticleId
+    Vorher: verlinktes Kind
+        das ist nicht mehr sinnvoll 
+    Nachher: verlinkter Vater
+        Vorteil:
+        - es können mehrere Kinder auf dem Vater zugreifen
+        - Das Kind kann direkt die ID des Vates ermiteln
+        Hier Beispiel:
+        Lichttechniker
+            Vater: Tagessatz
+            Kind1: Offday
+            Kind2: Überstundenstaz
+
+Benutzung von:
+    index.html -> projectNew.html
+    projectEdit.html
+    projectView.html
+    
+
+
+

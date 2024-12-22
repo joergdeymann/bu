@@ -69,7 +69,8 @@ export class ProjectJobDefinition extends DB_ProjectJobDefinition {
     chooseJob(id) {
         let job=this.getById(id);
         this.newEntry.color=job.color;
-        this.newEntry.id=id;
+        // this.newEntry.id=id;
+        this.newEntry.jobId=id;
         this.newEntry.name=job.name;
         this.outputHeadlines();
         calendar.display(); // renderCalendarAll(); // später muss der Kalender upgedatet werden

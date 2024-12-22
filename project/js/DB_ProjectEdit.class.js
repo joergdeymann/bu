@@ -56,6 +56,7 @@ export class DB_ProjectEdit extends Query {
             invoiceText: document.getElementsByName("invoiceText")[0],
 
 
+
             
         }
 
@@ -84,6 +85,10 @@ export class DB_ProjectEdit extends Query {
         let datetime=new DateTime();
 
         this.input.timeWorkerId.value   =data.id; //Worker id
+
+        this.input.projectId.value      =data.projectId;
+        this.input.projectJobId.value   =data.projectJobId;
+        this.input.timeJobId.value      =data.timeJobId;        
 
         this.input.eventId.value        =data.eventId;
         this.input.eventName.value      =data.eventName;
@@ -119,6 +124,7 @@ export class DB_ProjectEdit extends Query {
 
 
         job.newEntry.id          = data.id;    // time_WorkerId 
+        job.newEntry.timeWorkerId= data.id;    // time_WorkerId 
         job.newEntry.jobId       = data.jobId; // JobDefinitionId 
         job.newEntry.name        = data.jobName;
         job.newEntry.color       = data.color;
@@ -168,7 +174,7 @@ export class DB_ProjectEdit extends Query {
                 a.street AS street,
                 c.id AS customerId,
                 c.name AS customerName,
-                tj.id AS timejobId,
+                tj.id AS timeJobId,
                 tj.text AS "text",
                 tj.invoiceText AS invoiceText,
                 p.id AS projectId,

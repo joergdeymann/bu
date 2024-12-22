@@ -28,13 +28,13 @@ export class DB_Customer extends Query {
         await this.request(`
             UPDATE bu_customer 
             SET 
-                name="${this.name.value}",
+                name="${this.name.value}"
             WHERE id = ${this.id.value};
         `); 
     }
 
     async update() {
-        if (customerList.data.firma == this.name.value) return;
+        // not here, not really necessary : if (customerList.data.firma == this.name.value) return;
         super.update();
     }
 

@@ -3,26 +3,41 @@
 import { Query } from "./Query.js";
 
 export class TimeEquipmentInput { // extends DB_TimeEquipmentList {
+    timeIds;
+    articleId;
+    price;
+    projectJobId;
 
     constructor() {
         this.load();
     }
 
+    elements() {
+        this.timeIds=document.getElementsByName("timeEquipmentId[]");
+        this.articleIds=document.getElementsByName("equipmentId[]");
+        this.price=document.getElementsByName("equipmentPrice[]");
+        this.projectJobId= document.getElementsByName("projectJobId")[0];
+    }
+
     save() {
+        this.elements();
         this.delete();
         this.insert();
     }
 
     async delete() {
-        let ids=document.getElementsByName("timeEquipmentId[]");
+        let ids=this.timeIds;
         if (ids.length == 0) return;
-        let idList = Array.from(ids).map(input => input.value).join(',');
+        let idList = Array.from(ids)
+            .map(input => input.value)
+            .filter(e => +e) 
+            .join(',');
 
         let request=new Query(`
             DELETE FROM bu_time_equipment 
             WHERE 
                 companyId=${+login.companyId} 
-                AND projectJobId = ${+projectEdit.data[0].projectJobId}
+                AND projectJobId = ${+this.projectJobId.value}
                 AND id NOT IN (${idList});
         `);
         await request.get();
@@ -33,9 +48,9 @@ export class TimeEquipmentInput { // extends DB_TimeEquipmentList {
     }
 
     async insert()  {
-        let timeIds=document.getElementsByName("timeEquipmentId[]");
-        let articleIds=document.getElementsByName("equipmentId[]");
-        let price=document.getElementsByName("equipmentPrice[]");
+        let timeIds=this.timeIds;
+        let articleIds=this.articleIds;
+        let price=this.price;
 
         let from=calendar.newEntry.start;
         let to  =calendar.newEntry.end;
@@ -45,26 +60,28 @@ export class TimeEquipmentInput { // extends DB_TimeEquipmentList {
         INSERT INTO bu_time_equipment(
             companyId, 
             projectJobId,
-            artcleId,
+            articleId,
             price,
             vat,
-            from,
-            to,
-            status
+            bu_time_equipment.from,
+            bu_time_equipment.to,
+            bu_time_equipment.status
         )`;
         
         let v="";
-
-        for (i = 0;i<articleIds.length;i++ ) {
-            if (timeIds.value) continue;
+        // db_project.id.value
+        // db_projectEdit.input.projectJobId.value
+        // +db_projectEdit.input.projectJobId.value
+        for (let i = 0;i<articleIds.length;i++ ) {
+            if (+timeIds[i].value) continue;             // Entry already there
+            if (!+this.articleIds[i].value) continue;    // No Article choosen
             if (v) v+=","
             v+= `
             VALUES (
                 ${+login.companyId},
-                ${+projectEdit.data[0].projectJobId},
+                ${+this.projectJobId.value}, 
                 ${+articleIds[i].value},
                 ${+price[i].value},
-                0,
                 0,
                 ${this.inMarks(from)},
                 ${this.inMarks(to)},
@@ -79,7 +96,8 @@ export class TimeEquipmentInput { // extends DB_TimeEquipmentList {
     }
 
     async load() {
-
+        this.elements();
+        // +db_projectEdit.input.projectJobId.value
         let p=new Query(`
             SELECT 
                 te.id as id,
@@ -93,7 +111,7 @@ export class TimeEquipmentInput { // extends DB_TimeEquipmentList {
                 ON a.id = te.articleId
             WHERE 
                 te.companyId=${+login.companyId} 
-                AND te.projectJobId = ${+projectEdit.data[0].projectJobId}
+                AND te.projectJobId = ${+this.projectJobId.value}
             ORDER BY a.name;`);
 
         this.data=await p.get();

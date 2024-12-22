@@ -1,6 +1,6 @@
 import { Win } from './Win.js';
 
-export class ProjectSave {
+export class ProjectUpdate {
     async msg(text) {
         await this.showPopup(`<center>${text}</center>`);
     }
@@ -40,9 +40,11 @@ export class ProjectSave {
 
     async saveAll() {
         // try{
-            this.saveSetup();
+            // this.saveSetup();
 
             if (db_project.isFullProject) {
+                // if (!db_project.data?.id ) await db_project.insert();
+                // else if (db_project.isFullProject) db_project.update();
 
             } else {
                 let p=[];
@@ -51,22 +53,28 @@ export class ProjectSave {
                 // Wenn kunde.id =0 dann auch als 0 in dem bu_project speichern, Kunde nicht anlegen
 
                 if (db_customer.name) {
-                    if (!db_customer.data?.id) p.push(db_customer.insert()); 
+                    if (!db_customer.id.value) p.push(db_customer.insert()); 
                     else p.push(db_customer.update())
                 }
-                if (!db_address.data?.id)  p.push(db_address.insert()); // Event Addresse
+                if (!db_address.id.value)  p.push(db_address.insert()); // Event Addresse
                 else p.push(db_address.update());
                 await Promise.all(p);
                 
-                
-                
-                if (!db_project.data?.id ) await db_project.insert();
-                else if (db_project.isFullProject) db_project.update();
+                // Achtung Zeiten des Projekts hier nicht anpassen alle mit Datum wären updateFull()
+                if (!db_project.id.value ) await db_project.insert();
+                else db_project.update();
 
-                if (!db_projectJob.data?.id ) await (db_projectJob.insert()); // only link, no update Das Falsche ?
+                // ist dieses noch relevant
+                if (!db_projectJob.id.value ) await db_projectJob.insert(); // only link, no update Das Falsche ?
+                else await db_projectJob.update();
+
                 timeEquipmentInput.save();
-                if (!db_timeWorker.data?.id ) p.push(db_timeWorker.insert());
-                if (!db_timeJob.data?.id ) p.push(db_timeJob.insert());
+
+                if (!db_timeWorker.id.value ) p.push(db_timeWorker.insert());
+                else p.push(db_timeWorker.update());
+
+                if (!db_timeJob.id.value ) p.push(db_timeJob.insert());
+                else p.push(db_timeJob.update());
                 await Promise.all(p);
 
 
@@ -98,9 +106,9 @@ export class ProjectSave {
             // if (!db_projectJob.data?.id) await projectJob.saveProjectJob();
             // else projectJob.updateProjectJob();
     
-            this.saveTimeJob();
-            this.saveTimeEquipment();
-            this.saveTimeEmplopyee();
+            // this.saveTimeJob();
+            // this.saveTimeEquipment();
+            // this.saveTimeEmplopyee();
             this.showPopup();
         // } catch (e){
         //     console.error("Fehler beim Speichern",e);

@@ -6,6 +6,7 @@ export class ProjectOvertime {
     setElements() {
         this.input=document.getElementsByName("overtimePrice")[0];
         this.inputDisplay =this.input.closest(".input-container").querySelector('.right');
+        this.overtime=document.getElementsByName("overtime");
     }
 
 
@@ -48,6 +49,10 @@ export class ProjectOvertime {
         //if (status) db_workPrice.load();
         oPrice.parentElement.classList.toggle("d-none",!status);
         this.handleFocusEvent(oPrice);
+    }
+
+    get isOvertime() {
+        return this.overtime[0].classList.contains("bg-green-gradient");
     }
 
     // toggleDisplay(target,display) {

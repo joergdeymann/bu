@@ -11,7 +11,7 @@ import { Login } from './Login.js';
 import { Setup } from './Setup.js';
 import { ProjectJobDefinition } from './ProjectJobDefinition.js';
 import { JobHierachy } from './JobHierachy.js';
-import { ProjectSave } from './ProjectSave.js';
+import { ProjectUpdate } from './ProjectUpdate.js';
 import { EventList } from './EventList.js';
 
 import { DB_Address } from './DB_Address.js';
@@ -24,6 +24,7 @@ import { DB_ProjectJob } from './DB_ProjectJob.js';
 import { DB_TimeJob } from './DB_TimeJob.js';
 import { DB_TimeWorker } from './DB_TimeWorker.js';
 import { DB_ProjectEdit } from './DB_ProjectEdit.class.js';
+import { DB_WorkPrice } from './DB_WorkPrice.js';
 
 
 
@@ -67,23 +68,23 @@ async function init() {
     // await projectEdit.fillForm(4); // choosen time_worker_id
 
     
-    let projectEdit=new DB_ProjectEdit();      
-    window.projectEdit=projectEdit;
-    await projectEdit.loadValues(34);
+    let db_projectEdit=new DB_ProjectEdit();      
+    window.db_projectEdit=db_projectEdit;
+    await db_projectEdit.loadValues(34);
 
 
     // ##########################################
     // Hier muss ich das Datum des Projekts haben
     // ###########################################
     let calendar=new ProjectCalendar();
-    calendar.setDate(projectEdit.getDateInRange());
+    calendar.setDate(db_projectEdit.getDateInRange());
     calendar.renderCalendarAll();
     window.calendar=calendar;
 
     await job.outputHeadlines() ;
     // job.renderJobHeadline();
 
-    projectEdit.fillNewForm(); // choosen time_worker_id
+    db_projectEdit.fillNewForm(); // choosen time_worker_id
     
 
     let projectPrice=new ProjectPrice();
@@ -113,8 +114,8 @@ async function init() {
     let unterkunftList=new UnterkunftList();
     window.unterkunftList=unterkunftList;
 
-    let projectSave = new ProjectSave();
-    window.projectSave=projectSave;
+    let projectUpdate = new ProjectUpdate();
+    window.projectUpdate=projectUpdate;
     
     let eventList = new EventList();
     window.eventList=eventList;
@@ -142,6 +143,9 @@ async function init() {
  
     let db_timeWorker = new DB_TimeWorker();
     window.db_timeWorker=db_timeWorker;
+
+    let db_workPrice = new DB_WorkPrice();
+    window.db_workPrice=db_workPrice;
 
 }
 

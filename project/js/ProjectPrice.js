@@ -41,6 +41,10 @@ export class ProjectPrice {
         );
     }
 
+
+    // BU_EQUIPMENT_PRICE = Liste aller equipments die einem Kunden zugeordnet sind
+    // articleId / customerId / price
+
     loadEquipmentPrice() {
         if (!customerList.id) return 0;
         this.ep=new Query(`
@@ -247,6 +251,7 @@ export class ProjectPrice {
         this.articleId=null;
         this.toggleWindow();
     } 
+    
     setPrice(price,articleId) {
         this.articleId=articleId;
         this.input.value=price;

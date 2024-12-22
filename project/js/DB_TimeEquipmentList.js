@@ -1,3 +1,6 @@
+/**
+ * Used for Project New (index.html)
+ */
 import {DB_TimeEquipment} from "./DB_TimeEquipment.js" 
 
 export class DB_TimeEquipmentList {

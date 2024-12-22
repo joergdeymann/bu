@@ -355,6 +355,7 @@ export class EquipmentList {
     clearField() {
         this.input.value="";
         this.inputId.value="";
+        this.timeEquipmentId.value="";
         this.inputPrice.value="";
         this.inputDisplay.innerText="";
         this.toggleWindow();

@@ -21,7 +21,7 @@ export class DB_WorkPrice extends Query {
                 ON job.id = jd.articleId
             LEFT JOIN
                 bu_article overtime
-                ON overtime.id = job.connectedAtricleId
+                ON overtime.id = job.connectedArticleId
             WHERE 
                 jd.id = ${+calendar.newEntry.id}
         
@@ -34,11 +34,14 @@ export class DB_WorkPrice extends Query {
     fill() {
         let price=document.getElementsByName("price-name")[0];
         let oPrice=document.getElementsByName("overtimePrice")[0];
-        if (!price.value) return;
-        let data=this.data[0];
+        if (!price.value) {
 
-        if (!data.overtimePrice) data.overtimePrice=0;
-        if (!data.jobPrice) data.jobPrice=0;
+        }
+        if (!price.value) return;
+        let data=this.data[0]??[];
+
+        if (!data?.overtimePrice) data.overtimePrice=0;
+        if (!data?.jobPrice) data.jobPrice=0;
 
         if (!oPrice.value) {
             oPrice.value=(data.overtimePrice*price.value/data.jobPrice).toFixed(2);

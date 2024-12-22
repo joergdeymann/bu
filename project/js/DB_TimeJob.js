@@ -6,7 +6,7 @@ export class DB_TimeJob extends Query {
     }
 
     elements() {
-        this.id=document.getElementsByName("timeJobId");
+        this.id=document.getElementsByName("timeJobId")[0];
         this.text=document.getElementsByName("importantText")[0];
         this.invoiceText=document.getElementsByName("invoiceText")[0];
     }
@@ -17,7 +17,7 @@ export class DB_TimeJob extends Query {
             SET 
                 bu_time_job.companyId=${+login.companyId},
                 bu_time_job.projectJobId=${+db_projectJob.id.value},
-                bu_time_job.jobDefinitionId=${+job.newEntry.id},
+                bu_time_job.jobDefinitionId=${+job.newEntry.jobId},
                 bu_time_job.from = ${this.inMarks(calendar.newEntry.start)},           
                 bu_time_job.to = ${this.inMarks(calendar.newEntry.end)},
                 bu_time_job.text = '${this.text.value}',
@@ -35,9 +35,9 @@ export class DB_TimeJob extends Query {
             SET 
                 bu_time_job.companyId=${+login.companyId},
                 bu_time_job.projectJobId=${+db_projectJob.id.value},
-                bu_time_job.jobDefinitionId=${+job.newEntry.id},
-                bu_time_job.bu_time_job.from = ${this.inMarks(calendar.newEntry.start)},           
-                bu_time_job.bu_time_job.to = ${this.inMarks(calendar.newEntry.end)},
+                bu_time_job.jobDefinitionId=${+job.newEntry.jobId},
+                bu_time_job.from = ${this.inMarks(calendar.newEntry.start)},           
+                bu_time_job.to = ${this.inMarks(calendar.newEntry.end)},
                 bu_time_job.text = '${this.text.value}',
                 bu_time_job.invoiceText = '${this.invoiceText.value}',
                 bu_time_job.status = 2 

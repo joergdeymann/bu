@@ -194,3 +194,49 @@ Hinweise:
         Diese Einstellung ist standart Voreinstellung
     
 
+Vorbereitung nächstes Teil:
+Überstunden das kommt dann alles aus der bu_customer_price
+===============
+SELECT 
+    a1.price,
+    a1.re_text,
+    1 AS source_order
+FROM bu_article a1
+WHERE a1.id = @article
+
+UNION ALL
+
+SELECT 
+    a1.price,
+    a1.re_text,
+    2 AS source_order
+FROM bu_article a1
+INNER JOIN bu_article a2 ON a1.id = a2.connectedArticleId
+WHERE 
+    a1.usage = 0
+    AND a1.companyId = 14
+    AND a1.re_text != ''
+
+UNION ALL
+
+SELECT 
+    a1.price,
+    a1.re_text,
+    3 AS source_order
+FROM bu_article a1
+WHERE 
+    a1.usage = 0
+    AND a1.companyId = 14
+    AND a1.re_text != ''
+
+ORDER BY source_order,re_text;
+
+1. Die Liste die jetzt verfügbat ist mit diesen füllen 
+    1 = Verknüpfung Job // mit job.articleId 
+        id=db_projectEdit.jobId
+        data=job.getById(id)
+        data.articleId
+        
+    2 = Verknüpfte Preise
+    3 = Alle Dienstleistungen
+
