@@ -1,0 +1,34 @@
+TagessatzListe
+===============
+1. Zeigt alle Artikel an 
+    - die keinen eintrag für Vater haben und
+    - welche Dienstleistung sind
+
+2. Wenn ein Kunde angegeben ist:
+    Zeige alle Artikel an, die
+    - keinen Eintrag für Vater haben
+    - welche Dinstleistung sind,
+    und in bu_equipment einen Eintrag haben
+    - customerId = Kundennummer
+    - companyId  natürlich abgleichen
+    - articleId  gleich dem Artikel aus der article Datenbank ist
+
+Die gesamte Liste enthält dann noch zusätzich am anfang den KundenPreis
+Es gibt nur eine Kombi articleId CustomerId für jede companyId
+Das ist dann der Spezielle KundenPreis
+
+Dieser Wert kann aus der Klasse: projectPrice gelsesen werden
+
+EDIT / INSERT
+Bei der Eingabe kann hieraus dann den Preis für das Projekt als anfangswert setzen,
+wenn eine ArticleId vorhanden ist.
+
+
+
+
+
+
+
+
+
+

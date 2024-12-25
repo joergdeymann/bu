@@ -17,6 +17,7 @@ import { EventList } from './EventList.js';
 import { DB_Address } from './DB_Address.js';
 import { DB_Project } from './DB_Project.js';
 import { DB_Customer } from './DB_Customer.js';
+import { DB_CustomerPrice, IF_ProjectNew } from './DB_CustomerPrice.js';
 import { DB_Article } from './DB_Article.js';
 import { DB_EventPrice } from './DB_EventPrice.js';
 import { DB_ProjectJob } from './DB_ProjectJob.js';
@@ -98,6 +99,12 @@ async function init() {
 
     let db_customer = new DB_Customer();
     window.db_customer=db_customer;
+
+    let db_customerPrice = new DB_CustomerPrice();
+    window.db_customerPrice=db_customerPrice;
+
+    let if_projectNew = new IF_ProjectNew();
+    window.if_projectNew=if_projectNew;
 
     let db_articlePrice = new DB_Article();
     window.db_articlePrice=db_articlePrice;

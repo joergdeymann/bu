@@ -12,7 +12,7 @@ export class ProjectPrice {
     }
 
 
-
+    // Das muss weg , der Preis bezieht sioch auf nichts 
     loadCustomerPrice() {
         if (!customerList.id) return 0;
         this.cp=new Query(`
@@ -26,6 +26,7 @@ export class ProjectPrice {
         
     }
 
+    // Bezogen auf Job Definition ID das wäre eigentlich nur der Wert der in JobDefinitionID eingetragen ist
     loadArticlePrice() {
         if (!calendar.newEntry.id ) return 0;
 
@@ -123,6 +124,10 @@ export class ProjectPrice {
         if (articlePrice>0) return articlePrice;
         if (customerPrice>0) return customerPrice; // Meanwhile this order
         return '';
+    }
+
+    getPrice() {
+        return this.getProjectPrice(this.customerPrice,this.articlePrice);
     }
 
     async load() {
@@ -223,7 +228,7 @@ export class ProjectPrice {
         } else {
             this.inputDisplay.classList.toggle("d-none",document.activeElement === this.input);
             if (document.activeElement !== this.input) {
-                this.input.value = parseFloat("0"+this.input.value).toFixed(2) || "";   
+                this.input.value = parseFloat("0"+this.input.value).toFixed(2) || "";
             }
         }
     }
@@ -257,5 +262,10 @@ export class ProjectPrice {
         this.input.value=price;
         this.input.blur();
         this.toggleWindow();
+        if_projectNew.findNewCustomerPrice(articleId);
+    }
+
+    getName(articleId) {
+        return this.ep.data.find(e => e.articleId == articleId).name; // Hat aber nur die Artikel des Kunden
     }
 }
