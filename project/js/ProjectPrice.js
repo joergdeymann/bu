@@ -211,7 +211,7 @@ export class ProjectPrice {
         });
 
         this.input.addEventListener("focus", this.handleFocusEventPre);
-        this.input.addEventListener("blur", this.handleFocusEvent);
+        this.input.addEventListener("blur", this.handleBlurEvent);
         this.input.parentElement.querySelector(".left")?.addEventListener("focus", this.handleFocusEventPre);
 
 
@@ -262,6 +262,11 @@ export class ProjectPrice {
         }
     }
 
+    handleBlurEvent= (event) => {
+        this.handleFocusEvent(event);
+        if_projectNew.saveValues(this.input);
+    }
+
     async toggleWindow(area=null) {
         if(this.listContainer.classList.contains("d-none")) { 
             this.setElements(area);
@@ -292,7 +297,10 @@ export class ProjectPrice {
         this.input.value=price;
         this.input.blur();
         this.toggleWindow();
-        if_projectNew.findNewCustomerPrice(articleId);
+        if (this.input.name == "price-name") if_projectNew.findNewCustomerPrice(articleId);
+
+        if_projectNew.saveValues(this.input,articleId); // ArtikelId and name must be saved here
+
     }
 
     getName(articleId) {

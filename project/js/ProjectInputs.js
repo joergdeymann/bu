@@ -1,3 +1,4 @@
+
 export class ProjectInputs {
     constructor() {
 
@@ -43,4 +44,14 @@ export class ProjectInputs {
         oPrice.parentElement.classList.toggle("d-none",!status);
     }
 
+    setDayrateStandart(event,status) {
+        this.toggleYesNo(event,status);
+        if_projectNew.dataset.standart=status?1:0;
+
+    }
+
+    setDayrateCustomer(event,status) {
+        this.toggleYesNo(event,status);
+        if_projectNew.dataset.dayrateCustomer=status?1:0;
+    }
 }
