@@ -168,6 +168,30 @@
             <div id="price-list" class="popup-list"></div>
         </div>
 
+        <div class="input-container relative" >
+            <input type="text" name="overtime-price"  placeholder="Überstundensatz">
+            <input type="text" name="overtime-price"  placeholder="Überstundensatz" class="left d-none">
+            <button class="small" type="button" onclick="projectPrice.toggleWindow('overtime');">?</button>
+            <div class="right d-none">€</div>
+        </div>
+        <div class="relative mb-16px d-none">
+            <div class="blocker"></div>
+            <div id="overtime-list" class="popup-list"></div>
+        </div>
+
+        <div class="input-container relative" >
+            <input type="text" name="offday-price"  placeholder="Offday Tagessatz">
+            <button class="small" type="button" onclick="projectPrice.toggleWindow('offday');">?</button>
+            <div class="right d-none">€</div>
+        </div>
+        <div class="relative mb-16px d-none">
+            <div class="blocker"></div>
+            <div id="offday-list" class="popup-list"></div>
+        </div>
+
+
+
+
         <div class="input-container" >
             <div>Überstunden berechnen?</div>
             <div class="group">
@@ -176,15 +200,6 @@
             </div>
         </div>
 
-        <div class="input-container d-none relative" >
-            <input type="text" name="overtimePrice"  placeholder="Überstunden Preis">
-            <button class="small invisible" type="button" onclick="">?</button>
-            <div class="right d-none">€</div>
-        </div>
-        <div class="relative mb-16px d-none">
-            <div class="blocker"></div>
-            <div id="overtime-list" class="popup-list"></div>
-        </div>
 
 
 

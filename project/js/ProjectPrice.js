@@ -5,10 +5,17 @@ export class ProjectPrice {
     ap;
     cp;
     ep;
+    headline="Tagessatz"
 
     constructor() {
         this.setElements();
         this.addEvents();
+
+        this.setElements("overtime");
+        this.addEvents();
+
+        this.setElements("offday");
+        this.addEvents();        
     }
 
 
@@ -102,12 +109,19 @@ export class ProjectPrice {
      * Change the right Side customerXX ind your ids given in HTML
      *  
      */
-    setElements() {
-        this.list=document.getElementById("price-list");
-        this.listContainer=this.list.parentElement;
-        this.input=document.getElementsByName("price-name")[0];
-        this.inputDisplay =this.input.closest(".input-container").querySelector('.right');
+    setElements(area=null) {
 
+        if (!area) {
+            this.list=document.getElementById("price-list");
+            this.input=document.getElementsByName("price-name")[0];
+        } else {
+            this.list=document.getElementById(`${area}-list`);
+            this.input=document.getElementsByName(`${area}-price`)[0];
+
+        }
+        this.headline={offday:"Offday",overtime:"Überstundensatz"}[area] || "Tagessatz";
+        this.listContainer=this.list.parentElement; 
+        this.inputDisplay =this.input.closest(".input-container").querySelector('.right');    
     }
 
 
@@ -126,9 +140,6 @@ export class ProjectPrice {
         return '';
     }
 
-    getPrice() {
-        return this.getProjectPrice(this.customerPrice,this.articlePrice);
-    }
 
     async load() {
         this.loadArticlePrice();
@@ -161,7 +172,7 @@ export class ProjectPrice {
         let customerPriceText=customerList.inputId.value?`${(+this.customerPrice).toFixed(2)} €`:"Kunde nicht ausgewählt";
 
         let html=/*html*/`
-        <h1>Tagessatz</h1>
+        <h1>${this.headline}</h1>
         <div class="selector-headline" onclick="projectPrice.clearField()">Zurücksetzten</div>
         <div onclick="projectPrice.setPrice(${this.articlePrice},${articleId})">
             <div>${job.newEntry.name||"Artikelpreis"}:</div>
@@ -199,8 +210,10 @@ export class ProjectPrice {
             event.stopPropagation();
         });
 
-        this.input.addEventListener("focus", this.handleFocusEvent);
+        this.input.addEventListener("focus", this.handleFocusEventPre);
         this.input.addEventListener("blur", this.handleFocusEvent);
+        this.input.parentElement.querySelector(".left")?.addEventListener("focus", this.handleFocusEventPre);
+
 
         this.input.addEventListener("input",event=> {
             if (!this.listContainer.classList.contains("d-none")) {
@@ -222,19 +235,36 @@ export class ProjectPrice {
         });
     }
 
+
+    handleFocusEventPre= (event) => {
+        let area= {"overtime-price":"overtime","offday-price":"offday"}[event.target.name] || null;
+        this.setElements(area);
+        this.hideOverlay();
+
+        this.handleFocusEvent(event);
+        this.input.focus();
+    }
+
     handleFocusEvent= (event) => {
-        if (event.target.value == "") {
+        let activeElement=document.activeElement;
+        let left=this.input.parentElement.querySelector(".left"); 
+        if (document.activeElement === left) activeElement = this.input;
+
+        if (activeElement.value == "") {
             this.inputDisplay.classList.add("d-none");
         } else {
-            this.inputDisplay.classList.toggle("d-none",document.activeElement === this.input);
-            if (document.activeElement !== this.input) {
+            this.inputDisplay.classList.toggle("d-none",activeElement === this.input);
+
+            if (activeElement !== this.input) {
                 this.input.value = parseFloat("0"+this.input.value).toFixed(2) || "";
+                this.showOverlay();
             }
         }
     }
 
-    async toggleWindow() {
+    async toggleWindow(area=null) {
         if(this.listContainer.classList.contains("d-none")) { 
+            this.setElements(area);
             this.load();
             this.input.style.zIndex=3;
             this.input.focus(); 
@@ -267,5 +297,30 @@ export class ProjectPrice {
 
     getName(articleId) {
         return this.ep.data.find(e => e.articleId == articleId).name; // Hat aber nur die Artikel des Kunden
+    }
+
+    getPrice(articleId) {
+        if (articleId == null) return this.getProjectPrice(this.customerPrice,this.articlePrice);
+        return this.ep.data.find(e => e.articleId == articleId).price; // Hat aber nur die Artikel des Kunden
+    }
+
+    showOverlay() {
+        let p=this.input.parentElement;
+        let left  = p.querySelector(".left");
+        let right = p.querySelector(".right");
+        if (!left) return;
+
+        this.input.classList.add("d-none");
+        left.classList.remove("d-none");
+        right.innerHTML=this.input.value+" €";
+        left.value=this.input.placeholder + ":";
+    }
+
+    hideOverlay() {
+        let p=this.input.parentElement;
+        let left  = p.querySelector(".left");
+        if (!left) return;
+        this.input.classList.remove("d-none");
+        left.classList.add("d-none");
     }
 }

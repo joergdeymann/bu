@@ -1,7 +1,7 @@
 import { ProjectInputs } from './ProjectInputs.js';
 import { ProjectCalendar } from './ProjectCalendar.js';
 import { ProjectPrice } from './ProjectPrice.js';
-import { ProjectOvertime } from './ProjectOvertime.js';
+// import { ProjectOvertime } from './ProjectOvertime.js';
 // import { Query } from './Query.js';
 import { CustomerList } from './CustomerList.js';
 import { EquipmentList } from './EquipmentList.js';
@@ -63,8 +63,8 @@ async function init() {
     let projectPrice=new ProjectPrice();
     window.projectPrice=projectPrice;
  
-    let projectOvertime=new ProjectOvertime();
-    window.projectOvertime=projectOvertime;
+    // let projectOvertime=new ProjectOvertime();
+    // window.projectOvertime=projectOvertime;
     
     let customer=new CustomerList();
     window.customerList=customer;

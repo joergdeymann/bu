@@ -4,7 +4,7 @@ export class ProjectOvertime {
         this.addEvents();
     }
     setElements() {
-        this.input=document.getElementsByName("overtimePrice")[0];
+        this.input=document.getElementsByName("overtime-price")[0];
         this.inputDisplay =this.input.closest(".input-container").querySelector('.right');
         this.overtime=document.getElementsByName("overtime");
     }
@@ -44,7 +44,7 @@ export class ProjectOvertime {
 
     setPrice() {
         // this.toggleYesNo(event,status);
-        let oPrice=document.getElementsByName("overtimePrice")[0];
+        let oPrice=document.getElementsByName("overtime-price")[0];
         let status=oPrice.value != 0 
         //if (status) db_workPrice.load();
         oPrice.parentElement.classList.toggle("d-none",!status);

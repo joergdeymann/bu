@@ -138,7 +138,7 @@ export class IF_ProjectNew extends DB_CustomerPrice {
      * INTERFACE - Schnittstelle von der Datenbank zur Eingabe
      * IF_ProjectNew
      */
-    fillForm() {
+    XfillForm() {
         let data=null;
         // 1. Dataset exist already by Loading an existing project 
         let jobId=this.var.jobDefinitionId;
@@ -228,7 +228,10 @@ export class IF_ProjectNew extends DB_CustomerPrice {
         console.log("Artikelpreis hat sich geändert");
 
         // Try to find Article in the grouped CustomerPrice 
-        let data=this.data.filter(e => e.articleIdDayrate == articleIdDayrate);
+        // 1. DayrateId must be equal
+        // 2. customerId must be 0 or selected customerId
+
+        let data=this.data.filter(e => e.articleIdDayrate == articleIdDayrate && (e.customerId == 0 || e.customerId == +this.input.customerId.value));
         
         if (data.length == 0) {
             console.log(`Artikel nicht in der Datenbank gefunden, DayrateId=${articleIdDayrate}`);
@@ -261,7 +264,10 @@ export class IF_ProjectNew extends DB_CustomerPrice {
                 this.data.splice(index, 1);
             }
             
+            let dayrateId = articleIdDayrate??entry[0].articleId;
 
+            let drName=projectPrice.getName(dayrateId);
+            let drPrice=projectPrice.getPrice(dayrateId);
             
             // cp = CustomerPrice
             // ot = OverTime
@@ -273,9 +279,9 @@ export class IF_ProjectNew extends DB_CustomerPrice {
                 customerId: customerId,
                 companyId: login.companyId,
 
-                articleIdDayrate: articleIdDayrate??entry[0].articleId, // entry falls ArtikelID = 0
-                drName:  articleIdDayrate?projectPrice.getName(articleIdDayrate):job.newEntry.name,     // Das muss aus Article kommen
-                drPrice: projectPrice.equipmentPrice, // Das muss auch aus Article Kommen // get Customerprice if customerId > 0 else standart
+                articleIdDayrate: dayrateId, // entry falls ArtikelID = 0
+                drName:  drName, // job.newEntry.name,     // Das muss aus Article kommen
+                drPrice: drPrice, // Das muss auch aus Article Kommen // get Customerprice if customerId > 0 else standart
 
                 articleIdOffday: 0, // Neu erzeugen oder Auswahl in den Artiekeln
                 offName: "",        // Eingabe
@@ -286,17 +292,22 @@ export class IF_ProjectNew extends DB_CustomerPrice {
                 otPrice: 0,        // Eingabe
                 
                 jobDefinitionId: job.newEntry.jobId,
-                cpName:job.newEntry.name,          // Name für diese zusammenhängende Daten                
+                cpName:job.newEntry.name,          // Name für diese zusammenhängende Daten  
+                starndart: 0,
             });
             this.currentId=0;
+            if (customerId > 0) this.data.standart=1;
+
         } else 
         if (data.length == 1) {
             // Hier haben wir den aktuellen Satz der PriceId in data[0]
             this.currentId=data[0].id;
         } else {
+            d= data.find(e => e.standart==1);
+
             // Can we seperate it  if there are more than one article width different Values ?
             // Mabe , make it to standart 
-            this.currentId=data[0].id;
+            this.currentId=d?.id??data[0].id;
         }
 
 
