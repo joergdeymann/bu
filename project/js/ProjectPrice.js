@@ -5,7 +5,7 @@ export class ProjectPrice {
     ap;
     cp;
     ep;
-    headline="Tagessatz"
+    headline="Tagessatz";
 
     constructor() {
         this.setElements();
@@ -119,9 +119,12 @@ export class ProjectPrice {
             this.input=document.getElementsByName(`${area}-price`)[0];
 
         }
-        this.headline={offday:"Offday",overtime:"Überstundensatz"}[area] || "Tagessatz";
+        this.headline={offday:"Offday Preis",overtime:"Überstundensatz"}[area] || "Tagessatz";
         this.listContainer=this.list.parentElement; 
         this.inputDisplay =this.input.closest(".input-container").querySelector('.right');    
+        let p=this.input.parentElement;
+        this.left = p.querySelector(".left");
+        this.right= p.querySelector(".right");
     }
 
 
@@ -265,6 +268,10 @@ export class ProjectPrice {
     handleBlurEvent= (event) => {
         this.handleFocusEvent(event);
         if_projectNew.saveValues(this.input);
+        if (event.target == document.getElementsByName("price-name")[0]) {
+            document.getElementById("dayrate-section").classList.toggle("d-none",if_projectNew.dataset?.id??false)
+        }
+        // document.getElementById("dayrate-section").classList.remove("d-none");
     }
 
     async toggleWindow(area=null) {
@@ -288,6 +295,8 @@ export class ProjectPrice {
 
     clearField() {
         this.input.value="";
+        this.input.nextElementSibling.value="";
+        this.input.parentElement.querySelector(".right").innerHTML="";
         this.articleId=null;
         this.toggleWindow();
     } 
@@ -321,7 +330,7 @@ export class ProjectPrice {
         this.input.classList.add("d-none");
         left.classList.remove("d-none");
         right.innerHTML=this.input.value+" €";
-        left.value=this.input.placeholder + ":";
+        left.value=this.input.placeholder;
     }
 
     hideOverlay() {

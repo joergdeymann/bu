@@ -169,43 +169,49 @@
             <div id="price-list" class="popup-list"></div>
         </div>
 
-        <div class="input-container relative" >
-            <input type="text" name="overtime-price"  placeholder="Überstundensatz">
-            <input type="text" name="overtime-price"  placeholder="Überstundensatz" class="left d-none">
-            <button class="small" type="button" onclick="projectPrice.toggleWindow('overtime');">?</button>
-            <div class="right d-none">€</div>
-        </div>
-        <div class="relative mb-16px d-none">
-            <div class="blocker"></div>
-            <div id="overtime-list" class="popup-list"></div>
-        </div>
-
-        <div class="input-container relative" >
-            <input type="text" name="offday-price"  placeholder="Offday Tagessatz">
-            <input type="text" name="offday-price"  placeholder="Offday Tagessatz" class="left d-none">
-            <button class="small" type="button" onclick="projectPrice.toggleWindow('offday');">?</button>
-            <div class="right d-none">€</div>
-        </div>
-        <div class="relative mb-16px d-none">
-            <div class="blocker"></div>
-            <div id="offday-list" class="popup-list"></div>
-        </div>
-
-        <div class="input-container" >
-            <div>Tagessatz als Standart ?</div>
-            <div class="group">
-                <button name="dayrateStandart" class="flex w50p" type="button" onclick="project.setDayrateStandart(event,true)">Ja</button>
-                <button name="dayrateStandart" class="flex w50p" type="button" onclick="project.setDayrateStandart(event,false)">Nein</button>    
+        <div id="dayrate-section" class="section d-none">
+            <h1>Neue Tagessatz Gruppe</h1>
+            <div class="input-container relative" >
+                <input type="text" name="overtime-price"  placeholder="Überstundensatz">
+                <input type="text" name="overtime-price"  placeholder="Überstundensatz" class="left d-none">
+                <button class="small" type="button" onclick="projectPrice.toggleWindow('overtime');">?</button>
+                <div class="right d-none">€</div>
+                <div class="blocker"></div>
+                <div id="overtime-list" class="popup-list"></div>
             </div>
+    
+            <div class="input-container relative" >
+                <input type="text" name="offday-price"  placeholder="Offday Tagessatz">
+                <input type="text" name="offday-price"  placeholder="Offday Tagessatz" class="left d-none">
+                <button class="small" type="button" onclick="projectPrice.toggleWindow('offday');">?</button>
+                <div class="right d-none">€</div>
+            </div>
+            <div class="relative d-none">
+                <div class="blocker"></div>
+                <div id="offday-list" class="popup-list"></div>
+            </div>
+
+            <div class="input-container" >
+                <div>Tagessatz als Standart ?</div>
+                <div class="group">
+                    <button name="dayrateStandart" class="flex w50p" type="button" onclick="project.setDayrateStandart(event,true)">Ja</button>
+                    <button name="dayrateStandart" class="flex w50p" type="button" onclick="project.setDayrateStandart(event,false)">Nein</button>    
+                </div>
+            </div>
+    
+            <div class="input-container" >
+                <div>Tagessatz nur für<br>diesen Kunden ?</div>
+                <div class="group">
+                    <button name="dayrateCustomer" class="flex w50p" type="button" onclick="project.setDayrateCustomer(event,true)">Ja</button>
+                    <button name="dayrateCustomer" class="flex w50p" type="button" onclick="project.setDayrateCustomer(event,false)">Nein</button>    
+                </div>
+            </div>
+    
+
         </div>
 
-        <div class="input-container" >
-            <div>Tagessatz nur für<br>diesen Kunden ?</div>
-            <div class="group">
-                <button name="dayrateCustomer" class="flex w50p" type="button" onclick="project.setDayrateCustomer(event,true)">Ja</button>
-                <button name="dayrateCustomer" class="flex w50p" type="button" onclick="project.setDayrateCustomer(event,false)">Nein</button>    
-            </div>
-        </div>
+
+
 
 
 
