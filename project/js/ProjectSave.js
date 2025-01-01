@@ -1,3 +1,4 @@
+import { IF_ProjectNew } from './IF_ProjectNew.js';
 import { Win } from './Win.js';
 
 export class ProjectSave {
@@ -50,6 +51,8 @@ export class ProjectSave {
                 // kommt die abfrage der Id vielleicht aus der Liste der Kunden ?
                 // Wenn kunde.id =0 dann auch als 0 in dem bu_project speichern, Kunde nicht anlegen
 
+                if (!if_projectNew.dataset?.id) p.push(if_projectNew.insert());
+                else p.push(if_projectNew.update())
                 if (!db_customer.data?.id && db_customer.name) p.push(db_customer.insert()); 
                 if (!db_address.data?.id)  p.push(db_address.insert()); // Event Addresse
                 await Promise.all(p);

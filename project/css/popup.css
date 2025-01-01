@@ -42,6 +42,7 @@
     margin-bottom: 4px;
     /* height: 1em; */
     padding: 2px;
+    z-index: 1;
 }
 .popup-list>div { /* :not(.red) */
     display: flex; 

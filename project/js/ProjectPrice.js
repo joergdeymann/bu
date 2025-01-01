@@ -6,6 +6,8 @@ export class ProjectPrice {
     cp;
     ep;
     headline="Tagessatz";
+    changedPrice=false;
+
 
     constructor() {
         this.setElements();
@@ -35,17 +37,23 @@ export class ProjectPrice {
 
     // Bezogen auf Job Definition ID das wäre eigentlich nur der Wert der in JobDefinitionID eingetragen ist
     loadArticlePrice() {
-        if (!calendar.newEntry.id ) return 0;
+        if (!calendar.newEntry.jobId ) return 0;
 
         this.ap=new Query(`
             SELECT 
+                a.name,
                 a.price as price,
                 a.id    as articleId 
-            FROM bu_article a 
-            JOIN bu_job_definition jd
-            ON jd.articleId = a.id
-            WHERE a.companyId=${login.companyId} 
-            AND jd.id=${calendar.newEntry.id};`
+            FROM 
+                bu_article a 
+            JOIN 
+                bu_job_definition jd
+            ON 
+                jd.articleId = a.id
+            WHERE 
+                a.companyId=${login.companyId} 
+            AND 
+                jd.id=${calendar.newEntry.jobId};`
         );
     }
 
@@ -56,24 +64,41 @@ export class ProjectPrice {
     loadEquipmentPrice() {
         if (!customerList.id) return 0;
         this.ep=new Query(`
-            SELECT 
+            SELECT
+                a.id as articleId, 
                 a.name, 
-                eq.price as price,
-                a.id as articleId 
+                a.price
             FROM 
-                bu_equipment_price eq 
-            LEFT JOIN 
                 bu_article a
-            ON 
-                a.id = eq.articleId
             WHERE 
-                eq.companyId = ${login.companyId} 
+                a.companyId = ${login.companyId} 
             AND 
-                eq.customerId = ${customerList.id} 
+                a.usage = 0               
             ORDER BY 
                 name;
         `);
     }
+    // loadEquipmentPrice() {
+    //     if (!customerList.id) return 0;
+    //     this.ep=new Query(`
+    //         SELECT
+    //             a.name, 
+    //             eq.price as price,
+    //             a.id as articleId 
+    //         FROM 
+    //             bu_equipment_price eq 
+    //         LEFT JOIN 
+    //             bu_article a
+    //         ON 
+    //             a.id = eq.articleId
+    //         WHERE 
+    //             eq.companyId = ${login.companyId} 
+    //         AND 
+    //             eq.customerId = ${customerList.id} 
+    //         ORDER BY 
+    //             name;
+    //     `);
+    // }
 
 
 
@@ -157,7 +182,7 @@ export class ProjectPrice {
             this.input.value =this.getProjectPrice(this.customerPrice,this.articlePrice);
         }
         this.render();
-        this.listContainer.classList.remove("d-none");
+        // ##### this.listContainer.classList.remove("d-none");
     }
 
     /**
@@ -176,15 +201,18 @@ export class ProjectPrice {
 
         let html=/*html*/`
         <h1>${this.headline}</h1>
-        <div class="selector-headline" onclick="projectPrice.clearField()">Zurücksetzten</div>
+        <div class="list-button-group">
+            <div class="selector-headline" onclick="projectPrice.clearField()">Zurücksetzten</div>
+            <div class="selector-headline" onclick="projectPrice.showPriceGroup()">ändern</div>
+        </div>          
         <div onclick="projectPrice.setPrice(${this.articlePrice},${articleId})">
             <div>${job.newEntry.name||"Artikelpreis"}:</div>
             <div>${articlePriceText}</div>
         </div>
-        <div onclick="projectPrice.setPrice(${this.customerPrice},0)">
+        <!-- div onclick="projectPrice.setPrice(${this.customerPrice},0)">
             <div>Kundenbasis:</div>
             <div>${customerPriceText}</div>
-        </div>
+        </div -->
         `;
         if (this.ep?.data) {
             for (let ep of this.ep.data) {
@@ -236,8 +264,15 @@ export class ProjectPrice {
                 event.preventDefault();
             }
         });
+
+
+        // document.getElementsByName("customerName")[0].addEventListener('input',this.handleCustomerEvent)
     }
 
+
+    // handleCustomerEvent = (event) => {
+    //     document.getElementById("customer-name").innerHTML=event.target.value;
+    // }
 
     handleFocusEventPre= (event) => {
         let area= {"overtime-price":"overtime","offday-price":"offday"}[event.target.name] || null;
@@ -267,24 +302,39 @@ export class ProjectPrice {
 
     handleBlurEvent= (event) => {
         this.handleFocusEvent(event);
-        if_projectNew.saveValues(this.input);
+        if (if_projectNew.dataset && if_projectNew.dataset.drPrice != this.input.value) this.changedPrice = true;
+
+        if (if_projectNew.dataset?.id) if_projectNew.saveValues(this.input);
+        // if_projectNew.saveValues(this.input);
+
         if (event.target == document.getElementsByName("price-name")[0]) {
-            document.getElementById("dayrate-section").classList.toggle("d-none",if_projectNew.dataset?.id??false)
+            
+            let value=(if_projectNew.dataset?.id??false) ||  this.changedPrice;
+
+            document.getElementById("dayrate-section").classList.toggle("d-none",!value);
         }
         // document.getElementById("dayrate-section").classList.remove("d-none");
     }
 
+    closeWindow() {
+        this.listContainer.classList.add("d-none");
+        this.input.style.zIndex="";
+    }
+
     async toggleWindow(area=null) {
+        this.setElements(area);
         if(this.listContainer.classList.contains("d-none")) { 
-            this.setElements(area);
             this.load();
             this.input.style.zIndex=3;
             this.input.focus(); 
 
+            
+            // this.showPriceGroup();
+
         } else {
-            this.listContainer.classList.add("d-none");
             this.input.style.zIndex="";
         };
+        this.listContainer.classList.toggle("d-none");
     }
 
     XselectCustomer(id) {
@@ -293,51 +343,139 @@ export class ProjectPrice {
         this.toggleWindow();
     }
 
+    getElementSetter(element) {
+        if (!element) return null; 
+        return {"overtime-price":"overtime","offday-price":"offday","price-name":null}[element.name]??null;
+    }
+
+    setActiveElements() {
+        let name=this.getElementSetter(document.activeElement.parentElement.querySelector("input"));
+        this.setElements(name);
+    }
+
+
     clearField() {
+        this.setActiveElements();
         this.input.value="";
         this.input.nextElementSibling.value="";
         this.input.parentElement.querySelector(".right").innerHTML="";
         this.articleId=null;
         this.toggleWindow();
+        if (this.input.name == "price-name") this.clearDayrate();
+        // if_projectNew.remove(0); // Das funktioniert, sind dann aber keine Daten in if_projectNew.dataset
+        if_projectNew.prepareNew(); // NUr das Wichtigste behalten
+        // this.hidePriceGroup();
     } 
     
+    setDayrateText() {
+        let text=if_projectNew.dataset?.drName  // cpName not always loded, it is the same normaly
+        ||document.getElementsByName("price-name")[0].parentElement.querySelector("header").innerHTML
+        ||"Tagessatz";
+
+       
+        document.getElementById("dayrate-text").innerHTML=text;
+        document.querySelector("#dayrate-section H3").innerHTML=text;
+    }
+
     setPrice(price,articleId) {
+        this.setActiveElements();
         this.articleId=articleId;
         this.input.value=price;
         this.input.blur();
-        this.toggleWindow();
-        if (this.input.name == "price-name") if_projectNew.findNewCustomerPrice(articleId);
+        this.toggleWindow(this.getElementSetter(this.input));
 
+        if (this.input.name == "price-name") {
+            if_projectNew.findNewCustomerPrice(articleId);
+        }
         if_projectNew.saveValues(this.input,articleId); // ArtikelId and name must be saved here
+        // this.setHeadline(this.input);
+        this.showOverlay(this.input);
+        
 
     }
 
     getName(articleId) {
-        return this.ep.data.find(e => e.articleId == articleId).name; // Hat aber nur die Artikel des Kunden
+
+        return this.ep?.data?.find(e => e.articleId == articleId)?.name
+        ??this.ap?.data?.find(e => e.articleId == articleId)?.name
+        ??"";
+
+        
+        ; // Hat aber nur die Artikel des Kunden
     }
 
     getPrice(articleId) {
-        if (articleId == null) return this.getProjectPrice(this.customerPrice,this.articlePrice);
-        return this.ep.data.find(e => e.articleId == articleId).price; // Hat aber nur die Artikel des Kunden
+        return this.ep?.data?.find(e => e.articleId == articleId)?.price
+        ??this.ap?.data?.find(e => e.articleId == articleId)?.price
+        ??"";
+
+        // if (articleId == null) return this.getProjectPrice(this.customerPrice,this.articlePrice);
+        // return this.ep.data.find(e => e.articleId == articleId).price; // Hat aber nur die Artikel des Kunden
     }
 
-    showOverlay() {
-        let p=this.input.parentElement;
+    showOverlay(input=this.input) {
+        let p=input.parentElement;
         let left  = p.querySelector(".left");
         let right = p.querySelector(".right");
         if (!left) return;
 
-        this.input.classList.add("d-none");
+        input.classList.add("d-none");
         left.classList.remove("d-none");
-        right.innerHTML=this.input.value+" €";
-        left.value=this.input.placeholder;
+        right.classList.remove("d-none");
+        right.innerHTML=input.value?input.value+" €":"";
+        left.value=+input.value?input.placeholder:"";
+        this.setHeadline(input);
     }
 
-    hideOverlay() {
-        let p=this.input.parentElement;
+    hideOverlay(input=this.input) {
+        let p=input.parentElement;
         let left  = p.querySelector(".left");
+        let right = p.querySelector(".right");
+        let header = p.querySelector("header");
         if (!left) return;
-        this.input.classList.remove("d-none");
+        input.classList.remove("d-none");
         left.classList.add("d-none");
+        right.classList.add("d-none");
+        //header.innerHTML="";        
     }
+
+    
+    clearOverlay(input=this.input) {
+        let p=input.parentElement;
+        let left = p.querySelector(".left")
+        let right= p.querySelector(".right");
+        let header=p.querySelector("header");
+
+        if (left) left.value = "";
+        if (right) right.innerHTML = "";
+        if (header) header.innerHTML = "";
+        if (input) input.value="";
+
+    }
+
+    hidePriceGroup() {
+        if_projectNew.hideDayPriceGroup();
+    }
+
+    showPriceGroup() {
+        if_projectNew.showDayPriceGroup();
+        this.toggleWindow(); // #### 
+    }
+
+    setHeadline(input) {
+        let name={"overtime-price":"otName","offday-price":"offName","price-name":"drName"}[input.name];
+        let header=input.parentElement.querySelector("header");
+        if (name && header) {
+            header.innerHTML=if_projectNew.dataset?.[name]??"";
+        }
+        this.setDayrateText();
+
+    }
+
+    clearDayrate() {
+        let p=document.getElementsByName("price-name")[0];
+        this.clearOverlay(p);
+        this.hidePriceGroup();
+    }
+
 }

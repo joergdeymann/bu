@@ -1,3 +1,5 @@
+import { IF_ProjectNew } from './IF_ProjectNew.js';
+import { JobHierachy } from './JobHierachy.js';
 import { Query } from './Query.js';
 
 export class CustomerList {
@@ -90,6 +92,7 @@ export class CustomerList {
             if (!this.listContainer.classList.contains("d-none")) {
                 this.render();
             }
+            this.setCustomerNameGroup();
         })
     }
 
@@ -109,9 +112,12 @@ export class CustomerList {
         this.input.blur();
         this.input.value=customer.firma;
         this.inputId.value=customer.recnum;
+        this.setCustomerNameGroup();
         
         
         this.toggleWindow();
+        // if (job.isChoosen()) if_projectNew.showDayrate();
+        if_projectNew.showDayrate();
     }
 
     clearField() {
@@ -119,5 +125,12 @@ export class CustomerList {
         this.input.value="";
         this.inputId.value="";
         this.toggleWindow();
+        this.setCustomerNameGroup();
     } 
+
+    setCustomerNameGroup() {
+        document.getElementById("customer-name").innerHTML=document.getElementsByName("customerName")[0].value;
+        // if_projectNew.showDayrate();
+    }    
+
 }

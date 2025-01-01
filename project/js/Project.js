@@ -24,7 +24,7 @@ import { DB_ProjectJob } from './DB_ProjectJob.js';
 import { DB_TimeEquipmentList } from './DB_TimeEquipmentList.js';
 import { DB_TimeJob } from './DB_TimeJob.js';
 import { DB_TimeWorker } from './DB_TimeWorker.js';
-import { DB_WorkPrice } from './DB_WorkPrice.js';
+// import { DB_WorkPrice } from './DB_WorkPrice.js';
 
 
 window.debug= true;
@@ -115,8 +115,8 @@ async function init() {
     let db_timeWorker = new DB_TimeWorker();
     window.db_timeWorker=db_timeWorker;
 
-    let db_workPrice = new DB_WorkPrice();
-    window.db_workPrice=db_workPrice;
+    // let db_workPrice = new DB_WorkPrice();
+    // window.db_workPrice=db_workPrice;
 
 
 }

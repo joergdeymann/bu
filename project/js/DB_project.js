@@ -30,11 +30,12 @@ export class DB_Project extends Query {
                                        
                     bu_project.companyId=${login.companyId},                  
                     bu_project.info = "${this.importanttext.value}",          
-                    bu_project.customerId  = ${db_customer.id.value}
+                    bu_project.customerId  = ${db_customer.id.value};
         `); 
     }
 
     async updateQueryFull() {
+        console.log("UpdateQueryFull");
         await this.request(`
             UPDATE bu_project 
             SET 
@@ -52,6 +53,8 @@ export class DB_Project extends Query {
     }
 
     async updateQueryProjectJob() {
+        console.log("UpdateQueryProjectJob")
+
         await this.request(`
             UPDATE bu_project 
             SET 

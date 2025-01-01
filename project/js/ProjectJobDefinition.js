@@ -65,17 +65,32 @@ export class ProjectJobDefinition extends DB_ProjectJobDefinition {
         `;
     }
 
+    isChoosen() {
+        return this.newEntry?.jobId>0??false;
+    }
 
-    chooseJob(id) {
+    displayJobByArticleId(articleId) {
+        let jobId=this.chooseJobByArticleId(articleId);    
+        if (jobId) this.chooseAndDisplayJob(jobId);
+    }
+
+    chooseJobByArticleId(articleId) {
+        return this.data.find(e => e.articleId == articleId)?.id??null;
+    } 
+
+    chooseAndDisplayJob(id) {
         let job=this.getById(id);
         this.newEntry.color=job.color;
         // this.newEntry.id=id;
         this.newEntry.jobId=id;
         this.newEntry.name=job.name;
         this.outputHeadlines();
-        calendar.display(); // renderCalendarAll(); // später muss der Kalender upgedatet werden
+        calendar.display();
+    }
 
-        // calendar.renderCalendarAll(); // später muss der Kalender upgedatet werden
+    chooseJob(id) {
+        this.chooseAndDisplayJob(id);
+        projectPrice.clearDayrate();
     }
 
     reset() {

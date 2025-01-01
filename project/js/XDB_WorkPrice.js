@@ -33,7 +33,7 @@ export class DB_WorkPrice extends Query {
 
     fill() {
         let price=document.getElementsByName("price-name")[0];
-        let oPrice=document.getElementsByName("overtimePrice")[0];
+        let oPrice=document.getElementsByName("overtime-price")[0];
         if (!price.value) {
 
         }

@@ -4,6 +4,10 @@ export class ProjectInputs {
 
     }
 
+    isYes(element) {
+        return element.classList.contains("bg-green-gradient");        
+    }
+
     toggleYesNo(event,status) {
         let target;
         if (event instanceof Event) {
@@ -39,19 +43,38 @@ export class ProjectInputs {
 
     setOvertime(event,status) {
         this.toggleYesNo(event,status);
-        let oPrice=document.getElementsByName("overtimePrice")[0];
-        if (status) db_workPrice.load();
-        oPrice.parentElement.classList.toggle("d-none",!status);
+        // let oPrice=document.getElementsByName("overtime-price")[0];
+        // if (status) db_workPrice.load();
+        // oPrice.parentElement.classList.toggle("d-none",!status);
     }
 
-    setDayrateStandart(event,status) {
+    setDayrateStandard(event,status=null) {
+        if (status==null) {
+            status=event;
+            event=document.getElementsByName("dayrateStandard")[0];
+        }
         this.toggleYesNo(event,status);
-        if_projectNew.dataset.standart=status?1:0;
+        if_projectNew.dataset.standard=status?1:0;
 
     }
 
-    setDayrateCustomer(event,status) {
+    setDayrateCustomer(event,status=null) {
+        if (status==null) {
+            status=event;
+            event=document.getElementsByName("dayrateCustomer")[0];
+        }
         this.toggleYesNo(event,status);
         if_projectNew.dataset.dayrateCustomer=status?1:0;
     }
+
+
+    setDayrateAll(status=false) {
+        let element=document.getElementsByName("dayrateAll")[0];
+        this.toggleYesNo(element,status);
+    }
+
+    isDayrateAll() {
+        return this.isYes(document.getElementsByName("dayrateAll")[0]);
+    }
+
 }

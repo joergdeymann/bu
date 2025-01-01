@@ -110,3 +110,24 @@ form {
     top:-8px;
     position: absolute;
 }
+
+.section h3 {
+    font-size: 1rem;
+    margin: 0px;
+    display: flex;
+    justify-content: center;
+
+}
+
+.input-container header {
+    position: absolute;
+    top: -0.8em;
+    font-size: 10px;
+    margin-left: 8px;
+    font-weight: 600;
+    color: rgba(0, 0, 0, 0.7);
+}
+
+.font10px {
+    font-size:10px;
+}

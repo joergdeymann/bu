@@ -60,9 +60,12 @@ export class DB_TimeWorker extends Query {
                 housingPrice = 0,
                 housingStart = NULL, 
                 housingEnd = NULL,
-                dayrate = ${+(this.price.value??0)},
+                dayratePrice = ${+(this.price.value??0)},
                 overtimePrice = ${this.otPrice},
-                lumpsum =0
+                offdayPrice = ${if_ProjectNew.dataset.offPrice},
+                customerPriceId = ${if_ProjectNew.dataset.id},
+                lumpsum =0,
+
         `); 
 
         // --vat standart null,= take from customer
@@ -84,8 +87,10 @@ export class DB_TimeWorker extends Query {
                 housingPrice = 0,
                 housingStart = NULL, 
                 housingEnd = NULL,
-                dayrate = ${+(this.price.value??0)},
+                dayratePrice = ${+(this.price.value??0)},
                 overtimePrice = ${this.otPrice},
+                offdayPrice = ${if_ProjectNew.dataset.offPrice},
+                customerPriceId = ${if_ProjectNew.dataset.id},
                 lumpsum =0            
             WHERE id = ${this.id.value};
         `); 
