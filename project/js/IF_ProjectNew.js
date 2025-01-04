@@ -140,8 +140,8 @@ export class IF_ProjectNew extends DB_CustomerPrice {
         let data=this.data.filter(e => e.articleIdDayrate == articleIdDayrate && (e.customerId == 0 || e.customerId == +this.input.customerId.value));
         
         if (data.length == 0 || data[0].id == 0) {
-            console.log(`Artikel nicht in der Datenbank gefunden, DayrateId=${articleIdDayrate}`);
-            console.log(`Suche den Artikel aus JobDefinition`);
+            // console.log(`Artikel nicht in der Datenbank gefunden, DayrateId=${articleIdDayrate}`);
+            // console.log(`Suche den Artikel aus JobDefinition`);
             //ArticleId is not yet in the Database we have to isert it
             // Try to find articleId over ProjectJobDefinition-> Article
             
@@ -340,6 +340,7 @@ export class IF_ProjectNew extends DB_CustomerPrice {
     showDayPriceGroup() {
         document.getElementById("dayrate-section").classList.remove("d-none");
     }
+
     hideDayPriceGroup() {
         document.getElementById("dayrate-section").classList.add("d-none");
     }
@@ -440,6 +441,18 @@ export class IF_ProjectNew extends DB_CustomerPrice {
             dayrateCustomer: 0
         });
     
+    }
+
+    clearOvertime() {
+        this.dataset.articleIdOvertime=0;
+        this.dataset.otName = "";
+        this.dataset.otPrice = 0;        
+    }
+
+    clearOffday() {
+        this.dataset.articleIdOffday=0;
+        this.dataset.offName = "";
+        this.dataset.offPrice = 0;        
     }
 
 

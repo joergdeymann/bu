@@ -6,6 +6,8 @@ export class Query {
     isLoading = false;
     data = [];
     headers=[];
+    id=0;
+    
 
     constructor(query) {
         this.setFilename();
@@ -203,20 +205,28 @@ export class Query {
         return this.data.find(e => e.id == id);
     }
 
+    get isLoaded() {
+        if (this.id instanceof Element) return !!(+this.id.value);
+        return !!(+this.id);
+    }
+
+    setId() {
+        if (this.id instanceof Element) this.id.value=this.data.lastId;
+        else this.id=this.data.lastId;
+    }
+
     async insert() {
-        if (+this.id.value) return;
+        if(this.isLoaded()) return;
         await this.insertQuery();
         await this.get();
-        this.id.value=this.data.lastId;
+        this.setId();
     }
 
     async update() {
-        if (!+this.id.value) return;
+        if (!this.isLoaded()) return;
         await this.updateQuery();
         await this.get();        
     }
-
-
 }
 
 

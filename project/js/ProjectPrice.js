@@ -5,7 +5,7 @@ export class ProjectPrice {
     ap;
     cp;
     ep;
-    headline="Tagessatz";
+    header="Tagessatz";
     changedPrice=false;
 
 
@@ -132,24 +132,72 @@ export class ProjectPrice {
      * --- !!! MUST CHANGES !!! --
      * 
      * Change the right Side customerXX ind your ids given in HTML
+     * Area = class="input-container"
      *  
      */
+    setElementsPopup() {
+
+
+    }
+
+
     setElements(area=null) {
+        let id="price-list";
+        let name="price-name";
+    // if (!area && document.activeElement) {
+        //     area=document.activeElement.closest(".input-container");
+        // }
 
-        if (!area) {
-            this.list=document.getElementById("price-list");
-            this.input=document.getElementsByName("price-name")[0];
-        } else {
-            this.list=document.getElementById(`${area}-list`);
-            this.input=document.getElementsByName(`${area}-price`)[0];
+        if (!area) area="price-list";
+        if (typeof area === "string") {
+            switch (area) {
+                case "price-list":
+                    id="price-list";
+                    name="price-name";
+                    break;
+                case "overtime":
+                case "overtime-list":
+                    id="overtime-list";
+                    name="overtime-price";
+                    break;
+                case "offday":
+                case "offday-list":
+                    id="offday-list";
+                    name="offday-price";
+                    break;
+                default:
+                    console.error("Falsche id angegeben: ${area}");
+                    console.trace();
 
+            } 
+
+            this.inputContainer=document.getElementsByName(name)[0].closest(".input-container");
+            this.listContainer=document.getElementById(id).parentElement;
+
+            this.input=this.inputContainer.querySelector("input:not(.left)");
+    
         }
-        this.headline={offday:"Offday Preis",overtime:"Überstundensatz"}[area] || "Tagessatz";
-        this.listContainer=this.list.parentElement; 
-        this.inputDisplay =this.input.closest(".input-container").querySelector('.right');    
-        let p=this.input.parentElement;
-        this.left = p.querySelector(".left");
-        this.right= p.querySelector(".right");
+
+
+        if (area instanceof Element) {
+            if (!area.classList.contains("input-containter")) area=area.closest(".input-container");            
+            this.input=area.querySelector("input:not(.left)");
+            this.inputContainer=area;
+            
+            if (this.input.name !== "price-list") {
+                id=this.input.name.split("-")[0]+"-list";
+            }
+
+            this.listContainer=document.getElementById(id).parentElement;
+        }
+
+        this.list=document.getElementById(id);
+        this.left=this.inputContainer.querySelector(".left");
+        this.right=this.inputContainer.querySelector(".right");
+        this.inputDisplay=this.right;
+        this.header=this.input.placeholder; // {offday:"Offday Preis",overtime:"Überstundensatz"}[area] || "Tagessatz";
+        this.description=this.inputContainer.querySelector("header");
+        
     }
 
 
@@ -200,9 +248,9 @@ export class ProjectPrice {
         let customerPriceText=customerList.inputId.value?`${(+this.customerPrice).toFixed(2)} €`:"Kunde nicht ausgewählt";
 
         let html=/*html*/`
-        <h1>${this.headline}</h1>
+        <h1>${this.header}</h1>
         <div class="list-button-group">
-            <div class="selector-headline" onclick="projectPrice.clearField()">Zurücksetzten</div>
+            <div class="selector-headline" onclick="projectPrice.uiClearField()">Zurücksetzten</div>
             <div class="selector-headline" onclick="projectPrice.showPriceGroup()">ändern</div>
         </div>          
         <div onclick="projectPrice.setPrice(${this.articlePrice},${articleId})">
@@ -288,7 +336,7 @@ export class ProjectPrice {
         let left=this.input.parentElement.querySelector(".left"); 
         if (document.activeElement === left) activeElement = this.input;
 
-        if (activeElement.value == "") {
+        if (activeElement.value == "" || !+event.target.value) {
             this.inputDisplay.classList.add("d-none");
         } else {
             this.inputDisplay.classList.toggle("d-none",activeElement === this.input);
@@ -302,14 +350,19 @@ export class ProjectPrice {
 
     handleBlurEvent= (event) => {
         this.handleFocusEvent(event);
-        if (if_projectNew.dataset && if_projectNew.dataset.drPrice != this.input.value) this.changedPrice = true;
+        if (if_projectNew.dataset && +if_projectNew.dataset.drPrice != +this.input.value) this.changedPrice = true;
 
         if (if_projectNew.dataset?.id) if_projectNew.saveValues(this.input);
         // if_projectNew.saveValues(this.input);
 
         if (event.target == document.getElementsByName("price-name")[0]) {
-            
+
             let value=(if_projectNew.dataset?.id??false) ||  this.changedPrice;
+
+            if (!if_projectNew.dataset?.articleIdDayrate && (+this.input.value != 0) ) {
+                db_dayrate.fillPrice();
+                db_dayrate.openWindow();
+            }
 
             document.getElementById("dayrate-section").classList.toggle("d-none",!value);
         }
@@ -321,26 +374,36 @@ export class ProjectPrice {
         this.input.style.zIndex="";
     }
 
-    async toggleWindow(area=null) {
-        this.setElements(area);
-        if(this.listContainer.classList.contains("d-none")) { 
-            this.load();
-            this.input.style.zIndex=3;
-            this.input.focus(); 
-
-            
-            // this.showPriceGroup();
-
-        } else {
-            this.input.style.zIndex="";
-        };
-        this.listContainer.classList.toggle("d-none");
+    async openWindow() {
+        await this.load();
+        this.input.style.zIndex=3;
+        this.input.focus(); 
+        // this.showPriceGroup();
+        this.listContainer.classList.remove("d-none");
     }
 
-    XselectCustomer(id) {
-        let customer=this.data.find(e => e.recnum==id);
-        this.input.value=customer.firma;
-        this.toggleWindow();
+    // this is the new one 
+    // the set Elemenst of the other must be set before calling
+    // or change the Name: toggleWindowfromElementName 
+    async toggleWin() {
+        if(this.listContainer.classList.contains("d-none")) { 
+            await this.openWindow();
+        } else {
+            this.closeWindow();
+        };
+    }
+
+    async toggleWindowfromElementName(area=null) {
+        this.setElements(area);
+        await this.toggleWin();
+    }
+
+    // Find out where it is calledFrom with parameters
+    // This is DEPRICATED and should be elemated as soon as possible
+    // Lets do it in one Day and search for all
+    async toggleWindow(area=null) {
+        this.setElements(area);
+        await this.toggleWin();
     }
 
     getElementSetter(element) {
@@ -353,18 +416,54 @@ export class ProjectPrice {
         this.setElements(name);
     }
 
+    getSelectedInputField() {
+        return document.activeElement.closest(".input-container").querySelector("input");
+    }
+
+    setSelectedElements() {
+        this.setElements(this.getSelectedInputField());
+    }
+
+    get isDayrate() {
+        return this.input.name == "price-name";
+    }
+
+    get isOvertime() {
+        return this.input.name == "overtime-price";
+    }
+
+    get isOffday() {
+        return this.input.name == "offday-price";
+    }
+    
+
+    uiClearField() {
+        if (this.isDayrate) this.setElements();
+        this.clearSelectedField();
+    }
+
+
+    clearSelectedField() {
+        this.input.value="";
+        this.left.value="";
+        this.right.innerHTML="";
+        this.description.innerHTML="";
+
+        this.toggleWin();
+        if (this.isOvertime) if_projectNew.clearOvertime();
+        if (this.isOffday)   if_projectNew.clearOffday();
+
+        if (this.isDayrate) {
+            this.articleId=null;
+            this.clearDayrate();
+            if_projectNew.prepareNew(); // NUr das Wichtigste behalten
+            
+        }
+    } 
 
     clearField() {
         this.setActiveElements();
-        this.input.value="";
-        this.input.nextElementSibling.value="";
-        this.input.parentElement.querySelector(".right").innerHTML="";
-        this.articleId=null;
-        this.toggleWindow();
-        if (this.input.name == "price-name") this.clearDayrate();
-        // if_projectNew.remove(0); // Das funktioniert, sind dann aber keine Daten in if_projectNew.dataset
-        if_projectNew.prepareNew(); // NUr das Wichtigste behalten
-        // this.hidePriceGroup();
+        this.clearSelectedField();
     } 
     
     setDayrateText() {
@@ -375,6 +474,17 @@ export class ProjectPrice {
        
         document.getElementById("dayrate-text").innerHTML=text;
         document.querySelector("#dayrate-section H3").innerHTML=text;
+    }
+
+    setPriceDayrate(price,articleId) {
+        this.setElements();
+        this.articleId=articleId;
+        this.input.value=price;
+        this.input.blur();
+        this.closeWindow();
+        if_projectNew.findNewCustomerPrice(articleId);
+        if_projectNew.saveValues(this.input,articleId); // ArtikelId and name must be saved here
+        this.showOverlay(this.input);
     }
 
     setPrice(price,articleId) {
@@ -431,12 +541,10 @@ export class ProjectPrice {
         let p=input.parentElement;
         let left  = p.querySelector(".left");
         let right = p.querySelector(".right");
-        let header = p.querySelector("header");
         if (!left) return;
         input.classList.remove("d-none");
         left.classList.add("d-none");
         right.classList.add("d-none");
-        //header.innerHTML="";        
     }
 
     
@@ -463,7 +571,11 @@ export class ProjectPrice {
     }
 
     setHeadline(input) {
-        let name={"overtime-price":"otName","offday-price":"offName","price-name":"drName"}[input.name];
+        let name={
+            "overtime-price":"otName",
+            "offday-price":"offName",
+            "price-name":"drName"
+        }[input.name];
         let header=input.parentElement.querySelector("header");
         if (name && header) {
             header.innerHTML=if_projectNew.dataset?.[name]??"";

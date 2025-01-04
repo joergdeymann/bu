@@ -229,9 +229,39 @@
                 <div class="right d-none">€</div>
                 <header></header>
             </div>
+
             <div class="relative mb-16px d-none">
                 <div class="blocker"></div>
                 <div id="price-list" class="popup-list"></div>
+            </div>
+
+            <div id="dayrate-edit" class="relative mb-16px d-none">
+                <div class="blocker"></div>
+                <div  class="popup-list nolist">
+                    <h1>Neuer Tagessatz</h1>
+                    <div class="input-container">
+                        <input type="text" name="dayrate-price"    placeholder="Betrag">
+                        <header>Betrag</header>
+                        <div class="right right15em">€</div>
+                    </div>
+                    <div class="input-container">
+                        <input type="text" name="dayrate-vat"      placeholder="MwSt.">
+                        <header>Mehrwertsteuersatz in %</header>
+                        <div class="right right15em">%</div>
+                    </div>
+                    <div class="input-container">
+                        <input type="text" name="dayrate-name"     placeholder="Name">
+                        <header>Wiedererkennungstext</header>
+                    </div>
+                    <div class="input-container">
+                        <input type="text" name="dayrate-re_text"  placeholder="Rechnungstext">
+                        <header>Rechnungstext</header>
+                    </div>
+                    <div class="movement input-container">
+                        <button class="bg-green-gradient" type="button" onclick="db_dayrate.save()">Anlegen</button>
+                        <button class="bg-red-gradient" type="button" onclick="db_dayrate.cancel()">Abbruch!</button>
+                    </div>
+                </div>                
             </div>
 
             <div id="dayrate-section" class="section d-none">
