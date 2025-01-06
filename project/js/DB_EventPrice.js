@@ -16,7 +16,7 @@ export class DB_EventPrice extends DB_EquipmentPrice {
         this.articleId=projectPrice.articleId??j.articleId??0;
     } 
 
-    async insert() {
+    async Xinsert() {
         this.getArticleId();
         this.selectQuery();
         await this.get();

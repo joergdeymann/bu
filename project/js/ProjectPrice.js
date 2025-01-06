@@ -282,9 +282,11 @@ export class ProjectPrice {
             this.input.style.zIndex="";
             event.preventDefault();
             event.stopPropagation();
+            console.log("lockeck Container");
         });
 
         this.list.addEventListener("mousedown",event=> {
+            console.log("lockeck List");
             event.preventDefault();
             event.stopPropagation();
         });
@@ -310,6 +312,8 @@ export class ProjectPrice {
             }
             if (!/[0-9.]/.test(char) || (char === '.' && event.target.value.includes('.'))) {
                 event.preventDefault();
+                console.log("lockeck input");
+
             }
         });
 
@@ -348,25 +352,51 @@ export class ProjectPrice {
         }
     }
 
+    handleBlurEventX= (event) => {
+        setTimeout(() => {
+            console.log("Blur ausgeführt nach Mousedown-Logik");
+            this.handleBlurEventTimed(event);
+        }, 0);   
+    
+        console.log("Blur event");
+    }
+
     handleBlurEvent= (event) => {
-        this.handleFocusEvent(event);
-        if (if_projectNew.dataset && +if_projectNew.dataset.drPrice != +this.input.value) this.changedPrice = true;
-
-        if (if_projectNew.dataset?.id) if_projectNew.saveValues(this.input);
-        // if_projectNew.saveValues(this.input);
-
-        if (event.target == document.getElementsByName("price-name")[0]) {
-
-            let value=(if_projectNew.dataset?.id??false) ||  this.changedPrice;
-
-            if (!if_projectNew.dataset?.articleIdDayrate && (+this.input.value != 0) ) {
-                db_dayrate.fillPrice();
-                db_dayrate.openWindow();
+            let button=event.target.parentElement.querySelector("button");
+            if ( event.relatedTarget === button) { //pressed TAB or clocked on "?""
+                this.showOverlay();
+                return;
             }
 
-            document.getElementById("dayrate-section").classList.toggle("d-none",!value);
-        }
-        // document.getElementById("dayrate-section").classList.remove("d-none");
+            if (if_projectNew.dataset && +if_projectNew.dataset.drPrice != +this.input.value) this.changedPrice = true;
+
+            if (if_projectNew.dataset?.id) if_projectNew.saveValues(this.input);
+
+            if (event.target == document.getElementsByName("price-name")[0]) {
+
+                let value=(if_projectNew.dataset?.id??false) ||  this.changedPrice;
+
+                if (!if_projectNew.dataset?.articleIdDayrate && (+this.input.value != 0) ) {
+                    db_dayrate.fillPrice();
+                    db_dayrate.openWindow();
+                }
+
+                document.getElementById("dayrate-section").classList.toggle("d-none",!value);
+            } else {
+                if (!this.isOpen() && event.target.value)  {
+                    let id=event.target.name.split("-")[0];
+                    if ((    id=="overtime" && !if_projectNew.dataset.articleIdOvertime )
+                        ||  (id=="offday"   && !if_projectNew.dataset.articleIdOffday   ) 
+                    ){
+                        db_dayrate.uiOpen(id);
+
+                    }
+    
+                }
+                event.target.blur();
+            }
+            projectPrice.showOverlay();
+            // document.getElementById("dayrate-section").classList.remove("d-none");
     }
 
     closeWindow() {
@@ -377,11 +407,14 @@ export class ProjectPrice {
     async openWindow() {
         await this.load();
         this.input.style.zIndex=3;
-        this.input.focus(); 
+        this.input.focus(); // #####
         // this.showPriceGroup();
         this.listContainer.classList.remove("d-none");
     }
 
+    isOpen() {
+        return !this.listContainer.classList.contains("d-none");
+    }
     // this is the new one 
     // the set Elemenst of the other must be set before calling
     // or change the Name: toggleWindowfromElementName 

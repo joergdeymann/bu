@@ -2,12 +2,12 @@ import { Query } from './Query.js';
 import { DateTime } from './DateTime.class.js';
 
 export class DB_ProjectEdit extends Query {
-    id=document.getElementsByName("timeWorkerId")[0];  // bu_time_worker.id
+    // id=document.getElementsByName("timeWorkerId")[0];  // bu_time_worker.id
 
     elements() {
         
-
         this.input={
+            id:document.getElementsByName("timeWorkerId")[0],
             timeWorkerId: document.getElementsByName("timeWorkerId")[0], // New 
 
             projectId: document.getElementsByName("projectId")[0],         //??
@@ -145,8 +145,8 @@ export class DB_ProjectEdit extends Query {
 
     load(id=null) {
         // id=34; // 7 und 8 und 25 
-        if (id) this.id.value=id;
-        else if (!this.id.value) return;
+        if (id) this.input.id.value=id;
+        else if (!this.input.id.value) return;
         
 
         this.request=new Query(`
@@ -202,7 +202,7 @@ export class DB_ProjectEdit extends Query {
                     ON hotel.id = w.housingAddressId
                 
             WHERE
-                w.id = ${this.id.value}         
+                w.id = ${this.input.id.value}         
         `);
 
     }

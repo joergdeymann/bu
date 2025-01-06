@@ -6,7 +6,7 @@ export class DB_TimeWorker extends Query {
     }
 
     elements() {
-        this.id=document.getElementsByName("timeWorkerId")[0];
+        this.input={id:document.getElementsByName("timeWorkerId")[0]};
         this.price=document.getElementsByName("price-name")[0];
         this.overtimePrice=document.getElementsByName("overtimePrice")[0];
         this.overtimeYes=document.getElementsByName("overtime")[0];
@@ -50,7 +50,7 @@ export class DB_TimeWorker extends Query {
             INSERT INTO bu_time_worker 
             SET 
                 companyId=${+login.companyId},
-                projectJobId=${+db_projectJob.id.value},
+                projectJobId=${+db_projectJob.input.id.value},
                 employeeId=${+login.userId},
                 bu_time_worker.start =${this.inMarks(calendar.newEntry.start)},           
                 bu_time_worker.end = ${this.inMarks(calendar.newEntry.end)},
@@ -77,7 +77,7 @@ export class DB_TimeWorker extends Query {
             UPDATE bu_time_worker
             SET 
                 companyId=${+login.companyId},
-                projectJobId=${+db_projectJob.id.value},
+                projectJobId=${+db_projectJob.input.id.value},
                 employeeId=${+login.userId},
                 bu_time_worker.start =${this.inMarks(calendar.newEntry.start)},           
                 bu_time_worker.end = ${this.inMarks(calendar.newEntry.end)},
@@ -92,7 +92,7 @@ export class DB_TimeWorker extends Query {
                 offdayPrice = ${if_ProjectNew.dataset.offPrice},
                 customerPriceId = ${if_ProjectNew.dataset.id},
                 lumpsum =0            
-            WHERE id = ${this.id.value};
+            WHERE id = ${this.input.id.value};
         `); 
     }
 

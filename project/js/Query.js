@@ -7,6 +7,11 @@ export class Query {
     data = [];
     headers=[];
     id=0;
+    input={
+        id: {
+            value:0
+        }
+    }
     
 
     constructor(query) {
@@ -61,6 +66,7 @@ export class Query {
     setFilename(filename='./php/request.php') {
         this.__filename = filename;
     }
+
     addHeader(header) {
         Object.assign(this.headers, header);
     }
@@ -123,6 +129,7 @@ export class Query {
     async await(query=null) {
         await this.get(query);
     }
+
     // fetchData führt die Fetch-Anfrage durch
     async __fetchData(keyvalues = {}) {
         try {
@@ -206,24 +213,24 @@ export class Query {
     }
 
     get isLoaded() {
-        if (this.id instanceof Element) return !!(+this.id.value);
+        if (this.input.id instanceof Element) return !!(+this.input.id.value);
         return !!(+this.id);
     }
 
     setId() {
-        if (this.id instanceof Element) this.id.value=this.data.lastId;
-        else this.id=this.data.lastId;
+        if (this.input.id instanceof Element) this.input.id.value=this.data.lastId;
+        this.id=this.data.lastId;
     }
 
     async insert() {
-        if(this.isLoaded()) return;
+        if(this.isLoaded) return;
         await this.insertQuery();
         await this.get();
         this.setId();
     }
 
     async update() {
-        if (!this.isLoaded()) return;
+        if (!this.isLoaded) return;
         await this.updateQuery();
         await this.get();        
     }

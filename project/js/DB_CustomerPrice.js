@@ -111,6 +111,10 @@ export class DB_CustomerPrice extends Query {
     }
 
     async updateQuery() {
+        let data=this.dataset;
+        let customerId=0;
+        if (data.dayrateCustomer) customerId=data.customerId;
+        
         await this.request(`
             UPDATE bu_customerprice
                 SET 
@@ -124,6 +128,7 @@ export class DB_CustomerPrice extends Query {
                     bu_customerprice.name = "${data.drName}"
             WHERE id = ${data.id};
         `); 
+        await this.get();
     }
 
 

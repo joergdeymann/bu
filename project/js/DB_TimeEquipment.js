@@ -14,7 +14,7 @@ export class DB_TimeEquipment extends Query {
     elements() {
         if (this.index === null) return;
         //Arrays
-        this.id=document.getElementsByName("timeEquipmentId[]")[this.index];       
+        this.input={id:document.getElementsByName("timeEquipmentId[]")[this.index]}       
         this.articleId=document.getElementsByName("equipmentId[]")[this.index];
         this.price=document.getElementsByName("equipmentPrice[]")[this.index];
     }
@@ -52,7 +52,7 @@ export class DB_TimeEquipment extends Query {
                 bu_time_equipment.to = ${this.inMarks(calendar.newEntry.end)},
                 status = 2 
             
-            WHERE id = ${this.id.value};
+            WHERE id = ${this.input.id.value};
         `); 
     }
 

@@ -43,70 +43,16 @@ export class IF_ProjectNew extends DB_CustomerPrice {
     getFormCustomerAndJob() {
         return this.filterCustomerAndJob(this.input.customerId.value,this.var.jobDefinitionId);
     }
-    /**
-     * INTERFACE - Schnittstelle von der Datenbank zur Eingabe
-     * IF_ProjectNew
-     */
-    XfillForm() {
-        let data=null;
-        // 1. Dataset exist already by Loading an existing project 
-        let jobId=this.var.jobDefinitionId;
-
-        if (projectWorker.customerPriceId.value != "") {
-            this.currentId=projectWorker.customerPriceId.value;
-            data=[
-                getById[this.currentId]
-            ];
-        } else
-
-        // Try to load a dataset from 2 Values customer and Job
-        if (this.input.customerId.value && jobId) {
-            data=this.getFormCustomerAndJob();
-            if (data.length == 0) data = this.filterJob(jobId);
-            if (data.length == 0) data = this.filterJob(this.input.customerId.value);
-        } else 
-        if (jobId.value) {
-            data=this.filterJob(jobId);
-        } else
-        if (this.input.customerId.value) {
-            data=this.filterJob(this.input.customerId.value);
-        }
-
-        if (data && data.length>0) {
-            fillFormData(data[0]);
-            this.currentId=data[0].id;
-        }
-
-    }
 
     fillFormData(data) {
         this.input.dayPrice.value=data.dayPrice;
-        // this.input.dayPriceText.value=data.dayPriceText;
-        // hide the text on focus out 
-        // make the text width new data visible "Lichttechniker: "
-        // ans instead only € show the price,too;
-        // an own Listener is a good idea 
-
-        // this.input.customerPriceId.value=data.id;
-    }
-
-    fillListData() {
-        // For the Popdown List
     }
 
 
-    // If we change Dayrate Find new Id in CustomerPrice
-    // articleIdDayrate 
-    // id : if exists
-    // 0 : if we want to create
     fillCustomerPrice() {
         this.findNewCustomerPrice(projectWorker.customerPriceId.value);
     };
 
-    // ### What is the PriceId wi have choosen
-    XfillSelectedPrice() {
-        this.findNewCustomerPrice(projectWorker.customerPriceId.value);
-    };
 
     // Wie soll es anezeigt werden ?
     // 1. Wenn Kunde angegeben 
@@ -127,31 +73,18 @@ export class IF_ProjectNew extends DB_CustomerPrice {
     //      der neue Preis wird auch gespeichert
     //      Will man die Daten ändern: muss amn das irgendwo angeben
     findNewCustomerPrice(articleIdDayrate) {
-        let dataset=this.dataset;
-        // if (dataset?.articleIdDayrate == articleIdDayrate 
-        //     && dataset?.customerId == customerList.id
-        // ) return dataset.drPrice;
-        // console.log("Artikelpreis hat sich geändert");
-
         // Try to find Article in the grouped CustomerPrice 
         // 1. DayrateId must be equal
         // 2. customerId must be 0 or selected customerId
-
         let data=this.data.filter(e => e.articleIdDayrate == articleIdDayrate && (e.customerId == 0 || e.customerId == +this.input.customerId.value));
         
         if (data.length == 0 || data[0].id == 0) {
-            // console.log(`Artikel nicht in der Datenbank gefunden, DayrateId=${articleIdDayrate}`);
-            // console.log(`Suche den Artikel aus JobDefinition`);
-            //ArticleId is not yet in the Database we have to isert it
+            // ArticleId is not yet in the Database we have to isert it
             // Try to find articleId over ProjectJobDefinition-> Article
             
             // We will have a new Entry so we ave to fill Data width the standard of JobDefinition ID
             // If we dont find it, there has to Popup, "We didnt find the standard Value of JobDefinitioId"
-            // 
-            // Values
-
-            // ich ziehe hier nur den Namen des JobDefinitionIds raus und die Id zum speichern
-
+            
             let entry=job.data.find(e=> e.id == job.newEntry.jobId);
             let jobId=entry?entry.jobId:0;
             let jobName=entry?entry.name:"";
@@ -208,28 +141,21 @@ export class IF_ProjectNew extends DB_CustomerPrice {
                 dayrateCustomer: 0
             });
             this.currentId=0;
-            // if (customerId > 0) this.data[0].standard=1;
             if (!dayrateId || !this.dataset.id) this.clearDayPriceGroup(); 
-            // if (!dayrateId) this.clearDayPriceGroup(); //!this.dataset.id ausprobieren ansosnten die offdayId und otId 
             if (jobId && jobChanged) job.chooseAndDisplayJob(jobId);
-            // if (jobId) job.chooseAndDisplayJob(jobId);
-
             this.showDayPriceGroup();
 
         } else 
         if (data.length == 1) {
-            // Hier haben wir den aktuellen Satz der PriceId in data[0]
             this.currentId=data[0].id;
-            this.dataset.dayrateCustomer=this.dataset.customerId>0; // nur beim Laden
+            this.dataset.dayrateCustomer=this.dataset.customerId>0;
             this.currentId?this.hideDayPriceGroup():this.showDayPriceGroup();
             this.fillDayPriceGroup();
         } else {
             d= data.find(e => e.standard==1);
-
             // Can we seperate it  if there are more than one article width different Values ?
-            // Mabe , make it to standard 
             this.currentId=d?.id??data[0].id;
-            this.dataset.dayrateCustomer=this.dataset.customerId>0; // Nur beim Laden
+            this.dataset.dayrateCustomer=this.dataset.customerId>0;
             this.currentId?this.hideDayPriceGroup():this.showDayPriceGroup();
             this.fillDayPriceGroup();
         }
@@ -308,12 +234,6 @@ export class IF_ProjectNew extends DB_CustomerPrice {
         let element=document.getElementsByName(elementName);
         element[0].value=datasetValue;
         projectPrice.showOverlay(element[0]);
-
-
-        // element[0].parentElement.querySelector(`.right`).innerHTML=this.getFillPrice();
-        // element[0].value=datasetValue;
-        // element[1].value=+datasetValue?element[0].placeholder:"";
-
     }
 
     get isNewEntry() {
@@ -384,37 +304,20 @@ export class IF_ProjectNew extends DB_CustomerPrice {
         return  data3?data3.articleIdDayrate:data2[0].articleIdDayrate;
     }
 
-    findStandarJob(articleId) {
-
-    } 
-
-    // findCustomerValues(dayrateId) {
-    //     let cp=db_customerPrice.findByDayrateId(dayrateId,this.input.customerId.value);
-    // }
-
     async showDayrate() {
-        console.log("ShowDayrate");
         await projectPrice.load();
         const dayrateId=this.findDayrateId();
         if (dayrateId) {
-            // this.findCustomerValues(dayrateId);
             job.displayJobByArticleId(dayrateId);
             this.findNewCustomerPrice(dayrateId);
         }
 
         this.fillDayPrice("price-name",this.dataset.drPrice);
-        // ####
-        // ####
-        // document.getElementById("dayrate-section").classList.remove("d-none"); 
-        // #### Das hier woanders Hin, direkt nach dem Laden
-        // #### Zusäzlicher Test, wenn Neu dann anzeigen sonst nicht
-
     }
 
     prepareNew() {
         let price=document.getElementsByName("price-name")[0].value;
         this.remove(0);
-        // if (price == "") return;  
 
         this.currentId=0;
         this.data.push({
@@ -454,6 +357,4 @@ export class IF_ProjectNew extends DB_CustomerPrice {
         this.dataset.offName = "";
         this.dataset.offPrice = 0;        
     }
-
-
 }

@@ -76,9 +76,9 @@ export class DB_TimeEquipmentList {
         return this.data.find(e => e.id = id);
     }
 
-    render() {
-        foreach() 
-    }
+    // render() {
+    //     foreach() 
+    // }
 
 }
 

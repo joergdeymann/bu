@@ -124,3 +124,12 @@ form {
     font-size:10px;
 }
 
+.text {
+    appearance: textfield;
+}
+
+.text::-webkit-inner-spin-button,
+.text::-webkit-outer-spin-button {
+    -webkit-appearance: none; /* Für WebKit-basierte Browser */
+    margin: 0; /* Optional: Entfernt zusätzlichen Abstand */
+}

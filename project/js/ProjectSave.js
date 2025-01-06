@@ -44,6 +44,9 @@ export class ProjectSave {
             this.saveSetup();
 
             if (db_project.isFullProject) {
+                // The Project itself, either the project (or the time_project later)
+                if (!db_project.data?.id ) await db_project.insert();
+                else if (db_project.isFullProject) db_project.update();
 
             } else {
                 let p=[];
@@ -51,30 +54,45 @@ export class ProjectSave {
                 // kommt die abfrage der Id vielleicht aus der Liste der Kunden ?
                 // Wenn kunde.id =0 dann auch als 0 in dem bu_project speichern, Kunde nicht anlegen
 
-                if (!if_projectNew.dataset?.id) p.push(if_projectNew.insert());
-                else p.push(if_projectNew.update())
+                
+                // Save customer
                 if (!db_customer.data?.id && db_customer.name) p.push(db_customer.insert()); 
-                if (!db_address.data?.id)  p.push(db_address.insert()); // Event Addresse
-                await Promise.all(p);
-                if (!db_project.data?.id ) await db_project.insert();
-                else if (db_project.isFullProject) db_project.update();
+                else p.push(db_customer.update());
 
+                // Save Event Address
+                if (!db_address.data?.id)  p.push(db_address.insert()); // Event Addresse
+                else p.push(db_address.update());
+                await Promise.all(p);
+
+                // The Project itself, either the project (or the time_project later)
+                if (!db_project.data?.id ) await db_project.insert();
+                else db_project.update();
+
+                // else if (db_project.isFullProject) db_project.update();
+
+                // I think this has nor really need but its implemented somewhere 
+                // Type of Job
                 if (!db_projectJob.data?.id ) await (db_projectJob.insert()); // only link, no update Das Falsche ?
+
+
+
                 p=[];
                 // Quick and Dirty DB
+                // Add all equipments
                 db_timeEquipmentList.clear();
                 db_timeEquipmentList.addAll();
                 p.push(db_timeEquipmentList.insertAll());
+
+                // Add Data for the User / Worker 
                 if (!db_timeWorker.data?.id ) p.push(db_timeWorker.insert());
                 if (!db_timeJob.data?.id ) p.push(db_timeJob.insert());
+
+                // Save bu_customerprice: 
+                //  Contents of Group, Function, Dayrate, Overtime, and Offdayrate 
+                if (!if_projectNew.dataset?.id) p.push(if_projectNew.insert());
+                else p.push(if_projectNew.update());
+
                 await Promise.all(p);
-
-
-
-                // DIESE TESTEN OB NÖTIG
-                //  Ist das für den Tagessatz ???                
-                // await db_equipmentPrice.insert(); // db_equipmentPric
-
             }
         
 

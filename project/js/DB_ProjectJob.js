@@ -6,7 +6,7 @@ export class DB_ProjectJob extends Query {
     }
 
     elements() {
-        this.id = document.getElementsByName("projectJobId")[0];   // noch anlegen
+        this.input={id:document.getElementsByName("projectJobId")[0]}   // noch anlegen
         this.projectId=document.getElementsByName("projectId")[0];
         
         
@@ -33,7 +33,7 @@ export class DB_ProjectJob extends Query {
             UPDATE bu_project_job 
             SET 
                 projectId = ${+this.projectId.value}            
-            WHERE id = ${+this.id.value};
+            WHERE id = ${+this.input.id.value};
         `); 
     }
 

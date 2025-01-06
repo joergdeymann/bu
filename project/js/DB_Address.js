@@ -7,7 +7,7 @@ export class DB_Address extends Query {
 
     elements() {
         this.name=document.getElementsByName("eventName")[0];
-        this.id=document.getElementsByName("eventId")[0];
+        this.input={id:document.getElementsByName("eventId")[0]};
         this.city=document.getElementsByName("place")[0];
     }
 
@@ -29,7 +29,7 @@ export class DB_Address extends Query {
             SET 
                 a.name = "${this.name.value}",
                 a.city = "${this.city.value}"
-            WHERE a.id = ${this.id.value};
+            WHERE a.id = ${this.input.id.value};
         `); 
     }
 

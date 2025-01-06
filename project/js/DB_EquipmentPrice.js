@@ -33,7 +33,7 @@ export class DB_EquipmentPrice extends Query {
                 customerId = ${this.customerId.value??0},
                 articleId  = ${this.articleId.value}            
 
-            WHERE a.id = ${this.id.value};
+            WHERE a.id = ${this.input.id.value};
         `); 
     }
 

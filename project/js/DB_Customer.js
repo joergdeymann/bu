@@ -6,8 +6,8 @@ export class DB_Customer extends Query {
     }
 
     elements() {
+        this.input={id:document.getElementsByName("customerId")[0]};
         this.name=document.getElementsByName("customerName")[0];
-        this.id=document.getElementsByName("customerId")[0];
     }
 
     references() {
@@ -29,7 +29,7 @@ export class DB_Customer extends Query {
             UPDATE bu_customer 
             SET 
                 name="${this.name.value}"
-            WHERE id = ${this.id.value};
+            WHERE id = ${this.input.id.value};
         `); 
     }
 

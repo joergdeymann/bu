@@ -258,8 +258,8 @@
                         <header>Rechnungstext</header>
                     </div>
                     <div class="movement input-container">
-                        <button class="bg-green-gradient" type="button" onclick="db_dayrate.save()">Anlegen</button>
-                        <button class="bg-red-gradient" type="button" onclick="db_dayrate.cancel()">Abbruch!</button>
+                        <button class="bg-green-gradient" type="button" onmousedown="db_dayrate.save()">Anlegen</button>
+                        <button class="bg-red-gradient" type="button" onmousedown="db_dayrate.cancel()">Abbruch!</button>
                     </div>
                 </div>                
             </div>
@@ -270,7 +270,7 @@
                 <div class="input-container relative">
                     <input type="text" name="overtime-price" placeholder="Überstundensatz" class="d-none">
                     <input type="text" name="overtime-price" placeholder="Überstundensatz" class="left">
-                    <button class="small" type="button" onclick="projectPrice.toggleWindow('overtime');">?</button>
+                    <button class="small" type="button" onmousedown="projectPrice.toggleWindow('overtime');">?</button>
                     <div class="right">€</div>
                     <header></header>
                 </div>
@@ -279,10 +279,30 @@
                     <div id="overtime-list" class="popup-list"></div>
                 </div>
 
+                <div class="relative d-none">
+                    <div class="blocker"></div>
+                    <div id="overtime" class="popup-list nolist">
+                        <h1>Neuer Überstundensatz</h1>
+                        <div class="input-container">
+                            <input class="text" type="number" name="overtime-vat" placeholder="Steuer">
+                            <div class="right right15em">%</div>
+                            <header>Steuer in %</header>
+                        </div>
+                        <div class="input-container">
+                            <input type="text" name="overtime-text" placeholder="Überstundentext">
+                            <header>Überstundentext</header>
+                        </div>
+                        <div class="movement input-container">
+                            <button class="bg-green-gradient" type="button" onclick="db_dayrate.uiOvertimeSave()">Anlegen</button>
+                            <button class="bg-red-gradient"   type="button" onclick="db_dayrate.uiCancel()">Abbruch!</button>
+                        </div>
+                    </div>
+                </div>
+
                 <div class="input-container relative">
                     <input type="text" name="offday-price" placeholder="Offday Tagessatz" class="d-none">
                     <input type="text" name="offday-price" placeholder="Offday Tagessatz" class="left">
-                    <button class="small" type="button" onclick="projectPrice.toggleWindow('offday');">?</button>
+                    <button class="small" type="button" onmousedown="projectPrice.toggleWindow('offday');">?</button>
                     <div class="right">€</div>
                     <header></header>
                 </div>
@@ -290,6 +310,27 @@
                     <div class="blocker"></div>
                     <div id="offday-list" class="popup-list"></div>
                 </div>
+
+                <div class="relative d-none">
+                    <div class="blocker"></div>
+                    <div id="offday" class="popup-list nolist">
+                        <h1>Neuer Offdaysatz</h1>
+                        <div class="input-container">
+                            <input class="text" type="number" name="offday-vat" placeholder="Steuer">
+                            <div class="right right15em">%</div>
+                            <header>Steuer in %</header>
+                        </div>
+                        <div class="input-container">
+                            <input type="text" name="offday-text" placeholder="Offday Text">
+                            <header>Offday Text</header>
+                        </div>
+                        <div class="movement input-container">
+                            <button class="bg-green-gradient" type="button" onclick="db_dayrate.uiOffdaySave()">Anlegen</button>
+                            <button class="bg-red-gradient"   type="button" onclick="db_dayrate.uiCancel()">Abbruch!</button>
+                        </div>
+                    </div>
+                </div>
+
 
                 <div class="input-container">
                     <div>Tagessatz als Standard ?</div>

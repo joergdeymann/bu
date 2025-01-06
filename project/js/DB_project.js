@@ -6,7 +6,7 @@ export class DB_Project extends Query {
     }
 
     elements() {
-        this.id=document.getElementsByName("projectId")[0];
+        this.input={id:document.getElementsByName("projectId")[0]};
         this.name=document.getElementsByName("eventName")[0];
         this.city=document.getElementsByName("place")[0];
         this.importanttext=document.getElementsByName("importantText")[0];
@@ -23,14 +23,32 @@ export class DB_Project extends Query {
                 SET 
                     bu_project.start =${this.inMarks(calendar.newEntry.start)},           
                     bu_project.end = ${this.inMarks(calendar.newEntry.end)},              
-                    bu_project.addressId=${db_address.id.value},              
                     bu_project.setup=${this.inMarks(calendar.newEntry.arrival)},          
                     bu_project.dismantling=${this.inMarks(calendar.newEntry.departure)},  
+
                     bu_project.createDate=${this.inMarks(new Date().toISOString())},      
                                        
+                    bu_project.addressId=${db_address.input.id.value},              
                     bu_project.companyId=${login.companyId},                  
                     bu_project.info = "${this.importanttext.value}",          
-                    bu_project.customerId  = ${db_customer.id.value};
+                    bu_project.customerId  = ${db_customer.input.id.value};
+        `); 
+    }
+
+    async updateQuery() {
+        await this.request(`
+            UPDATE bu_project 
+            SET 
+                bu_project.start =${this.inMarks(calendar.newEntry.start)},           
+                bu_project.end = ${this.inMarks(calendar.newEntry.end)},              
+                bu_project.setup=${this.inMarks(calendar.newEntry.arrival)},          
+                bu_project.dismantling=${this.inMarks(calendar.newEntry.departure)},  
+                                    
+                bu_project.addressId=${db_address.input.id.value},              
+                bu_project.companyId=${login.companyId},                  
+                bu_project.info = "${this.importanttext.value}",          
+                bu_project.customerId  = ${db_customer.input.id.value}
+            WHERE id = ${this.input.id.value};
         `); 
     }
 
@@ -44,11 +62,11 @@ export class DB_Project extends Query {
                 bu_project.setup=${this.inMarks(calendar.newEntry.arrival)},          
                 bu_project.dismantling=${this.inMarks(calendar.newEntry.departure)},  
                                     
-                bu_project.addressId=${db_address.id.value},              
+                bu_project.addressId=${db_address.input.id.value},              
                 bu_project.companyId=${login.companyId},                  
                 bu_project.info = "${this.importanttext.value}",          
-                bu_project.customerId  = ${db_customer.id.value}
-            WHERE id = ${this.id.value};
+                bu_project.customerId  = ${db_customer.input.id.value}
+            WHERE id = ${this.input.id.value};
         `); 
     }
 
@@ -58,11 +76,11 @@ export class DB_Project extends Query {
         await this.request(`
             UPDATE bu_project 
             SET 
-                bu_project.addressId=${db_address.id.value},                                                  
+                bu_project.addressId=${db_address.input.id.value},                                                  
                 bu_project.companyId=${login.companyId},                  
                 bu_project.info = "${this.importanttext.value}",          
-                bu_project.customerId  = ${db_customer.id.value} 
-            WHERE id = ${this.id.value};
+                bu_project.customerId  = ${db_customer.input.id.value} 
+            WHERE id = ${this.input.id.value};
         `); 
     }
     
