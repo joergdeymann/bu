@@ -92,6 +92,20 @@ export class ProjectSave {
                 if (!if_projectNew.dataset?.id) p.push(if_projectNew.insert());
                 else p.push(if_projectNew.update());
 
+                if (project.isDayrateAll() && project.isDayrateVisible()) {
+                    let d=if_projectNew.dataset;
+                    p.push(db_dayrate.updatePrice(+d.articleIdDayrate,+d.drPrice));
+                    p.push(db_dayrate.updatePrice(+d.articleIdOffday,+d.offPrice));
+                    p.push(db_dayrate.updatePrice(+d.articleIdOvertime,+d.otPrice));
+                }
+                if (project.isStandard()) {
+                    if (project.isOnlyCustomer()) {
+                        p.push(if_projectNew.updateNewCustomerStandard(if_projectNew.dataset.customerId));
+                    } else {
+                        p.push(if_projectNew.updateNewCustomerStandard(0));
+                    }
+                }
+
                 await Promise.all(p);
             }
         

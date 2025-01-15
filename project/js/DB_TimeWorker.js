@@ -3,13 +3,14 @@ import {Query} from "./Query.js"
 export class DB_TimeWorker extends Query {
     constructor() {
         super();
+        this.elements();
     }
 
     elements() {
         this.input={id:document.getElementsByName("timeWorkerId")[0]};
         this.price=document.getElementsByName("price-name")[0];
-        this.overtimePrice=document.getElementsByName("overtimePrice")[0];
-        this.overtimeYes=document.getElementsByName("overtime")[0];
+        this.overtimePrice=document.getElementsByName("overtime-price")[0];
+        this.overtimeYes=document.querySelector("#overtime button");
         this.housingAddressId=document.getElementsByName("housingAddressId")[0];
     }
 
@@ -39,7 +40,7 @@ export class DB_TimeWorker extends Query {
     }
 
     get otPrice() {
-        let overtimePrice=+(this.overtimePrice.value??0);
+        let overtimePrice=+(this.overtimePrice?.value??0);
         if (!this.isOvertime) overtimePrice=0;
         return overtimePrice;
     }
@@ -62,9 +63,9 @@ export class DB_TimeWorker extends Query {
                 housingEnd = NULL,
                 dayratePrice = ${+(this.price.value??0)},
                 overtimePrice = ${this.otPrice},
-                offdayPrice = ${if_ProjectNew.dataset.offPrice},
-                customerPriceId = ${if_ProjectNew.dataset.id},
-                lumpsum =0,
+                offdayPrice = ${if_projectNew.dataset.offPrice},
+                customerPriceId = ${if_projectNew.dataset.id},
+                lumpsum =0
 
         `); 
 
@@ -89,8 +90,8 @@ export class DB_TimeWorker extends Query {
                 housingEnd = NULL,
                 dayratePrice = ${+(this.price.value??0)},
                 overtimePrice = ${this.otPrice},
-                offdayPrice = ${if_ProjectNew.dataset.offPrice},
-                customerPriceId = ${if_ProjectNew.dataset.id},
+                offdayPrice = ${if_projectNew.dataset.offPrice},
+                customerPriceId = ${if_projectNew.dataset.id},
                 lumpsum =0            
             WHERE id = ${this.input.id.value};
         `); 

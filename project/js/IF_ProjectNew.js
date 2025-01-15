@@ -53,7 +53,13 @@ export class IF_ProjectNew extends DB_CustomerPrice {
         this.findNewCustomerPrice(projectWorker.customerPriceId.value);
     };
 
-
+    isChangedJobDefinition() {
+        if (!this.dataset.jobDefinitionId) return false;
+        return (
+            !this.dataset.jobDefinitionId
+            || this.dataset.cpName !== document.querySelector("#jobs h2").innerHTML
+        );
+    }
     // Wie soll es anezeigt werden ?
     // 1. Wenn Kunde angegeben 
     //      dann soll der Spezifische Kundenpeis angezegt werden falls er gespreichert ist
@@ -151,6 +157,7 @@ export class IF_ProjectNew extends DB_CustomerPrice {
             this.dataset.dayrateCustomer=this.dataset.customerId>0;
             this.currentId?this.hideDayPriceGroup():this.showDayPriceGroup();
             this.fillDayPriceGroup();
+            if (this.isChangedJobDefinition() ) job.chooseAndDisplayJob(this.dataset.jobDefinitionId);
         } else {
             d= data.find(e => e.standard==1);
             // Can we seperate it  if there are more than one article width different Values ?
@@ -158,6 +165,7 @@ export class IF_ProjectNew extends DB_CustomerPrice {
             this.dataset.dayrateCustomer=this.dataset.customerId>0;
             this.currentId?this.hideDayPriceGroup():this.showDayPriceGroup();
             this.fillDayPriceGroup();
+            if (this.isChangedJobDefinition() ) job.chooseAndDisplayJob(this.dataset.jobDefinitionId);
         }
         project.setDayrateStandard(this.dataset.standard);
         project.setDayrateCustomer(this.dataset.dayrateCustomer);
@@ -242,10 +250,13 @@ export class IF_ProjectNew extends DB_CustomerPrice {
 
     fillHeadlineH1() {
         let element=document.getElementById("dayrate-section").querySelector("h1");
+        let savePrices=document.getElementById("dayrate-text").closest(".input-container");
         if (this.isNewEntry) {
             element.innerHTML="Neue Tagessatz Gruppe";
+            savePrices.classList.add("d-none");
         } else {
             element.innerHTML="Ändere Tagessatz Gruppe";
+            savePrices.classList.remove("d-none");
         }
     }
 

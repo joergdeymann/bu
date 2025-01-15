@@ -27,13 +27,13 @@ export class DB_TimeEquipment extends Query {
         this.request(`
             INSERT INTO bu_time_equipment 
             SET 
-                companyId=${+login.companyId},
-                projectJobId=${+db_projectJob.id.value},
-                articleId=${+this.articleId.value},
-                price=${+this.price.value},         
+                bu_time_equipment.companyId=${+login.companyId},
+                bu_time_equipment.projectJobId=${+db_projectJob.id},
+                bu_time_equipment.articleId=${+this.articleId.value},
+                bu_time_equipment.price=${+this.price.value},         
                 bu_time_equipment.from =${this.inMarks(calendar.newEntry.start)},           
                 bu_time_equipment.to = ${this.inMarks(calendar.newEntry.end)},
-                status = 2 
+                bu_time_equipment.status = 2 
         `); 
 
         // --vat standart null,= take from customer
@@ -44,13 +44,13 @@ export class DB_TimeEquipment extends Query {
         await this.request(`
             UPDATE bu_time_equipment  
             SET 
-                companyId=${+login.companyId},
-                projectJobId=${+db_projectJob.id.value},
-                articleId=${+this.articleId.value},
-                price=${+this.price.value},         
+                bu_time_equipment.companyId=${+login.companyId},
+                bu_time_equipment.projectJobId=${+db_projectJob.id},
+                bu_time_equipment.articleId=${+this.articleId.value},
+                bu_time_equipment.price=${+this.price.value},         
                 bu_time_equipment.from =${this.inMarks(calendar.newEntry.start)},           
                 bu_time_equipment.to = ${this.inMarks(calendar.newEntry.end)},
-                status = 2 
+                bu_time_equipment.status = 2 
             
             WHERE id = ${this.input.id.value};
         `); 

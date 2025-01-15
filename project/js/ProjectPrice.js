@@ -529,6 +529,7 @@ export class ProjectPrice {
 
         if (this.input.name == "price-name") {
             if_projectNew.findNewCustomerPrice(articleId);
+            if_projectNew.fillHeadlineH1();
         }
         if_projectNew.saveValues(this.input,articleId); // ArtikelId and name must be saved here
         // this.setHeadline(this.input);

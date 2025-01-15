@@ -1,4 +1,3 @@
-
 export class ProjectInputs {
     constructor() {
 
@@ -30,7 +29,8 @@ export class ProjectInputs {
         if (!status) {
             document.querySelector(".input-container.hotel-name").classList.toggle("d-none",!status); 
         } else {
-            let s=document.querySelector(".input-container.hotel-given").querySelector("button").classList.contains("bg-green-gradient"); 
+            // let s=document.querySelector(".input-container.hotel-given").querySelector("button").classList.contains("bg-green-gradient"); 
+            let s=document.querySelector(".input-container.hotel-given button").classList.contains("bg-green-gradient"); 
             document.querySelector(".input-container.hotel-name").classList.toggle("d-none",!s); 
         }
     }
@@ -75,6 +75,18 @@ export class ProjectInputs {
 
     isDayrateAll() {
         return this.isYes(document.getElementsByName("dayrateAll")[0]);
+    }
+
+    isStandard() {
+        return this.isYes(document.getElementsByName("dayrateStandard")[0]);
+    }
+
+    isOnlyCustomer() {
+        return this.isYes(document.getElementsByName("dayrateCustomer")[0]);
+    }
+    
+    isDayrateVisible() {
+        return !document.getElementsByName("dayrateAll")[0].closest(".input-container").classList.contains("d-none");
     }
 
 }

@@ -79,6 +79,7 @@ export class ProjectJobDefinition extends DB_ProjectJobDefinition {
     } 
 
     chooseAndDisplayJob(id) {
+        console.trace();
         let job=this.getById(id);
         this.newEntry.color=job.color;
         // this.newEntry.id=id;

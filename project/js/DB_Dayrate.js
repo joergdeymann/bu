@@ -163,6 +163,17 @@ export class  DB_Dayrate extends Query {
         this.price.container.classList.add("d-none");
     }
 
+    async updatePrice(id,price) {
+        await this.request(`
+            UPDATE bu_article
+            SET 
+                bu_article.price = ${+price}
+            WHERE 
+                bu_article.id = ${+id}
+        `); 
+        await this.get();
+    }
+
     updateOvertime() {
         if_projectNew.dataset.otPrice=this.price.price.value;
         if_projectNew.dataset.articleIdOvertime=this.id;
@@ -216,4 +227,6 @@ export class  DB_Dayrate extends Query {
         this.price.container.classList.remove("d-none");
         if (!+this.price.vat.value) this.price.vat.value="19.00";
     }
+
+
 }

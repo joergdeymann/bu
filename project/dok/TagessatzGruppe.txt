@@ -1,0 +1,24 @@
+ändere Tagessatzgruppe
+======================
+
+
+
+
+
+
+
+
+letzter Wert: Tags Überstunden offdaysatz übernehmen
+    Wird nur bei vorhandenen Eintrag angezeit (überschrift heist dann ändere Tagessatzgruppe)
+    - Momentanes Problem: 
+    Firma: Jögr Deymann e.K 
+    Tagessatz: 500 € (500 € Tagessatz XX)
+    Überstundensatz und Offday Tagessatz werden nicht angezeigt oder überschrift ist falsch
+    CustomerId = 26
+    articleIdDayrate = 40  
+    jobId = 5
+    if_projectNew.dataset.id = 0
+    
+
+Hinweis:
+    Jeder Eintrag eines Wertes benötigt einen Artikel Eintrag, kann aber temporär in der Gruppe überschrieben werden

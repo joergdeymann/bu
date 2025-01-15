@@ -1,3 +1,4 @@
+import { IF_ProjectNew } from "./IF_ProjectNew.js";
 import {Query} from "./Query.js" 
 
 
@@ -33,8 +34,14 @@ export class DB_CustomerPrice extends Query {
         this.filter=this.data.map(item => ({ ...item }));
     }
 
+    // findByDayrateId(dayrateId,customerId=null) {
+    //     return this.data.find(e => e.articleIdDayrate == dayrateId && (!customerId || e.customerId === customerId));  
+    // }
+
     findByDayrateId(dayrateId,customerId=null) {
-        return this.data.find(e => e.articleIdDayrate == dayrateId && (!customerId || e.customerId === customerId));  
+        let data=this.data.find(e => e.articleIdDayrate == dayrateId && (!customerId || e.customerId === customerId));
+        if (data) this.currentId=data.id;
+        return data;
     }
 
     remove(id) {
@@ -104,7 +111,7 @@ export class DB_CustomerPrice extends Query {
                     bu_customerprice.articleIdOffday =  ${data.articleIdOffday},
                     bu_customerprice.articleIdOvertime = ${data.articleIdOvertime},
                     bu_customerprice.jobDefinitionId = ${data.jobDefinitionId},
-                    bu_customerprice.standard = ${data.standart},
+                    bu_customerprice.standard = ${data.standard},
                     bu_customerprice.name = "${data.drName}";
         `); 
         await this.get();
@@ -124,13 +131,43 @@ export class DB_CustomerPrice extends Query {
                     bu_customerprice.articleIdOffday =  ${data.articleIdOffday},
                     bu_customerprice.articleIdOvertime = ${data.articleIdOvertime},
                     bu_customerprice.jobDefinitionId = ${data.jobDefinitionId},
-                    bu_customerprice.standard = ${data.standart},
+                    bu_customerprice.standard = ${data.standard},
                     bu_customerprice.name = "${data.drName}"
             WHERE id = ${data.id};
         `); 
         await this.get();
     }
 
+    /**
+     * Update the Standart Display for the Customer
+     * 
+     */
+    async updateNewCustomerStandard(customerId) {
+        let articleIdDayrate=if_projectNew.dataset.articleIdDayrate;
+
+        await this.request(`
+            UPDATE 
+                bu_customerprice
+            SET 
+                bu_customerprice.standard = 0
+            WHERE 
+                bu_customerprice.companyId=${login.companyId} AND
+                bu_customerprice.customerId=${customerId}
+        `); 
+        await this.get();
+
+        await this.request(`
+            UPDATE 
+                bu_customerprice
+            SET 
+                bu_customerprice.standard = 1
+            WHERE 
+                bu_customerprice.companyId=${login.companyId} AND
+                bu_customerprice.customerId=${customerId} AND
+                bu_customerprice.articleIdDayrate=${articleIdDayrate}
+        `); 
+        await this.get();
+    }
 
 
 }
