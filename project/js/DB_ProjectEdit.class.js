@@ -1,5 +1,7 @@
 import { Query } from './Query.js';
 import { DateTime } from './DateTime.class.js';
+import { IF_ProjectNew } from './IF_ProjectNew.js';
+import { ProjectPrice } from './ProjectPrice.js';
 
 export class DB_ProjectEdit extends Query {
     // id=document.getElementsByName("timeWorkerId")[0];  // bu_time_worker.id
@@ -34,11 +36,12 @@ export class DB_ProjectEdit extends Query {
             customerId: document.getElementsByName("customerId")[0],
             customerName: document.getElementsByName("customerName")[0],
 
-            dayrate:document.getElementsByName("price-name")[0],
-            overtimePrice:document.getElementsByName("overtimePrice")[0],
+            dayratePrice:document.getElementsByName("price-name")[0],
+            overtimePrice:document.getElementsByName("overtime-price")[0],
+            offdayPrice:document.getElementsByName("offday-price")[0],
 
-            overtimeYes: document.getElementsByName("overtime")[0],
-            overtimeNo: document.getElementsByName("overtime")[1],
+            overtimeYes: document.getElementsByName("set-overtime")[0],
+            overtimeNo: document.getElementsByName("set-overtime")[1],
 
             timeEquipmentId:document.getElementsByName("timeEquipmenId"), // Multiple Data
             equipmentId:document.getElementsByName("equipmenId"),
@@ -105,8 +108,9 @@ export class DB_ProjectEdit extends Query {
         this.input.customerId.value     =data.customerId;
         this.input.customerName.value   =data.customerName;
 
-        this.input.dayrate.value        =data.dayrate;
+        this.input.dayratePrice.value   =data.dayratePrice;
         this.input.overtimePrice.value  =data.overtimePrice;
+        this.input.offdayPrice.value    =data.offdayPrice;
 
         // Hier das Equipment rein
 
@@ -163,7 +167,10 @@ export class DB_ProjectEdit extends Query {
                 w.overtimePrice,
                 w.color AS workerColor,
                 w.projectJobId,
-                w.dayrate AS dayrate,
+                w.customerPriceId,
+                w.dayratePrice AS dayratePrice,
+                w.offdayPrice AS offdayPrice,
+                w.overtimePrice AS overtimePrice,
                 jd.id AS jobId,
                 jd.color AS color,
                 jd.name  AS jobName,
@@ -200,7 +207,8 @@ export class DB_ProjectEdit extends Query {
                     ON c.id = p.customerId
                 LEFT JOIN bu_address hotel
                     ON hotel.id = w.housingAddressId
-                
+                LEFT JOIN bu_customerprice cp
+                    ON cp.id = w.customerPriceId
             WHERE
                 w.id = ${this.input.id.value}         
         `);
@@ -258,6 +266,16 @@ export class DB_ProjectEdit extends Query {
         return `${maxMonth}-01`;
     }
 
+    fillNewFormLast() {
+        let data=this.data[0];
+        if_projectNew.currentId=data.customerPriceId;
+        projectPrice.showOverlay(this.input.offdayPrice);
+        projectPrice.showOverlay(this.input.dayratePrice);
+        projectPrice.showOverlay(this.input.overtimePrice);
 
-
+        projectPrice.setDayrateCustomerName();
+        project.setDayrateStandard(if_projectNew.dataset.standard);
+        project.setDayrateCustomer(if_projectNew.dataset.customerId>0);
+        project.setDayrateAll(false);
+    }
 }

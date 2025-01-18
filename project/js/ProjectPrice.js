@@ -509,6 +509,10 @@ export class ProjectPrice {
         document.querySelector("#dayrate-section H3").innerHTML=text;
     }
 
+    setDayrateCustomerName() {
+        document.getElementById("customer-name").innerHTML=document.getElementsByName("customerName")[0].value;
+    }
+
     setPriceDayrate(price,articleId) {
         this.setElements();
         this.articleId=articleId;

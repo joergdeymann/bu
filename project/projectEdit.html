@@ -1,256 +1,439 @@
 <!DOCTYPE html>
 <html lang="de">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
-    <title>Edit Project</title>
-    <script type="module" src="./js/ProjectEdit.js" defer></script>
-    <link rel="stylesheet" href="./font/Overlock.css">
-    <link rel="stylesheet" href="./style.css">
-    <link rel="stylesheet" href="./css/calendar.css">
-    <link rel="stylesheet" href="./css/calendarHeadline.css">
-    <link rel="stylesheet" href="./css/calendarSetup.css">
-    <link rel="stylesheet" href="./css/gear.css">
-    <link rel="stylesheet" href="./css/input.css">
-    <link rel="stylesheet" href="./css/buttons.css">
-    <link rel="stylesheet" href="./css/popup.css">
-    <link rel="stylesheet" href="./css/projectEdit.css">
-    <link rel="stylesheet" href="./user01.css">
-    
-
-</head>
-<body>
-    <H1 class="headline">Projekt anpassen</H1>
-    <form id="add-project" method="POST" action="" onsubmit="return false;">
-        <input type="hidden" name="timeWorkerId"><!-- Vielleicht doppelt. sollte die Namen anpassen, diesen behalten -->
-        <input type="hidden" name="projectId"><!-- Projekt brauche ich im Normalfall nicht anpassen erst im MainProjekt Mododus-->
-        <input type="hidden" name="projectJobId">
-        <input type="hidden" name="timeJobId">
-        <input type="hidden" name="date">
-        <input type="hidden" name="housingAddressId"> <!-- Not really in use -->
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+        <title>Edit Project</title>
+        <script type="module" src="./js/ProjectEdit.js" defer></script>
+        <link rel="stylesheet" href="./font/Overlock.css">
+        <link rel="stylesheet" href="./style.css">
+        <link rel="stylesheet" href="./css/calendar.css">
+        <link rel="stylesheet" href="./css/calendarHeadline.css">
+        <link rel="stylesheet" href="./css/calendarSetup.css">
+        <link rel="stylesheet" href="./css/gear.css">
+        <link rel="stylesheet" href="./css/input.css">
+        <link rel="stylesheet" href="./css/buttons.css">
+        <link rel="stylesheet" href="./css/popup.css">
+        <link rel="stylesheet" href="./css/projectEdit.css">
+        <link rel="stylesheet" href="./user01.css">
 
 
-        <div class="input-container" >
-            <input type="hidden" name="eventId">
-            <input type="text" name="eventName"  placeholder="Name der Veranstaltung">
-            <button class="small" type="button" onclick="eventList.toggleWindow();">&#128315;</button>
-        </div>
-        <div class="relative mb-16px d-none">
-            <div class="blocker"></div>
-            <div id="event-list" class="popup-list"></div>
-        </div>
+    </head>
+    <body>
+        <H1 class="headline">Projekt anlegen</H1>
+        <form id="add-project" method="POST" action="" onclick="return false;">
+            <input type="hidden" name="projectId">
+            <input type="hidden" name="projectJobId">
+            <input type="hidden" name="timeJobId">
+            <input type="hidden" name="timeWorkerId">
+            <input type="hidden" name="date">
+            <input type="hidden" name="housingAddressId"> <!-- Not really in use -->
 
-        <!-- input type="text" name="name"  placeholder="Name der Veranstaltung"-->
-        <input type="text" name="place" placeholder="Ort der Veranstaltung">
 
-        <div id="calendar" class="calendar-container">
-            <h2 id="theme">Wann ?</h2>
-            <div class="calendar">
-                <nav>
-                    <img src="../img/pfeil-links.png" onclick="calendar(-1)">
-                    <span id="month" onclick="calender(0)">&nbsp;</span>
-                    <img src="../img/pfeil-rechts.png" onclick="calendar(1)">
-                </nav>
-                <header>
-                    <div>Mo</div>
-                    <div>Di</div>
-                    <div>Mi</div>
-                    <div>Do</div>
-                    <div>Fr</div>
-                    <div>Sa</div>
-                    <div>So</div>
-                </header>
-                <section>
-                    <div><div class="empty"></div></div>
-                    <div><div>1</div></div>
-                    <div>
-                        <div class="start">2</div>
-                        <span class="small bl">An</span>
-                    </div>
-                    <div><div class="center">3</div></div>
-                    <div>
-                        <div class="end">4</div>
-                        <span class="small br">Ab</span>
-                    </div>
-                    <div><div>5</div></div>
-                    <div><div>6</div></div>
-                    <div><div>7</div></div>
-                    <div>
-                        <div class="big">8</div>
-                        <span class="small bl">An</span>
-                    </div>
-                    <div><div>9</div></div>
-                    <div><div>10</div></div>
-                    <div><div>11</div></div>
-                    <div><div>12</div></div>
-                    <div><div>13</div></div>
-                    <div><div>14</div></div>
-                    <div><div>15</div></div>
-                    <div><div>16</div></div>
-                    <div><div>17</div></div>
-                    <div><div>18</div></div>
-                    <div><div>19</div></div>
-                    <div><div>20</div></div>
-                    <div><div>21</div></div>
-                    <div><div>22</div></div>
-                    <div><div>23</div></div>
-                    <div><div>24</div></div>
-                    <div><div>25</div></div>
-                    <div><div>26</div></div>
-                    <div><div>27</div></div>
-                    <div><div class="floor-left">28</div></div>
-                    <div><div>29</div></div>
-                    <div><div>30</div></div>
-                    <div><div>31</div></div>
-                    <div><div class="empty"></div></div>
-                    <div><div class="empty"></div></div>
-                    <div><div class="empty floor-right"></div></div>
-                </section>
+            <div class="input-container">
+                <input type="hidden" name="eventId">
+                <input type="text" name="eventName" placeholder="Name der Veranstaltung">
+                <button class="small" type="button" onclick="eventList.toggleWindow();">&#128315;</button>
             </div>
-        </div>
-
-        <div id="movement" class="calendar-container">
-            <div class="buttons movement">
-                <button type="button" onclick="calendar.reset()">RESET</button>
-                <button type="button" onclick="calendar.next()">WEITER</button>
-                <button type="button" onclick="calendar.undo()">OOPS</button>
+            <div class="relative mb-16px d-none">
+                <div class="blocker"></div>
+                <div id="event-list" class="popup-list"></div>
             </div>
-        </div>
 
-        <div id="jobs" class="calendar-container">
-        </div>
+            <!-- input type="text" name="name"  placeholder="Name der Veranstaltung"-->
+            <input type="text" name="place" placeholder="Ort der Veranstaltung">
 
-        <div class="input-date-container" >
-            <div> 
-                <div class="relative flex-row">
-                    <input type="date" name="from" onblur="calendar.updateFromInputs(event,0)">
-                    <span>Start des Events</span>
+            <div id="calendar" class="calendar-container">
+                <h2 id="theme">Wann ?</h2>
+                <div class="calendar">
+                    <nav>
+                        <img src="../img/pfeil-links.png" onclick="calendar(-1)">
+                        <span id="month" onclick="calender(0)">&nbsp;</span>
+                        <img src="../img/pfeil-rechts.png" onclick="calendar(1)">
+                    </nav>
+                    <header>
+                        <div>Mo</div>
+                        <div>Di</div>
+                        <div>Mi</div>
+                        <div>Do</div>
+                        <div>Fr</div>
+                        <div>Sa</div>
+                        <div>So</div>
+                    </header>
+                    <section>
+                        <div>
+                            <div class="empty"></div>
+                        </div>
+                        <div>
+                            <div>1</div>
+                        </div>
+                        <div>
+                            <div class="start">2</div>
+                            <span class="small bl">An</span>
+                        </div>
+                        <div>
+                            <div class="center">3</div>
+                        </div>
+                        <div>
+                            <div class="end">4</div>
+                            <span class="small br">Ab</span>
+                        </div>
+                        <div>
+                            <div>5</div>
+                        </div>
+                        <div>
+                            <div>6</div>
+                        </div>
+                        <div>
+                            <div>7</div>
+                        </div>
+                        <div>
+                            <div class="big">8</div>
+                            <span class="small bl">An</span>
+                        </div>
+                        <div>
+                            <div>9</div>
+                        </div>
+                        <div>
+                            <div>10</div>
+                        </div>
+                        <div>
+                            <div>11</div>
+                        </div>
+                        <div>
+                            <div>12</div>
+                        </div>
+                        <div>
+                            <div>13</div>
+                        </div>
+                        <div>
+                            <div>14</div>
+                        </div>
+                        <div>
+                            <div>15</div>
+                        </div>
+                        <div>
+                            <div>16</div>
+                        </div>
+                        <div>
+                            <div>17</div>
+                        </div>
+                        <div>
+                            <div>18</div>
+                        </div>
+                        <div>
+                            <div>19</div>
+                        </div>
+                        <div>
+                            <div>20</div>
+                        </div>
+                        <div>
+                            <div>21</div>
+                        </div>
+                        <div>
+                            <div>22</div>
+                        </div>
+                        <div>
+                            <div>23</div>
+                        </div>
+                        <div>
+                            <div>24</div>
+                        </div>
+                        <div>
+                            <div>25</div>
+                        </div>
+                        <div>
+                            <div>26</div>
+                        </div>
+                        <div>
+                            <div>27</div>
+                        </div>
+                        <div>
+                            <div class="floor-left">28</div>
+                        </div>
+                        <div>
+                            <div>29</div>
+                        </div>
+                        <div>
+                            <div>30</div>
+                        </div>
+                        <div>
+                            <div>31</div>
+                        </div>
+                        <div>
+                            <div class="empty"></div>
+                        </div>
+                        <div>
+                            <div class="empty"></div>
+                        </div>
+                        <div>
+                            <div class="empty floor-right"></div>
+                        </div>
+                    </section>
+                </div>
+            </div>
+
+            <div id="movement" class="calendar-container">
+                <div class="buttons movement">
+                    <button type="button" onclick="calendar.reset()">RESET</button>
+                    <button type="button" onclick="calendar.next()">WEITER</button>
+                    <button type="button" onclick="calendar.undo()">OOPS</button>
+                </div>
+            </div>
+
+            <div id="jobs" class="calendar-container">
+            </div>
+
+            <div class="input-date-container">
+                <div>
+                    <div class="relative flex-row">
+                        <input type="date" name="from" onblur="calendar.updateFromInputs(event,0)">
+                        <span>Start des Events</span>
+                    </div>
+
+                    <div class="relative flex-row">
+                        <input type="date" name="to" onblur="calendar.updateFromInputs(event,1)">
+                        <span>Ende des Events</span>
+                    </div>
                 </div>
 
-                <div class="relative flex-row">
-                    <input type="date" name="to" onblur="calendar.updateFromInputs(event,1)">
-                    <span>Ende des Events</span>
-                </div>                    
-            </div>
+                <div>
+                    <div class="relative flex-row">
+                        <input type="date" name="arrival" onblur="calendar.updateFromInputs(event,2)">
+                        <span>Anfahrt</span>
+                    </div>
 
-            <div> 
-                <div class="relative flex-row">
-                    <input type="date" name="arrival" onblur="calendar.updateFromInputs(event,2)">
-                    <span>Anfahrt</span>
+                    <div class="relative flex-row">
+                        <input type="date" name="departure" onblur="calendar.updateFromInputs(event,3)">
+                        <span>Abfahrt</span>
+                    </div>
                 </div>
 
-                <div class="relative flex-row">
-                    <input type="date" name="departure"  onblur="calendar.updateFromInputs(event,3)">
-                    <span>Abfahrt</span>
-                </div>                    
+
             </div>
-            
-        
-        </div>
 
-        <div class="input-container" >
-            <input type="hidden" name="customerId">
-            <input type="text" name="customerName"  placeholder="Name des Kunden">
-            <button class="small" type="button" onclick="customerList.toggleWindow();">&#128315;</button>
-        </div>
-        <div class="relative mb-16px d-none">
-            <div class="blocker"></div>
-            <div id="customer-list" class="popup-list"></div>
-        </div>
-
-
-        <div class="input-container relative" >
-            <input type="text" name="price-name"  placeholder="Tagessatz">
-            <button class="small" type="button" onclick="projectPrice.toggleWindow();">?</button>
-            <div class="right d-none">€</div>
-        </div>
-        <div class="relative mb-16px d-none">
-            <div class="blocker"></div>
-            <div id="price-list" class="popup-list"></div>
-        </div>
-
-        <div class="input-container" >
-            <div>Überstunden berechnen?</div>
-            <div class="group">
-                <button class="flex w50p" name="overtime" type="button" onclick="project.setOvertime(event,true)">Ja</button>
-                <button class="flex w50p" name="overtime" type="button" onclick="project.setOvertime(event,false)">Nein</button>    
+            <div class="input-container">
+                <input type="hidden" name="customerId">
+                <input type="text" name="customerName" placeholder="Name des Kunden">
+                <button class="small" type="button" onclick="customerList.toggleWindow();">&#128315;</button>
             </div>
-        </div>
-        
-        <div class="input-container d-none relative" >
-            <input type="text" name="overtimePrice"  placeholder="Überstunden Preis">
-            <button class="small invisible" type="button" onclick="">?</button>
-            <div class="right d-none">€</div>
-        </div>
-        <div class="relative mb-16px d-none">
-            <div class="blocker"></div>
-            <div id="overtime-list" class="popup-list"></div>
-        </div>
-
-
-
-        <div class="input-container equipment relative" >
-            <input type="hidden" name="timeEquipmentId[]"  value="0">
-            <input type="hidden" name="equipmentId[]">
-            <input type="hidden" name="equipmentPrice[]">
-            <input type="text" name="equipmentName[]" class="listener" placeholder="Was bringst du mit">
-            <button class="small" type="button" onmousedown="equipmentList.setWindow(event)">&#128315;</button>
-            <div class="right d-none">Price,00 €</div>
-        </div>
-
-        <div  id="popup" class="relative mb-16px d-none">
-            <div class="blocker"></div>
-            <div id="equipment-list" class="popup-list"></div>
-        </div>
-
-        <div id="more-equipment" class="input-container">
-            <div></div>
-            <div class="group">
-                <button class="small" type="button" onclick="equipmentList.removeInputField(event)">&#10134;</button>
-                <button class="small" type="button" onclick="equipmentList.addInputField(event)">&#10133;</button>    
+            <div class="relative mb-16px d-none">
+                <div class="blocker"></div>
+                <div id="customer-list" class="popup-list"></div>
             </div>
-        </div>
 
 
-        <div class="input-container" >
-            <div>Unterkunft nötig?</div>
-            <div class="group">
-                <button class="flex w50p" name="hotel" type="button" onclick="project.setHotelNecessary(event,true)">Ja</button>
-                <button class="flex w50p" name="hotel" type="button" onclick="project.setHotelNecessary(event,false)">Nein</button>    
+            <div class="input-container relative">
+                <input type="text" name="price-name" placeholder="Tagessatz">
+                <input type="text" name="price-name" placeholder="Tagessatz" class="left d-none">
+                <button class="small" type="button" onclick="projectPrice.toggleWindow();">?</button>
+                <div class="right d-none">€</div>
+                <header></header>
             </div>
-        </div>
 
-        <div class="input-container hotel-given d-none" >
-            <div>vom Kunden gestellt?</div>
-            <div class="group">
-                <button class="flex w50p" name="customer-payed" type="button" onclick="project.setHotelGiven(event,true)">Ja</button>
-                <button class="flex w50p" name="customer-payed" type="button" onclick="project.setHotelGiven(event,false)">Nein</button>    
+            <div class="relative mb-16px d-none">
+                <div class="blocker"></div>
+                <div id="price-list" class="popup-list"></div>
             </div>
-        </div>
 
-        <div class="input-container hotel-name unterkunft-name d-none" >
-            <input type="hidden" name="unterkunftId">
-            <input type="text" name="unterkunftName"  placeholder="Name der Unterkunft">
-            <button class="small" type="button" onclick="unterkunftList.toggleWindow();">&#128315;</button>
-        </div>
-        <div class="relative mb-16px d-none">
-            <div class="blocker"></div>
-            <div id="unterkunft-list" class="popup-list"></div>
-        </div>
+            <div id="dayrate-edit" class="relative mb-16px d-none">
+                <div class="blocker"></div>
+                <div  class="popup-list nolist">
+                    <h1>Neuer Tagessatz</h1>
+                    <div class="input-container">
+                        <input type="text" name="dayrate-price"    placeholder="Betrag">
+                        <header>Betrag</header>
+                        <div class="right right15em">€</div>
+                    </div>
+                    <div class="input-container">
+                        <input type="text" name="dayrate-vat"      placeholder="MwSt.">
+                        <header>Mehrwertsteuersatz in %</header>
+                        <div class="right right15em">%</div>
+                    </div>
+                    <div class="input-container">
+                        <input type="text" name="dayrate-name"     placeholder="Name">
+                        <header>Wiedererkennungstext</header>
+                    </div>
+                    <div class="input-container">
+                        <input type="text" name="dayrate-re_text"  placeholder="Rechnungstext">
+                        <header>Rechnungstext</header>
+                    </div>
+                    <div class="movement input-container">
+                        <button class="bg-green-gradient" type="button" onmousedown="db_dayrate.save()">Anlegen</button>
+                        <button class="bg-red-gradient"   type="button" onmousedown="db_dayrate.cancel()">Abbruch!</button>
+                    </div>
+                </div>                
+            </div>
+
+            <div id="dayrate-section" class="section d-none">
+                <h1>Neue Tagessatz Gruppe</h1>
+                <h3></h3>
+                <div class="input-container relative">
+                    <input type="text" name="overtime-price" placeholder="Überstundensatz" class="d-none">
+                    <input type="text" name="overtime-price" placeholder="Überstundensatz" class="left">
+                    <button class="small" type="button" onmousedown="projectPrice.toggleWindow('overtime');">?</button>
+                    <div class="right">€</div>
+                    <header></header>
+                </div>
+                <div class="relative d-none">
+                    <div class="blocker"></div>
+                    <div id="overtime-list" class="popup-list"></div>
+                </div>
+
+                <div class="relative d-none">
+                    <div class="blocker"></div>
+                    <div id="overtime" class="popup-list nolist">
+                        <h1>Neuer Überstundensatz</h1>
+                        <div class="input-container">
+                            <input class="text" type="number" name="overtime-vat" placeholder="Steuer">
+                            <div class="right right15em">%</div>
+                            <header>Steuer in %</header>
+                        </div>
+                        <div class="input-container">
+                            <input type="text" name="overtime-text" placeholder="Überstundentext">
+                            <header>Überstundentext</header>
+                        </div>
+                        <div class="movement input-container">
+                            <button class="bg-green-gradient" type="button" onclick="db_dayrate.uiOvertimeSave()">Anlegen</button>
+                            <button class="bg-red-gradient"   type="button" onclick="db_dayrate.uiCancel()">Abbruch!</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="input-container relative">
+                    <input type="text" name="offday-price" placeholder="Offday Tagessatz" class="d-none">
+                    <input type="text" name="offday-price" placeholder="Offday Tagessatz" class="left">
+                    <button class="small" type="button" onmousedown="projectPrice.toggleWindow('offday');">?</button>
+                    <div class="right">€</div>
+                    <header></header>
+                </div>
+                <div class="relative d-none">
+                    <div class="blocker"></div>
+                    <div id="offday-list" class="popup-list"></div>
+                </div>
+
+                <div class="relative d-none">
+                    <div class="blocker"></div>
+                    <div id="offday" class="popup-list nolist">
+                        <h1>Neuer Offdaysatz</h1>
+                        <div class="input-container">
+                            <input class="text" type="number" name="offday-vat" placeholder="Steuer">
+                            <div class="right right15em">%</div>
+                            <header>Steuer in %</header>
+                        </div>
+                        <div class="input-container">
+                            <input type="text" name="offday-text" placeholder="Offday Text">
+                            <header>Offday Text</header>
+                        </div>
+                        <div class="movement input-container">
+                            <button class="bg-green-gradient" type="button" onclick="db_dayrate.uiOffdaySave()">Anlegen</button>
+                            <button class="bg-red-gradient"   type="button" onclick="db_dayrate.uiCancel()">Abbruch!</button>
+                        </div>
+                    </div>
+                </div>
 
 
-        <textarea name="importantText" rows="10" placeholder="Alles Wichtige hier rein"></textarea>
+                <div class="input-container">
+                    <div>Tagessatz als Standard ?</div>
+                    <div class="group">
+                        <button name="dayrateStandard" class="flex w50p" type="button"
+                            onclick="project.setDayrateStandard(event,true)">Ja</button>
+                        <button name="dayrateStandard" class="flex w50p" type="button"
+                            onclick="project.setDayrateStandard(event,false)">Nein</button>
+                    </div>
+                </div>
 
-        <textarea name="invoiceText" rows="10" placeholder="Zusatztext für die Rechnung"></textarea>
+                <div class="input-container">
+                    <div>Tagessatz nur für<br><i><span id="customer-name"></span></i></div>
+                    <div class="group">
+                        <button name="dayrateCustomer" class="flex w50p" type="button"
+                            onclick="project.setDayrateCustomer(event,true)">Ja</button>
+                        <button name="dayrateCustomer" class="flex w50p" type="button"
+                            onclick="project.setDayrateCustomer(event,false)">Nein</button>
+                    </div>
+                </div>
 
-        <div class="buttons movement input-container">
-            <button class="bg-green-gradient" type="button" onclick="projectUpdate.save()">Fertig</button>
-            <button class="bg-red-gradient" type="button" onclick="project.cancel()">Abbruch!</button>
-        </div>
+                <div class="input-container">
+                    <div class="font10px">Tages-, Überstunden-, Offdaysatz für<br>alle Ereignisse übernehmen <br>(<i><span id="dayrate-text"></span></i>)</div>
+                    <div class="group">
+                        <button name="dayrateAll" class="flex w50p" type="button"
+                            onclick="project.setDayrateAll(true)">Ja</button>
+                        <button name="dayrateAll" class="flex w50p" type="button"
+                            onclick="project.setDayrateAll(false)">Nein</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="input-container">
+                <div>Überstunden berechnen?</div>
+                <div class="group">
+                    <button  name="set-overtime" class="flex w50p" type="button" onclick="project.setOvertime(event,true)">Ja</button>
+                    <button  name="set-overtime" class="flex w50p" type="button" onclick="project.setOvertime(event,false)">Nein</button>
+                </div>
+            </div>
+
+            <div class="input-container relative">
+                <input type="hidden" name="timeEquipmentId[]" value="0">
+                <input type="hidden" name="equipmentId[]">
+                <input type="hidden" name="equipmentPrice[]">
+                <input type="text" name="equipmentName[]" class="listener" placeholder="Was bringst du mit">
+                <button class="small" type="button" onmousedown="equipmentList.setWindow(event)">&#128315;</button>
+                <div class="right d-none">Price,00 €</div>
+            </div>
+
+            <div id="popup" class="relative mb-16px d-none">
+                <div class="blocker"></div>
+                <div id="equipment-list" class="popup-list"></div>
+            </div>
+
+            <div class="input-container">
+                <div></div>
+                <div class="group">
+                    <button class="small" type="button"
+                        onclick="equipmentList.removeInputField(event)">&#10134;</button>
+                    <button class="small" type="button" onclick="equipmentList.addInputField(event)">&#10133;</button>
+                </div>
+            </div>
+            <div class="input-container">
+                <div>Unterkunft nötig?</div>
+                <div class="group">
+                    <button class="flex w50p" type="button" onclick="project.setHotelNecessary(event,true)">Ja</button>
+                    <button class="flex w50p" type="button"
+                        onclick="project.setHotelNecessary(event,false)">Nein</button>
+                </div>
+            </div>
+
+            <div class="input-container hotel-given d-none">
+                <div>vom Kunden gestellt?</div>
+                <div class="group">
+                    <button class="flex w50p" type="button" onclick="project.setHotelGiven(event,true)">Ja</button>
+                    <button class="flex w50p" type="button" onclick="project.setHotelGiven(event,false)">Nein</button>
+                </div>
+            </div>
+
+            <div class="input-container hotel-name unterkunft-name d-none">
+                <input type="hidden" name="unterkunftId">
+                <input type="text" name="unterkunftName" placeholder="Name der Unterkunft">
+                <button class="small" type="button" onclick="unterkunftList.toggleWindow();">&#128315;</button>
+            </div>
+            <div class="relative mb-16px d-none">
+                <div class="blocker"></div>
+                <div id="unterkunft-list" class="popup-list"></div>
+            </div>
 
 
-    </form>
-    <br><br>
-    
-</body>
+            <textarea name="importantText" rows="10" placeholder="Alles Wichtige hier rein"></textarea>
+
+            <textarea name="invoiceText" rows="10" placeholder="Zusatztext für die Rechnung"></textarea>
+
+            <div class="buttons movement input-container">
+                <button class="bg-green-gradient" type="button" onclick="projectSave.save()">Fertig</button>
+                <button class="bg-red-gradient" type="button" onclick="project.cancel()">Abbruch!</button>
+            </div>
+
+
+        </form>
+        <br><br>
+
+    </body>
 </html>
