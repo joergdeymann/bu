@@ -139,6 +139,7 @@ async function init() {
     // window.db_workPrice=db_workPrice;
     await if_projectNew.get();
     db_projectEdit.fillNewFormLast(); 
+    db_timeEquipmentList.addHTML();
 
 }
 

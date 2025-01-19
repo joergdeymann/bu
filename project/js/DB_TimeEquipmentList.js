@@ -2,10 +2,13 @@
  * Used for Project New (index.html)
  */
 import {DB_TimeEquipment} from "./DB_TimeEquipment.js" 
+import { Query } from './Query.js';
+
 
 export class DB_TimeEquipmentList {
     promise=[];
     data=[]; // the id ist data.find( e =>  e.id)
+    list=[];
     input;
 
     constructor() {
@@ -63,22 +66,49 @@ export class DB_TimeEquipmentList {
                 ON a.id = te.articleId
             WHERE 
                 te.companyId=${+login.companyId} 
-                AND te.projectJobId = ${+projectEdit.data[0].projectJobId}
+                AND te.projectJobId = ${+db_projectEdit.data[0].projectJobId}
             ORDER BY a.name;`);
 
-        this.data=await p.get();
-        
-        this.render();
-        // this.listContainer.classList.remove("d-none");
+        this.list=await p.get();
     }
+
+    // prepare() {
+    //     this.clear();
+    //     index=0;
+    //     for(let index = 0; index < this.list.length; index++) {
+    //         this.add(index);
+    //     }
+
+    // }
 
     getById(id) {
         return this.data.find(e => e.id = id);
     }
 
-    // render() {
-    //     foreach() 
-    // }
+    prepareForInput() {
+        // prepare for further use
+        for(let data of this.list) {
+            // let articleData=equipmentList.getById(data.articleId);
+
+            let d={
+                articleId: data.articleId,
+                timeEquipmentId: data.id,
+                name: data.name,
+                price: data.price
+            }
+            equipmentList.addLoadedInputField(d);
+        }
+
+    }
+
+    async addHTML() {
+        await this.load();          // Load from Database
+        this.prepareForInput();     // prepare for further use
+        this.addAll();              // set Input Interactions
+
+    }
+
+
 
 }
 

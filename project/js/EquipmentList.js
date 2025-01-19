@@ -181,6 +181,10 @@ export class EquipmentList {
         this.inputDisplay.classList.remove("d-none");
     }
 
+    hidePrice() {
+        this.inputDisplay.classList.add("d-none");
+    } 
+
 
     addEvents() {
         this.listContainer.querySelector(".blocker").addEventListener("mousedown",event => {
@@ -229,9 +233,6 @@ export class EquipmentList {
         }
     }
 
-    hidePrice() {
-        this.inputDisplay.classList.add("d-none");
-    } 
 
     handleFocusEvent= (event) => {
         this.moveElements(event.target);
@@ -300,15 +301,20 @@ export class EquipmentList {
         };
     }
 
-    selectEquipment(id) {
+    fillEquipment(id) {
         let equipment=this.data.find(e => e.id==id);
 
-        this.input.blur();
         if (this.inputId.value != equipment.id) this.timeEquipmentId.value=0;
         this.input.value=equipment.name;
         this.inputId.value=equipment.id;
         this.inputPrice.value=equipment.price;
         this.inputDisplay.innerText=equipment.price+" €";
+
+    }
+
+    selectEquipment(id) {
+        this.input.blur();
+        this.fillEquipment(id);
         this.toggleWindow();
         // this.getPrice(equipment); //Neu -> equpmentPrice.getPrice(equipment)
         this.showPrice();
@@ -319,13 +325,13 @@ export class EquipmentList {
         let date = new Date(d);
         return `${String(date.getDate()).padStart(2, "0")}.${String(date.getMonth() + 1).padStart(2, "0")}.${date.getFullYear()}`;
     }
-
-    addInputField(event) {
+    
+    addInputField(event,id=0) {
         let newContainer = document.createElement("div");
         newContainer.classList.add("input-container");
         newContainer.classList.add("equipment");
         newContainer.innerHTML=/*html*/`
-            <input type="hidden" name="timeEquipmentId[]"  value="${0}">
+            <input type="hidden" name="timeEquipmentId[]"  value="${id}">
             <input type="hidden" name="equipmentId[]">
             <input type="hidden" name="equipmentPrice[]">
             <input type="text" name="equipmentName[]"  placeholder="Was bringst du mit">
@@ -340,9 +346,30 @@ export class EquipmentList {
         target.closest(".input-container").insertAdjacentElement("beforebegin", newContainer);
         this.moveElements(newContainer.firstElementChild); // ich brauche hier erstmal nur das input field
         this.addInputEvent() ;
-        
-
     }
+
+    addLoadedInputField(data) {
+        let newContainer = document.createElement("div");
+        newContainer.classList.add("input-container");
+        newContainer.classList.add("equipment");
+        newContainer.innerHTML=/*html*/`
+            <input type="hidden" name="timeEquipmentId[]"  value="${data.articleId}">
+            <input type="hidden" name="equipmentId[]" value="${data.timeEquipmentId}">
+            <input type="hidden" name="equipmentPrice[]" value="${data.price}">
+            <input type="text" name="equipmentName[]"  value="${data.name}" placeholder="Was bringst du mit">
+            <button class="small" type="button" onmousedown="equipmentList.setWindow(event)">&#128315;</button>
+            <div class="right">${data.price}</div>
+        `; 
+        
+        let target=document.getElementById("add-input-field").closest(".input-container").previousElementSibling;
+        if (target.id == "popup") target=target.previousElementSibling;
+        target.insertAdjacentElement("beforebegin", newContainer);
+        // this.moveElements(newContainer.firstElementChild); // ich brauche hier erstmal nur das input field
+        this.addInputEvent() ;    
+    }
+
+
+
 
     removeInputField(event) {
         let list=document.querySelectorAll(".input-container.equipment");
