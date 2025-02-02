@@ -11,7 +11,7 @@ import { Login } from './Login.js';
 import { Setup } from './Setup.js';
 import { ProjectJobDefinition } from './ProjectJobDefinition.js';
 import { JobHierachy } from './JobHierachy.js';
-import { ProjectSave } from './ProjectSave.js';
+import { ProjectUpdate } from './ProjectUpdate.js';
 import { EventList } from './EventList.js';
 
 import { DB_Address } from './DB_Address.js';
@@ -99,8 +99,8 @@ async function init() {
     let unterkunftList=new UnterkunftList();
     window.unterkunftList=unterkunftList;
 
-    let projectSave = new ProjectSave();
-    window.projectSave=projectSave;
+    let projectUpdate = new ProjectUpdate();
+    window.projectUpdate=projectUpdate;
     
     let eventList = new EventList();
     window.eventList=eventList;
@@ -140,6 +140,16 @@ async function init() {
     await if_projectNew.get();
     db_projectEdit.fillNewFormLast(); 
     db_timeEquipmentList.addHTML();
+
+    // let data = db_projectEdit.data[0];
+    // db_project.loadById(data.projectId);        // --bu_project_job.projectId oder project.id
+    // db_customer.loadById(data.customerId);
+    // db_address.loadById(data.eventId);
+    // db_projectJob.loadById(data.projectJobId);  // projectJobId //44
+    // db_timeWorker.loadById(data.id);
+    // db_dayrate.loadById(if_projectNew.dataset.articleIdDayrate); //(data.customerPriceId);
+
+    
 
 }
 

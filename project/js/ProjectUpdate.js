@@ -19,13 +19,12 @@ export class ProjectUpdate {
                 "justify-content": "center",
                 "align-items":"center",
                 "font-size": "1.5rem",
-                transform: "translate(0, 200vh)",
-    
+                transform: "translate(0, 200vh)",  
             }
         )
 
         if (text == null) {
-            text="<center>Erfolgreich gespeichert</center>";
+            text="<center>Erfolgreich geändert</center>";
         }
 
         w.setContent(text);
@@ -39,94 +38,58 @@ export class ProjectUpdate {
     }
 
     async saveAll() {
-        // try{
-            // this.saveSetup();
+        this.saveSetup();
 
-            if (db_project.isFullProject) {
-                // if (!db_project.data?.id ) await db_project.insert();
-                // else if (db_project.isFullProject) db_project.update();
+        if (db_project.isFullProject) {
+            // The Project itself, either the project (or the time_project later)
+            // if (!db_project.data?.id ) await db_project.insert();
+            // else if (db_project.isFullProject) db_project.update();
 
-            } else {
-                let p=[];
-                // Hier abfragen ob der Kunde leer ist wenn leer dan muss die id im Listener zurückgesetzt werden Focus Lost
-                // kommt die abfrage der Id vielleicht aus der Liste der Kunden ?
-                // Wenn kunde.id =0 dann auch als 0 in dem bu_project speichern, Kunde nicht anlegen
+        } else {
+            let p=[];
+            p.push(this.saveCustomer());
+            p.push(this.saveEventAdress());
+            await Promise.all(p);
 
-                if (db_customer.name) {
-                    if (!db_customer.id.value) p.push(db_customer.insert()); 
-                    else p.push(db_customer.update())
-                }
-                if (!db_address.id.value)  p.push(db_address.insert()); // Event Addresse
-                else p.push(db_address.update());
-                await Promise.all(p);
-                
-                // Achtung Zeiten des Projekts hier nicht anpassen alle mit Datum wären updateFull()
-                if (!db_project.id.value ) await db_project.insert();
-                else db_project.update();
+            await this.saveProject();
+            await this.saveProjectJob();
 
-                // ist dieses noch relevant
-                if (!db_projectJob.id.value ) await db_projectJob.insert(); // only link, no update Das Falsche ?
-                else await db_projectJob.update();
-
-                timeEquipmentInput.save();
-
-                if (!db_timeWorker.id.value ) p.push(db_timeWorker.insert());
-                else p.push(db_timeWorker.update());
-
-                if (!db_timeJob.id.value ) p.push(db_timeJob.insert());
-                else p.push(db_timeJob.update());
-                await Promise.all(p);
-
-
-
-                // DIESE TESTEN OB NÖTIG
-                //  Ist das für den Tagessatz ???                
-                // await db_equipmentPrice.insert(); // db_equipmentPric
-
-            }
-        
-
-
-
-            // await db_eventPrice.insert();
-            // else 
-            // if (calendar.fullProjectView) {
-                // await db_project.updateProject(); //Falls in Projekt Ansicht
-                // Sind dor ganz andere Felder
-                // Ausserdem muss ich die Daten de sganzen Projektes laden, wenn ich in "Bearbeiten Modus bin"
-                // dann sollte es klappen
-                // im erstellen Modus wird immer ein Job angelegt
-                // also es gibt folgende MODI:
-                // 1. Erstellen Project und ProjectJob wird erstellt
-                // 2. Erweitern Project wird belassen und geladen und ProjectJob wird neu erstellt
-                // 3. änderen Project und ProjectJob kann verändert werden#
-
-            // }
-
-            // if (!db_projectJob.data?.id) await projectJob.saveProjectJob();
-            // else projectJob.updateProjectJob();
-    
-            // this.saveTimeJob();
-            // this.saveTimeEquipment();
-            // this.saveTimeEmplopyee();
+            p=[];
+            p.push(this.saveTimeEquipmentList());
+            p.push(this.saveTimeWorker());
+            p.push(this.saveTimeJob());
+            p.push(this.saveProjectNew()); // Customer Price
+            this.saveDayrate(p);
+            this.saveStandart(p);
+            
+            await Promise.all(p);
             this.showPopup();
-        // } catch (e){
-        //     console.error("Fehler beim Speichern",e);
-        // } 
-
-
-
-
+        }
     } 
+
+
     saveSetup() {
 
     }
 
+    async saveCustomer() {
+        if (!db_customer.data?.id && db_customer.name) return await db_customer.insert(); 
+        else return await db_customer.update();
+    }
+
+    async saveEventAdress() {
+        if (!db_address.input.id.value)  return await db_address.insert(); 
+        else return await db_address.update();
+    }
+    
     /**
      * All ProjectData
+     * 
+     * The Project itself, either the project (or the time_project later)
      */
     async saveProject() {
-
+        if (!db_project.input.id.value ) return await db_project.insert();
+        else return await db_project.update();    
     }
 
     /**
@@ -134,9 +97,28 @@ export class ProjectUpdate {
      * CompanyId and ProjectId
      * its for handling more JOBs for one Project
      */
-   async  saveProjectJob() {
+    async saveProjectJob() {
+        // I think this has nor really need but its implemented somewhere 
+        // Type of Job 
+        if (!db_projectJob.input.id.value ) return await db_projectJob.insert();
+        else return await db_projectJob.update();
+    }
 
+    async saveTimeEquipmentList() {
+        // Quick and Dirty DB
+        // Add all equipments
+        db_timeEquipmentList.clear();
+        db_timeEquipmentList.addAll();
+        return await db_timeEquipmentList.insertAll();
+    }
 
+    /**
+     * Add Data for the User / Worker
+     * housing AdressId, Price, ans so on
+     */
+    async saveTimeWorker() {
+        if (!db_timeWorker.input.id ) return await db_timeWorker.insert();
+        else return await db_timeWorker.update();
     }
 
     /**
@@ -145,43 +127,40 @@ export class ProjectUpdate {
      *    da die ArticleId für die Rechnug Relevant ist
      *    der Preis in der ArtikelID eindeutig ist, das ist ja nicht 100 % mit der Jobart eingabe 
      */
-    saveTimeJob() {
-
+    async saveTimeJob() {
+        //Save Time Job
+        if (!db_timeJob.data?.id ) return await db_timeJob.insert();
+        else return await db_timeJob.update();
     }
     
-    /**
-     * CompanyId,ProjectJobId, employeeID, start, end,m arrival,dfepature
-     * housing AdressId, Price, ans so on
-     */
-    saveTimeWorker() {
-
+    async saveProjectNew() {
+        // Save bu_customerprice: 
+        // Contents of Group, Function, Dayrate, Overtime, and Offdayrate 
+        if (!if_projectNew.dataset?.id) return await if_projectNew.insert();
+        else return await if_projectNew.update();
     }
 
-    /**
-     * CompanyId, projectJobId, articleId,Price,from, to, info for the equipment (not Yet) 
-     * 
-     */
-    saveTimeEquipment() {
-
+    saveDayrate(p) {
+        // If Dayrate Change is selected update the Prices to new Value
+        // new Creation happened already
+        if (project.isDayrateAll() && project.isDayrateVisible()) {
+            let d=if_projectNew.dataset;
+            p.push(db_dayrate.updatePrice(+d.articleIdDayrate,+d.drPrice));
+            p.push(db_dayrate.updatePrice(+d.articleIdOffday,+d.offPrice));
+            p.push(db_dayrate.updatePrice(+d.articleIdOvertime,+d.otPrice));
+        }
     }
 
-    saveNewCustomer() {
-        
+
+    saveStandart(p) {
+        // Standart Value: Set the standart when choosing the Customer or the JobDefinition
+        if (project.isStandard()) {
+            if (project.isOnlyCustomer()) {
+                p.push(if_projectNew.updateNewCustomerStandard(if_projectNew.dataset.customerId));
+            } else {
+                p.push(if_projectNew.updateNewCustomerStandard(0));
+            }
+        }
     }
-
-    saveNewEquipment() {
-        
-    }
-
-    /**
-     *  CompanyId, articleId, customerId, Price if we have no Id
-     */
-    saveNewEquipmentPrice() {
-
-    }
-    saveTimeEmplopyee() {
-
-    }
-
 
 }

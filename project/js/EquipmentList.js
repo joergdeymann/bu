@@ -353,8 +353,8 @@ export class EquipmentList {
         newContainer.classList.add("input-container");
         newContainer.classList.add("equipment");
         newContainer.innerHTML=/*html*/`
-            <input type="hidden" name="timeEquipmentId[]"  value="${data.articleId}">
-            <input type="hidden" name="equipmentId[]" value="${data.timeEquipmentId}">
+            <input type="hidden" name="timeEquipmentId[]"  value="${data.timeEquipmentId}">
+            <input type="hidden" name="equipmentId[]" value="${data.articleId}">
             <input type="hidden" name="equipmentPrice[]" value="${data.price}">
             <input type="text" name="equipmentName[]"  value="${data.name}" placeholder="Was bringst du mit">
             <button class="small" type="button" onmousedown="equipmentList.setWindow(event)">&#128315;</button>
@@ -471,3 +471,12 @@ export class EquipmentList {
     }
 
 }
+/*
+           let d={
+                articleId: data.articleId,
+                timeEquipmentId: data.id,
+                name: data.name,
+                price: data.price
+            }
+                addLoadedInputField(d);
+*/

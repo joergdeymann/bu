@@ -56,24 +56,25 @@ export class ProjectSave {
 
                 
                 // Save customer
-                if (!db_customer.data?.id && db_customer.name) p.push(db_customer.insert()); 
+                if (!db_customer.input.id.value && db_customer.name.value) p.push(db_customer.insert()); 
                 else p.push(db_customer.update());
 
+
                 // Save Event Address
-                if (!db_address.data?.id)  p.push(db_address.insert()); // Event Addresse
+                if (!db_address.input.id.value)  p.push(db_address.insert()); // Event Addresse
                 else p.push(db_address.update());
                 await Promise.all(p);
 
                 // The Project itself, either the project (or the time_project later)
-                if (!db_project.data?.id ) await db_project.insert();
+                if (!db_project.input.id.value) await db_project.insert();
                 else db_project.update();
 
                 // else if (db_project.isFullProject) db_project.update();
 
                 // I think this has nor really need but its implemented somewhere 
                 // Type of Job
-                if (!db_projectJob.data?.id ) await (db_projectJob.insert()); // only link, no update Das Falsche ?
-
+                if (!db_projectJob.input.id.value) await db_projectJob.insert(); // only link, no update Das Falsche ?
+                else await db_projectJob.update();
 
 
                 p=[];
@@ -98,6 +99,7 @@ export class ProjectSave {
                     p.push(db_dayrate.updatePrice(+d.articleIdOffday,+d.offPrice));
                     p.push(db_dayrate.updatePrice(+d.articleIdOvertime,+d.otPrice));
                 }
+                
                 if (project.isStandard()) {
                     if (project.isOnlyCustomer()) {
                         p.push(if_projectNew.updateNewCustomerStandard(if_projectNew.dataset.customerId));

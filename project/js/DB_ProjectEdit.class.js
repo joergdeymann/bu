@@ -277,5 +277,6 @@ export class DB_ProjectEdit extends Query {
         project.setDayrateStandard(if_projectNew.dataset.standard);
         project.setDayrateCustomer(if_projectNew.dataset.customerId>0);
         project.setDayrateAll(false);
+
     }
 }

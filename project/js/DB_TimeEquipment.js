@@ -28,7 +28,7 @@ export class DB_TimeEquipment extends Query {
             INSERT INTO bu_time_equipment 
             SET 
                 bu_time_equipment.companyId=${+login.companyId},
-                bu_time_equipment.projectJobId=${+db_projectJob.id},
+                bu_time_equipment.projectJobId=${+db_projectJob.input.id},
                 bu_time_equipment.articleId=${+this.articleId.value},
                 bu_time_equipment.price=${+this.price.value},         
                 bu_time_equipment.from =${this.inMarks(calendar.newEntry.start)},           
@@ -45,7 +45,7 @@ export class DB_TimeEquipment extends Query {
             UPDATE bu_time_equipment  
             SET 
                 bu_time_equipment.companyId=${+login.companyId},
-                bu_time_equipment.projectJobId=${+db_projectJob.id},
+                bu_time_equipment.projectJobId=${+db_projectJob.input.id},
                 bu_time_equipment.articleId=${+this.articleId.value},
                 bu_time_equipment.price=${+this.price.value},         
                 bu_time_equipment.from =${this.inMarks(calendar.newEntry.start)},           
