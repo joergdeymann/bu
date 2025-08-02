@@ -175,24 +175,116 @@ $rechnung->fillContent($mail_sig);
 $rechnung->fillContent($mail_content);   
 $rechnung->fillContent($mail_subject);
 
+
+$rows=0;
+$cc = array();
+
+$sep= "/[,\s;]/";
+$cc = preg_split($sep,$rechnung->row_kunde['mail_dienst']);
+$cc = array_filter($cc);
+$send_to = array_shift($cc);
+$dataList = array();
+
+if ($_POST['mahnstufe'] != 0) {
+	$request = /* sql */ "
+		SELECT 
+			i.mail, 
+			i.addressId
+		FROM 
+			bu_invoice_contact i
+		LEFT JOIN 
+			bu_adresse a ON a.recnum = i.addressId
+		WHERE 
+			i.companyId = ? AND 
+			i.invoiceId = ? AND 
+			i.mailType = 0
+	";			  
+	// SQL Request prepare
+	$stmt = $db->prepare($request);  
+
+	// parameters for request (i = int s = String)
+	$stmt->bind_param(
+		"is", 
+		$_SESSION['firmanr'], 
+		$rechnung->row_re['renr']
+	);
+	$stmt->execute();
+	$result = $stmt->get_result();
+
+	if ($result) $rows=$result->num_rows;
+
+	while($row=$result->fetch_assoc()) {
+		$cc[]=$row['mail'];
+	}
+}
+
+if ($rows == 0) {
+	/*
+		CCs holen
+		$rechnung->row_kunde['recnum']
+		$rechnung->row_kunde['kdnr']
+		
+	*/
+	$request="SELECT `mail`,recnum from `bu_adresse` where `firmanr`='".$_SESSION['firmanr']."' and `kunde_recnum`='".$rechnung->row_kunde['recnum']."' and `mail` != '' and `zuordnung`='5'";
+	// echo $request;
+	$result=$db->query($request);
+
+	while($row=$result->fetch_assoc()) {
+		$cc[]=$row['mail'];
+		$dataList[] = $row;
+	}
+
+}
+
+if ($_POST['mahnstufe'] == 0) {
+	foreach($row as $dataList) {
+		$request=/* sql */ "
+			INSERT INTO 
+				`bu_invoice_contact`
+			SET 
+				companyId = ?,
+				invoiceId = ?,
+				addressId = ?
+				mailType = 0
+		";
+
+		// SQL Request prepare
+		$stmt = $db->prepare($request);  
+
+		// parameters for request (i = int s = String)
+		$stmt->bind_param(
+			"isi", 
+			$_SESSION['firmanr'], 
+			$rechnung->row_re['renr'],
+			$row["recnum"]		
+		);
+
+		if (!$stmt->execute()) {
+			echo "Fehler beim Einfügen der gespeicherten Mails: " . $stmt->error;
+		};
+
+	}
+
+}
+
 /*
 	CCs holen
 	$rechnung->row_kunde['recnum']
 	$rechnung->row_kunde['kdnr']
 	
 */
-$request="SELECT `mail` from `bu_adresse` where `firmanr`='".$_SESSION['firmanr']."' and `kunde_recnum`='".$rechnung->row_kunde['recnum']."' and `mail` != '' and `zuordnung`='5'";
-// echo $request;
-$result=$db->query($request);
-$cc=array();
-$sep= "/[,\s;]/";
-$cc = preg_split($sep,$rechnung->row_kunde['mail_dienst']);
-$cc = array_filter($cc);
-$send_to = array_shift($cc);
+// $request="SELECT `mail` from `bu_adresse` where `firmanr`='".$_SESSION['firmanr']."' and `kunde_recnum`='".$rechnung->row_kunde['recnum']."' and `mail` != '' and `zuordnung`='5'";
+// // echo $request;
+// $result=$db->query($request);
+// $cc=array();
+// $sep= "/[,\s;]/";
+// $cc = preg_split($sep,$rechnung->row_kunde['mail_dienst']);
+// $cc = array_filter($cc);
+// $send_to = array_shift($cc);
 
-while($row=$result->fetch_assoc()) {
-	$cc[]=$row['mail'];
-}
+// while($row=$result->fetch_assoc()) {
+// 	$cc[]=$row['mail'];
+// }
 
 // echo $subject."<br>";
 // echo $content."<br>"; 
